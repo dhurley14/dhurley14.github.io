@@ -13,6 +13,7 @@ Background Motivation
 I began this experiment with topic analysis on a friend's suggestion on utilizing the treasure trove that is twitter.
 Marc Andreessen retweets a ton of different people all the time.  It's impossible to keep up with what those people's interests are.
 I wanted to learn what exactly are the "Top Ten Things" that Marc Andreessen retweets, and how does he feel about these topics?
+<!-- more -->
 
 As we all know, a retweet basically widdles down to agreeing with the tweet's author.  This is where I decided to begin
 researching topic analysis with Latent Dirichlet Allocation.
