@@ -22,3 +22,5 @@ The first part of this blog series will cover a review of how I acquired the twi
 ten topics pmarca retweets.  The second part of this blog series will cover sentiment analysis on the tweets that are associated
 with each topic.  Thus giving us an overview of how Marc Andreessen feels about specific topics he tweets about, based on people he 
 retweets.
+
+I HOPE THIS SHOWS UP.
