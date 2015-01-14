@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Twitter | AdventureLDA]]></title>
   <link href="http://dhurley14.github.io/blog/categories/twitter/atom.xml" rel="self"/>
   <link href="http://dhurley14.github.io/"/>
-  <updated>2015-01-14T00:19:10-05:00</updated>
+  <updated>2015-01-14T00:20:17-05:00</updated>
   <id>http://dhurley14.github.io/</id>
   <author>
     <name><![CDATA[Devin Hurley]]></name>
@@ -34,8 +34,6 @@ researching topic analysis with Latent Dirichlet Allocation.</p>
 ten topics pmarca retweets.  The second part of this blog series will cover sentiment analysis on the tweets that are associated
 with each topic.  Thus giving us an overview of how Marc Andreessen feels about specific topics he tweets about, based on people he
 retweets.</p>
-
-<p>I HOPE THIS SHOWS UP.</p>
 ]]></content>
   </entry>
   
