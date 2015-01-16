@@ -21,7 +21,7 @@ with each topic.  Thus giving us an overview of how Marc Andreessen feels about 
 retweets.
 
 ####Acquiring pmarca's Tweets
-I utilized the twython (add a link to twython) library to acquire the tweets.  Unfortunately, Twitter's api limits you to the 3200 most recent tweets so a quick introduction to the API might be useful to some.  The file containing all of this logic is the aptly named (I think at least) get_tweets.py.
+I utilized the [twython](https://pypi.python.org/pypi/twython/) library to acquire the tweets.  Unfortunately, Twitter's api limits you to the 3200 most recent tweets so a quick introduction to the API might be useful to some.  The file containing all of this logic is the aptly named (I think at least) get_tweets.py.
 
 I first needed access to the Twitter API.  Twython makes this extrememly easy and all I need to do is add my `APP_KEY` and `APP_SECRET` for authorization.
 ``` Python
