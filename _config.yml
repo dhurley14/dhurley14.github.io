@@ -3,12 +3,11 @@
 # ----------------------- #
 
 url: http://dhurley14.github.io
-title: AdventureLDA
+title: AdventureL(DA | and)
 subtitle: Adventures in Machine Learning
 author: Devin Hurley
 simple_search: https://www.google.com/search
-description: This blog will contain posts on Machine Learning using mostly Python \nand maybe some other cool stuff.
-
+description: Machine learning and Python
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
 # http://www.ruby-doc.org/core-1.9.2/Time.html#method-i-strftime

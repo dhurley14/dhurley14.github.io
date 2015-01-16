@@ -6,3 +6,7 @@ comments: true
 categories: [LDA, Python, Machine Learning]
 ---
 Hello world!
+
+The title for this blog is supposed to be a play on words of AdventureLand (i.e. AdventureLDA or AdventureLand).  Just a place to have fun ;)
+In this blog I will be examining a ton of different applications of machine learning algorithms. 
+Hopefully the results of these blog posts are interesting to people.  Here's to an adventure in machine learning!
