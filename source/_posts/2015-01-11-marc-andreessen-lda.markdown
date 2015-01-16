@@ -90,6 +90,8 @@ if __name__ == '__main__':
 Now I have all of pmarca's retweets (which turns out to be 1/2 of all of his tweets returned by the API).
 Next is to build a python dictionary that will store the links from the retweets as well as the tweets themselves.  I need to store the tweets alongside the articles the tweet links to so that I can go back and send the article data linked in the tweet back through my LDA model and find the topics those tweets are associated with.  I can then perform sentiment analysis on that tweet, aggregate the sentiment per topic, and finish my analysis.
 
+###Getting the URLs
+
 The following grabs the urls from all the retweets
 ``` Python
 import re, os, sys
@@ -110,6 +112,7 @@ print len(tweetURLdict)
 
 Surprisingly, out of the approximately 900 RT's with links, nearly 800 of them were malformed when returned from the twitter API. Some looked like this `RT @natashakhanhk: A brasher generation taking over from established pro-democracy fighters portends more political struggle ahead http://t…`  I think this has to do with the fact that these were retweets.  When anyone retweets something I think Twitter stores the link data somewhere else, not displaying or truncating the actual hyperlink text so that more user text can be fit into a tweet.  Just a theory.  Anyways, I now had 108 properly formed links to deal with.  Still plenty to have fun with :)
 
+
 In order to build my LDA model I needed to find a way to extract the body of the text from each article.  On the [mathandpencil](http://blog.mathandpencil.com/using-latent-dirichlet-allocation-to-categorize-my-twitter-feed/) blog, Joseph Misiti uses Diffbot to acquire the text body and I followed in his footsteps.  Diffbot gives each new signup a 14 day free trial with 10,000 daily calls, which was more than I needed at the time (although I wish I did do another sweep of pmarca's timeline this month so that I could at least double the amount of article links in my data).
 
 First, I needed to strip out the URL's from the dictionary I built when I extracted the links from the tweets.
@@ -118,7 +121,7 @@ First, I needed to strip out the URL's from the dictionary I built when I extrac
     tweetDICTurls = ast.literal_eval(open("tweetdict.txt").read())
     urls = " ".join([u.strip().replace('"','') for u in tweetDICTurls.keys()])
 ```
-
+###Building the corpus
 Now that I have just the URLs, I can send them to Diffbot to extract the body of each article.  Diffbot makes this extremely simple with their API.
 
 ``` Python
@@ -141,6 +144,7 @@ def create_bulk_job(urls, name):
 Next we clean up the corpus and the result can be found [here](https://github.com/dhurley14/pmarcaRTS/blob/master/src/corpus.txt).
 We now have a corpus we can use to build our LDA model.  
 
+###LDA model results
 I used the [gensim](http://radimrehurek.com/gensim/index.html) package which has an implementation of the LDA algorithm and a very nice tutorial on how to utilize it.  After building the model I got the top ten topics Marc Andreessen retweets the most (at least during the 3200 tweets ending in November 2014).  After looking at the top words for each topic ([which can be viewed here](https://github.com/dhurley14/pmarcaRTS/blob/master/src/bettertopics.txt)), I came up with the following list of topics (in no particular order):
 
 ####1. Venture Capital
@@ -154,4 +158,4 @@ I used the [gensim](http://radimrehurek.com/gensim/index.html) package which has
 ####9. Inflation
 ####10. Global economics and finances.
 
-To generate a more comprehensive set of topics, it certainly would've been nice to have not had to throw out 800 hyperlinks.  I could probably make another call to the Twitter API and acquire another 100 articles.  Unfortunately my free 14 day free trial with Diffbot is over.  Soon will be part 2 of this post, where I examine the sentiment of each topic using the text from the tweets.  Until next time!
+To generate a more comprehensive set of topics, it certainly would've been nice to have not had to throw out 800 articles due to malformed hyperlinks.  I could probably make another call to the Twitter API and acquire another 100 articles from Marc Andreessen's timeline.  Unfortunately my free 14 day free trial with Diffbot is over.  Soon will be part 2 of this post, where I examine the sentiment of each topic using the text from the tweets.  Until next time!
