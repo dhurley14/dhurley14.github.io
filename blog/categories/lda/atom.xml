@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Lda | AdventureLDA]]></title>
+  <title><![CDATA[Category: Lda | AdventureL(DA | and)]]></title>
   <link href="http://dhurley14.github.io/blog/categories/lda/atom.xml" rel="self"/>
   <link href="http://dhurley14.github.io/"/>
-  <updated>2015-01-15T22:12:30-05:00</updated>
+  <updated>2015-01-16T07:49:55-05:00</updated>
   <id>http://dhurley14.github.io/</id>
   <author>
     <name><![CDATA[Devin Hurley]]></name>
@@ -35,7 +35,7 @@ ten topics pmarca retweets. This blog owes a special thanks to the tutorial blog
 with each topic.  Thus giving us an overview of how Marc Andreessen feels about specific topics he tweets about, based on people he
 retweets.</p>
 
-<h4>Acquiring pmarca&rsquo;s Tweets</h4>
+<h3>Acquiring pmarca&rsquo;s Tweets</h3>
 
 <p>I utilized the <a href="https://pypi.python.org/pypi/twython/">twython</a> library to acquire the tweets.  Unfortunately, Twitter&rsquo;s api limits you to the 3200 most recent tweets so a quick introduction to the API might be useful to some.  The file containing all of this logic is the aptly named (I think at least) get_tweets.py.</p>
 
@@ -198,6 +198,10 @@ We now have a corpus we can use to build our LDA model.</p>
     <updated>2015-01-07T22:11:51-05:00</updated>
     <id>http://dhurley14.github.io/blog/2015/01/07/hello</id>
     <content type="html"><![CDATA[<p>Hello world!</p>
+
+<p>The title for this blog is supposed to be a play on words of AdventureLand (i.e. AdventureLDA or AdventureLand).  Just a place to have fun ;)
+In this blog I will be examining a ton of different applications of machine learning algorithms.
+Hopefully the results of these blog posts are interesting to people.  Here&rsquo;s to an adventure in machine learning!</p>
 ]]></content>
   </entry>
   

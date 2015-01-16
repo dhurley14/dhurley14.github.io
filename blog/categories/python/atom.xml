@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Python | AdventureLDA]]></title>
+  <title><![CDATA[Category: Python | AdventureL(DA | and)]]></title>
   <link href="http://dhurley14.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://dhurley14.github.io/"/>
-  <updated>2015-01-15T22:12:30-05:00</updated>
+  <updated>2015-01-16T07:49:55-05:00</updated>
   <id>http://dhurley14.github.io/</id>
   <author>
     <name><![CDATA[Devin Hurley]]></name>
@@ -19,6 +19,10 @@
     <updated>2015-01-07T22:11:51-05:00</updated>
     <id>http://dhurley14.github.io/blog/2015/01/07/hello</id>
     <content type="html"><![CDATA[<p>Hello world!</p>
+
+<p>The title for this blog is supposed to be a play on words of AdventureLand (i.e. AdventureLDA or AdventureLand).  Just a place to have fun ;)
+In this blog I will be examining a ton of different applications of machine learning algorithms.
+Hopefully the results of these blog posts are interesting to people.  Here&rsquo;s to an adventure in machine learning!</p>
 ]]></content>
   </entry>
   
