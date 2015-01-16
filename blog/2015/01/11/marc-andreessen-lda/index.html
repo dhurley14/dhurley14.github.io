@@ -101,8 +101,8 @@
 <div class="entry-content"><h2>Background Motivation</h2>
 
 <p>I began this experiment with topic analysis on a friend&rsquo;s suggestion on utilizing the treasure trove that is twitter.
-Marc Andreessen retweets a ton of different people all the time.  It&rsquo;s impossible to keep up with what those people&rsquo;s interests are.
-I wanted to learn what exactly are the &ldquo;Top Ten Things&rdquo; that Marc Andreessen retweets, and how does he feel about these topics?</p>
+Marc Andreessen retweets a ton of different people all the time.  It&rsquo;s impossible to keep up with what those people&rsquo;s interests are,
+and more specifically what pmarca&rsquo;s interests are.  I wanted to learn what exactly are the &ldquo;Top Ten Things&rdquo; that Marc Andreessen retweets, and how does he feel about these topics?</p>
 
 <!-- more -->
 
@@ -111,9 +111,241 @@ I wanted to learn what exactly are the &ldquo;Top Ten Things&rdquo; that Marc An
 researching topic analysis with Latent Dirichlet Allocation.</p>
 
 <p>The first part of this blog series will cover a review of how I acquired the twitter data and the steps I took to get the the top
-ten topics pmarca retweets.  The second part of this blog series will cover sentiment analysis on the tweets that are associated
+ten topics pmarca retweets. This blog owes a special thanks to the tutorial blog from <a href="http://blog.mathandpencil.com/using-latent-dirichlet-allocation-to-categorize-my-twitter-feed/">mathandpencil</a>.  The second part of this blog series will cover sentiment analysis on the tweets that are associated
 with each topic.  Thus giving us an overview of how Marc Andreessen feels about specific topics he tweets about, based on people he
 retweets.</p>
+
+<h4>Acquiring pmarca&rsquo;s Tweets</h4>
+
+<p>I utilized the <a href="https://pypi.python.org/pypi/twython/">twython</a> library to acquire the tweets.  Unfortunately, Twitter&rsquo;s api limits you to the 3200 most recent tweets so a quick introduction to the API might be useful to some.  The file containing all of this logic is the aptly named (I think at least) get_tweets.py.</p>
+
+<p>I first needed access to the Twitter API.  Twython makes this extrememly easy and all I need to do is add my <code>APP_KEY</code> and <code>APP_SECRET</code> for authorization.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='Python'><span class='line'><span class="kn">from</span> <span class="nn">twython</span> <span class="kn">import</span> <span class="n">Twython</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">get_authentication</span><span class="p">():</span>
+</span><span class='line'>    <span class="sd">&quot;&quot;&quot; Get a connection to the Twitter API using Twython.</span>
+</span><span class='line'><span class="sd">    return a new instance of the Twython object.</span>
+</span><span class='line'><span class="sd">    &quot;&quot;&quot;</span>
+</span><span class='line'>    <span class="n">APP_KEY</span> <span class="o">=</span> <span class="s">&#39;xxxx&#39;</span>
+</span><span class='line'>    <span class="n">APP_SECRET</span> <span class="o">=</span> <span class="s">&#39;xxxxx&#39;</span>
+</span><span class='line'>    <span class="n">twitter</span> <span class="o">=</span> <span class="n">Twython</span><span class="p">(</span><span class="n">APP_KEY</span><span class="p">,</span> <span class="n">APP_SECRET</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">twitter</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The next step was to get the user&rsquo;s tweets.  The <code>**kwargs</code> were necessary so that I could loop through the Twitter API and acquire all 3200 of pmarca&rsquo;s most recent tweets (again Twitter doesn&rsquo;t allow you to access all of a user&rsquo;s tweets).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='Python'><span class='line'><span class="k">def</span> <span class="nf">get_tweets</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&#39;pmarca&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span class='line'>    <span class="sd">&quot;&quot;&quot; Get a user&#39;s timeline</span>
+</span><span class='line'><span class="sd">    :param username: (default pmarca)</span>
+</span><span class='line'><span class="sd">    :param tweetID: </span>
+</span><span class='line'><span class="sd">    &quot;&quot;&quot;</span>
+</span><span class='line'>    <span class="n">twitter</span> <span class="o">=</span> <span class="n">get_authentication</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># to get all 3200 possible tweets, I must cycle</span>
+</span><span class='line'>    <span class="c"># through, and change the max_id on each call to be the lowest</span>
+</span><span class='line'>    <span class="c"># id , so that my next call gets all the tweets below that id,</span>
+</span><span class='line'>    <span class="c"># and so on and so forth.</span>
+</span><span class='line'>    <span class="n">user_timeline</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">user_timeline</span> <span class="o">=</span> <span class="n">twitter</span><span class="o">.</span><span class="n">get_user_timeline</span><span class="p">(</span><span class="n">screen_name</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">user_timeline</span> <span class="o">=</span> <span class="n">twitter</span><span class="o">.</span><span class="n">get_user_timeline</span><span class="p">(</span><span class="n">screen_name</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">max_id</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;anId&#39;</span><span class="p">])</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">user_timeline</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now that I have my authentication and a way to get the user&rsquo;s timeline (note that <code>count=200</code> is the max amount of tweets from a user&rsquo;s timeline you can receive before having to paginate, which is what I will show next).</p>
+
+<p>To get the next oldest 200 tweets, and so on and so forth until I max out at 3200, I had to loop through get_tweets(), setting the <code>tweetID</code> parameter to the ID of the last tweet that I received in the previous API call.  I do this 16 times in total.  I then write all of the tweets to a file called <code>pmarca_rts_append.txt</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='Python'><span class='line'><span class="k">def</span> <span class="nf">output_all_rts</span><span class="p">():</span>
+</span><span class='line'>    <span class="n">user_timeline</span> <span class="o">=</span> <span class="n">get_tweets</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">rts</span> <span class="o">=</span> <span class="p">[</span><span class="n">user_timeline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">user_timeline</span><span class="p">))</span>
+</span><span class='line'>        <span class="k">if</span> <span class="s">&quot;RT &quot;</span> <span class="ow">in</span> <span class="n">user_timeline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&#39;text&#39;</span><span class="p">]]</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">user_timeline</span> <span class="o">=</span> <span class="n">get_tweets</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&#39;pmarca&#39;</span><span class="p">,</span><span class="n">anId</span><span class="o">=</span><span class="n">user_timeline</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">user_timeline</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;id&#39;</span><span class="p">])</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">rts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">user_timeline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">user_timeline</span><span class="p">))</span>
+</span><span class='line'>            <span class="k">if</span> <span class="s">&quot;RT &quot;</span> <span class="ow">in</span> <span class="n">user_timeline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&#39;text&#39;</span><span class="p">]]</span> <span class="c">#filter RT&#39;s</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c">#print len(rts)</span>
+</span><span class='line'>    <span class="n">output_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;pmarca_rts_append.txt&quot;</span><span class="p">,</span> <span class="s">&quot;a+b&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">rts</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">output_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">output_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">output_all_rts</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now I have all of pmarca&rsquo;s retweets (which turns out to be &frac12; of all of his tweets returned by the API).
+Next is to build a python dictionary that will store the links from the retweets as well as the tweets themselves.  I need to store the tweets alongside the articles the tweet links to so that I can go back and send the article data linked in the tweet back through my LDA model and find the topics those tweets are associated with.  I can then perform sentiment analysis on that tweet, aggregate the sentiment per topic, and finish my analysis.</p>
+
+<h3>Getting the URLs</h3>
+
+<p>The following grabs the urls from all the retweets</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='Python'><span class='line'><span class="kn">import</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="n">tweetURLdict</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;pmarca_rts_append.txt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+</span><span class='line'>    <span class="n">results</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&quot;(?P&lt;url&gt;https?://t.co/[A-Za-z]{10})&quot;</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="c"># some urls are malformed so I was only able to extract perfect ones, hence {10}</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">results</span><span class="p">:</span>
+</span><span class='line'>        <span class="c">#print results.group(&quot;url&quot;)</span>
+</span><span class='line'>        <span class="n">tweetURLdict</span><span class="p">[</span><span class="n">results</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s">&quot;url&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\xe2\x80\x99</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;&#39;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\xe2\x80\x98</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;&#39;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\xe2\x80\x9c</span><span class="s">&quot;</span><span class="p">,</span> <span class="s">&#39;&quot;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\xe2\x80\x9d</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&#39;&quot;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\xe2\x80\x93</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&#39;-&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\xe2\x80\x94</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&#39;--&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\xe2\x80\xa6</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&#39;...&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\xc3\xb6</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;o&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\xf0\x9f\x98\x8a</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;:)&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">target</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;tweetdict.txt&#39;</span><span class="p">,</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">target</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">tweetURLdict</span><span class="p">))</span>
+</span><span class='line'><span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">tweetURLdict</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Surprisingly, out of the approximately 900 RT&rsquo;s with links, nearly 800 of them were malformed when returned from the twitter API. Some looked like this <code>RT @natashakhanhk: A brasher generation taking over from established pro-democracy fighters portends more political struggle ahead http://t…</code>  I think this has to do with the fact that these were retweets.  When anyone retweets something I think Twitter stores the link data somewhere else, not displaying or truncating the actual hyperlink text so that more user text can be fit into a tweet.  Just a theory.  Anyways, I now had 108 properly formed links to deal with.  Still plenty to have fun with :)</p>
+
+<p>In order to build my LDA model I needed to find a way to extract the body of the text from each article.  On the <a href="http://blog.mathandpencil.com/using-latent-dirichlet-allocation-to-categorize-my-twitter-feed/">mathandpencil</a> blog, Joseph Misiti uses Diffbot to acquire the text body and I followed in his footsteps.  Diffbot gives each new signup a 14 day free trial with 10,000 daily calls, which was more than I needed at the time (although I wish I did do another sweep of pmarca&rsquo;s timeline this month so that I could at least double the amount of article links in my data).</p>
+
+<p>First, I needed to strip out the URL&rsquo;s from the dictionary I built when I extracted the links from the tweets.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='Python'><span class='line'><span class="n">tweetDICTurls</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">&quot;tweetdict.txt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</span><span class='line'><span class="n">urls</span> <span class="o">=</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">u</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;&quot;&#39;</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">tweetDICTurls</span><span class="o">.</span><span class="n">keys</span><span class="p">()])</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Building the corpus</h3>
+
+<p>Now that I have just the URLs, I can send them to Diffbot to extract the body of each article.  Diffbot makes this extremely simple with their API.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='Python'><span class='line'><span class="n">DIFF_BOT_TOKEN</span> <span class="o">=</span> <span class="s">&#39;xxx&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">create_bulk_job</span><span class="p">(</span><span class="n">urls</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+</span><span class='line'>    <span class="sd">&quot;&quot;&quot; urls will be whitespace separated values</span>
+</span><span class='line'><span class="sd">    </span>
+</span><span class='line'><span class="sd">    &quot;&quot;&quot;</span>
+</span><span class='line'>    <span class="n">apiUrl</span> <span class="o">=</span> <span class="s">&#39;http://api.diffbot.com/v3/article&#39;</span>
+</span><span class='line'>    <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">DIFF_BOT_TOKEN</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">urls</span><span class="o">=</span><span class="n">urls</span><span class="p">,</span> <span class="n">apiUrl</span><span class="o">=</span><span class="n">apiUrl</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;http://api.diffbot.com/v3/bulk&#39;</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">moarData</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+</span><span class='line'>    <span class="c"># response from diffbot wrote data here..</span>
+</span><span class='line'>    <span class="n">target</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;output_from_diffbot.txt&#39;</span><span class="p">,</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">target</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">moarData</span><span class="p">))</span>
+</span><span class='line'>    <span class="k">print</span> <span class="n">moarData</span><span class="p">[</span><span class="s">&#39;jobs&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">&#39;downloadJson&#39;</span><span class="p">]</span> <span class="c">#this will print the link to the JSON where I can download the corpus.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next we clean up the corpus and the result can be found <a href="https://github.com/dhurley14/pmarcaRTS/blob/master/src/corpus.txt">here</a>.
+We now have a corpus we can use to build our LDA model.</p>
+
+<h3>LDA model results</h3>
+
+<p>I used the <a href="http://radimrehurek.com/gensim/index.html">gensim</a> package which has an implementation of the LDA algorithm and a very nice tutorial on how to utilize it.  After building the model I got the top ten topics Marc Andreessen retweets the most (at least during the 3200 tweets ending in November 2014).  After looking at the top words for each topic (<a href="https://github.com/dhurley14/pmarcaRTS/blob/master/src/bettertopics.txt">which can be viewed here</a>), I came up with the following list of topics (in no particular order):</p>
+
+<h4>1. Venture Capital</h4>
+
+<h4>2. Miscellaneous</h4>
+
+<h4>3. Employment</h4>
+
+<h4>4. Labor issues</h4>
+
+<h4>5. Monetary policy</h4>
+
+<h4>6. Healthcare technology</h4>
+
+<h4>7. Web services</h4>
+
+<h4>8. Education</h4>
+
+<h4>9. Inflation</h4>
+
+<h4>10. Global economics and finances.</h4>
+
+<p>To generate a more comprehensive set of topics, it certainly would&rsquo;ve been nice to have not had to throw out 800 articles due to malformed hyperlinks.  I could probably make another call to the Twitter API and acquire another 100 articles from Marc Andreessen&rsquo;s timeline.  Unfortunately my free 14 day free trial with Diffbot is over.  Soon will be part 2 of this post, where I examine the sentiment of each topic using the text from the tweets.  Until next time!</p>
 </div>
 
 
@@ -176,6 +408,35 @@ retweets.</p>
       </li>
     
   </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/dhurley14">@dhurley14</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'dhurley14',
+            count: 2,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
 </section>
 
 

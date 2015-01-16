@@ -104,8 +104,8 @@
   <div class="entry-content"><h2>Background Motivation</h2>
 
 <p>I began this experiment with topic analysis on a friend&rsquo;s suggestion on utilizing the treasure trove that is twitter.
-Marc Andreessen retweets a ton of different people all the time.  It&rsquo;s impossible to keep up with what those people&rsquo;s interests are.
-I wanted to learn what exactly are the &ldquo;Top Ten Things&rdquo; that Marc Andreessen retweets, and how does he feel about these topics?</p>
+Marc Andreessen retweets a ton of different people all the time.  It&rsquo;s impossible to keep up with what those people&rsquo;s interests are,
+and more specifically what pmarca&rsquo;s interests are.  I wanted to learn what exactly are the &ldquo;Top Ten Things&rdquo; that Marc Andreessen retweets, and how does he feel about these topics?</p>
 
 </div>
   
@@ -168,6 +168,35 @@ I wanted to learn what exactly are the &ldquo;Top Ten Things&rdquo; that Marc An
       </li>
     
   </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/dhurley14">@dhurley14</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'dhurley14',
+            count: 2,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
 </section>
 
 
