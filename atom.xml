@@ -4,7 +4,7 @@
   <title><![CDATA[AdventureL(DA | and)]]></title>
   <link href="http://dhurley14.github.io/atom.xml" rel="self"/>
   <link href="http://dhurley14.github.io/"/>
-  <updated>2015-01-16T07:49:55-05:00</updated>
+  <updated>2015-01-23T19:16:22-05:00</updated>
   <id>http://dhurley14.github.io/</id>
   <author>
     <name><![CDATA[Devin Hurley]]></name>
@@ -107,9 +107,9 @@ retweets.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Now that I have my authentication and a way to get the user&rsquo;s timeline (note that <code>count=200</code> is the max amount of tweets from a user&rsquo;s timeline you can receive before having to paginate, which is what I will show next).</p>
+<p>Now that I have my authentication and a way to get the user&rsquo;s timeline (note that <code>count=200</code> is the max amount of tweets from a user&rsquo;s timeline you can receive before having to paginate, which is what I will show next), I will build a python dict that will store the tweets and the hyperlinks that the tweet links to.  This will help me perform sentiment analysis on the topics using the tweets as my sentiment indicators.</p>
 
-<p>To get the next oldest 200 tweets, and so on and so forth until I max out at 3200, I had to loop through get_tweets(), setting the <code>tweetID</code> parameter to the ID of the last tweet that I received in the previous API call.  I do this 16 times in total.  I then write all of the tweets to a file called <code>pmarca_rts_append.txt</code>.</p>
+<p>To get the next oldest 200 tweets, and so on and so forth until I max out at 3200, I had to loop through get_tweets(), setting the <code>tweetID</code> parameter to the ID of the last tweet that I received in the previous API call.  I do this 16 times in total (hence, 3200 tweets).  I then write all of the tweets to a file called <code>pmarca_rts_append.txt</code>.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -131,23 +131,25 @@ retweets.</p>
 <span class='line-number'>18</span>
 <span class='line-number'>19</span>
 <span class='line-number'>20</span>
+<span class='line-number'>21</span>
 </pre></td><td class='code'><pre><code class='Python'><span class='line'><span class="k">def</span> <span class="nf">output_all_rts</span><span class="p">():</span>
 </span><span class='line'>    <span class="n">user_timeline</span> <span class="o">=</span> <span class="n">get_tweets</span><span class="p">()</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="n">rts</span> <span class="o">=</span> <span class="p">[</span><span class="n">user_timeline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">user_timeline</span><span class="p">))</span>
-</span><span class='line'>        <span class="k">if</span> <span class="s">&quot;RT &quot;</span> <span class="ow">in</span> <span class="n">user_timeline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&#39;text&#39;</span><span class="p">]]</span>
+</span><span class='line'>    <span class="c"># the below will build the first entry in our dict.  The dict will map tweet&#39;s and their corresponding URL&#39;s that were found in the tweets.</span>
+</span><span class='line'>    <span class="n">urls</span> <span class="o">=</span> <span class="p">{</span><span class="n">user_timeline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&#39;entities&#39;</span><span class="p">][</span><span class="s">&#39;urls&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">&#39;expanded_url&#39;</span><span class="p">]:</span> <span class="n">user_timeline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&#39;text&#39;</span><span class="p">]</span>  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">user_timeline</span><span class="p">))</span> <span class="k">if</span> <span class="n">user_timeline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&#39;entities&#39;</span><span class="p">][</span><span class="s">&#39;urls&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="s">&quot;RT&quot;</span> <span class="ow">in</span> <span class="n">user_timeline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&#39;text&#39;</span><span class="p">]}</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
 </span><span class='line'>        <span class="n">user_timeline</span> <span class="o">=</span> <span class="n">get_tweets</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&#39;pmarca&#39;</span><span class="p">,</span><span class="n">anId</span><span class="o">=</span><span class="n">user_timeline</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">user_timeline</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;id&#39;</span><span class="p">])</span>
-</span><span class='line'>        <span class="p">[</span><span class="n">rts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">user_timeline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">user_timeline</span><span class="p">))</span>
-</span><span class='line'>            <span class="k">if</span> <span class="s">&quot;RT &quot;</span> <span class="ow">in</span> <span class="n">user_timeline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&#39;text&#39;</span><span class="p">]]</span> <span class="c">#filter RT&#39;s</span>
+</span><span class='line'>        <span class="c"># Now I update that dict again to map more tweet&#39;s and URL&#39;s together</span>
+</span><span class='line'>        <span class="c"># this will help when I have to perform sentiment analysis on each topic.</span>
+</span><span class='line'>        <span class="n">urls</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">user_timeline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&#39;entities&#39;</span><span class="p">][</span><span class="s">&#39;urls&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">&#39;expanded_url&#39;</span><span class="p">]:</span> <span class="n">user_timeline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&#39;text&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">user_timeline</span><span class="p">))</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">user_timeline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&#39;entities&#39;</span><span class="p">][</span><span class="s">&#39;urls&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="s">&quot;RT&quot;</span> <span class="ow">in</span> <span class="n">user_timeline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&#39;text&#39;</span><span class="p">]})</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="c">#print len(rts)</span>
-</span><span class='line'>    <span class="n">output_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;pmarca_rts_append.txt&quot;</span><span class="p">,</span> <span class="s">&quot;a+b&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">rts</span><span class="p">:</span>
-</span><span class='line'>        <span class="n">output_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">urls</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">output_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;pmarca_rts_links_dict.txt&quot;</span><span class="p">,</span> <span class="s">&quot;w+b&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">output_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">urls</span><span class="p">))</span>
 </span><span class='line'>    <span class="n">output_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span><span class='line'>
 </span><span class='line'>
 </span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
 </span><span class='line'>    <span class="n">output_all_rts</span><span class="p">()</span>
@@ -155,57 +157,15 @@ retweets.</p>
 
 
 <p>Now I have all of pmarca&rsquo;s retweets (which turns out to be &frac12; of all of his tweets returned by the API).
-Next is to build a python dictionary that will store the links from the retweets as well as the tweets themselves.  I need to store the tweets alongside the articles the tweet links to so that I can go back and send the article data linked in the tweet back through my LDA model and find the topics those tweets are associated with.  I can then perform sentiment analysis on that tweet, aggregate the sentiment per topic, and finish my analysis.</p>
+Next up will be to extract the text from the associated links.</p>
 
-<h3>Getting the URLs</h3>
+<p>In order to build my LDA model I needed to find a way to extract the body of the text from each article for which I had links to.  On the <a href="http://blog.mathandpencil.com/using-latent-dirichlet-allocation-to-categorize-my-twitter-feed/">mathandpencil</a> blog, Joseph Misiti uses Diffbot to acquire the text body.  Unfortunately my Diffbot account is no longer active so I used the extremely handy <a href="https://github.com/misja/python-boilerpipe">python-boilerpipe wrapper</a> library to handle this for me.</p>
 
-<p>The following grabs the urls from all the retweets</p>
+<p>First, I needed to strip out the URL&rsquo;s from the dictionary I built when I extracted the links from the tweets.  At this point, I figured it would be better to just
+map the tweets to the article body itself.  So I wrote a script to do that.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='Python'><span class='line'><span class="kn">import</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="n">tweetURLdict</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span class='line'><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;pmarca_rts_append.txt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
-</span><span class='line'>    <span class="n">results</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&quot;(?P&lt;url&gt;https?://t.co/[A-Za-z]{10})&quot;</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="c"># some urls are malformed so I was only able to extract perfect ones, hence {10}</span>
-</span><span class='line'>    <span class="k">if</span> <span class="n">results</span><span class="p">:</span>
-</span><span class='line'>        <span class="c">#print results.group(&quot;url&quot;)</span>
-</span><span class='line'>        <span class="n">tweetURLdict</span><span class="p">[</span><span class="n">results</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s">&quot;url&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\xe2\x80\x99</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;&#39;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\xe2\x80\x98</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;&#39;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\xe2\x80\x9c</span><span class="s">&quot;</span><span class="p">,</span> <span class="s">&#39;&quot;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\xe2\x80\x9d</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&#39;&quot;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\xe2\x80\x93</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&#39;-&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\xe2\x80\x94</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&#39;--&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\xe2\x80\xa6</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&#39;...&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\xc3\xb6</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;o&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\xf0\x9f\x98\x8a</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;:)&quot;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">target</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;tweetdict.txt&#39;</span><span class="p">,</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">target</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">tweetURLdict</span><span class="p">))</span>
-</span><span class='line'><span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">tweetURLdict</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Surprisingly, out of the approximately 900 RT&rsquo;s with links, nearly 800 of them were malformed when returned from the twitter API. Some looked like this <code>RT @natashakhanhk: A brasher generation taking over from established pro-democracy fighters portends more political struggle ahead http://t…</code>  I think this has to do with the fact that these were retweets.  When anyone retweets something I think Twitter stores the link data somewhere else, not displaying or truncating the actual hyperlink text so that more user text can be fit into a tweet.  Just a theory.  Anyways, I now had 108 properly formed links to deal with.  Still plenty to have fun with :)</p>
-
-<p>In order to build my LDA model I needed to find a way to extract the body of the text from each article.  On the <a href="http://blog.mathandpencil.com/using-latent-dirichlet-allocation-to-categorize-my-twitter-feed/">mathandpencil</a> blog, Joseph Misiti uses Diffbot to acquire the text body and I followed in his footsteps.  Diffbot gives each new signup a 14 day free trial with 10,000 daily calls, which was more than I needed at the time (although I wish I did do another sweep of pmarca&rsquo;s timeline this month so that I could at least double the amount of article links in my data).</p>
-
-<p>First, I needed to strip out the URL&rsquo;s from the dictionary I built when I extracted the links from the tweets.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='Python'><span class='line'><span class="n">tweetDICTurls</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">&quot;tweetdict.txt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
-</span><span class='line'><span class="n">urls</span> <span class="o">=</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">u</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;&quot;&#39;</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">tweetDICTurls</span><span class="o">.</span><span class="n">keys</span><span class="p">()])</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Building the corpus</h3>
-
-<p>Now that I have just the URLs, I can send them to Diffbot to extract the body of each article.  Diffbot makes this extremely simple with their API.</p>
+<p>By passing in the dict I had saved previously <code>pmarca_rts_links_dict.txt</code> I was able to extract the text from the hyperlinks and map the body article text to the
+tweets (I used <code>|||</code> as the chars to separate the tweet and the article body text).</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -221,51 +181,102 @@ Next is to build a python dictionary that will store the links from the retweets
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='Python'><span class='line'><span class="n">DIFF_BOT_TOKEN</span> <span class="o">=</span> <span class="s">&#39;xxx&#39;</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='Python'><span class='line'><span class="kn">from</span> <span class="nn">boilerpipe.extract</span> <span class="kn">import</span> <span class="n">Extractor</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">ast</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
 </span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">create_bulk_job</span><span class="p">(</span><span class="n">urls</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-</span><span class='line'>    <span class="sd">&quot;&quot;&quot; urls will be whitespace separated values</span>
-</span><span class='line'><span class="sd">    </span>
-</span><span class='line'><span class="sd">    &quot;&quot;&quot;</span>
-</span><span class='line'>    <span class="n">apiUrl</span> <span class="o">=</span> <span class="s">&#39;http://api.diffbot.com/v3/article&#39;</span>
-</span><span class='line'>    <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">DIFF_BOT_TOKEN</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">urls</span><span class="o">=</span><span class="n">urls</span><span class="p">,</span> <span class="n">apiUrl</span><span class="o">=</span><span class="n">apiUrl</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;http://api.diffbot.com/v3/bulk&#39;</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">moarData</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
-</span><span class='line'>    <span class="c"># response from diffbot wrote data here..</span>
-</span><span class='line'>    <span class="n">target</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;output_from_diffbot.txt&#39;</span><span class="p">,</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">target</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">moarData</span><span class="p">))</span>
-</span><span class='line'>    <span class="k">print</span> <span class="n">moarData</span><span class="p">[</span><span class="s">&#39;jobs&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">&#39;downloadJson&#39;</span><span class="p">]</span> <span class="c">#this will print the link to the JSON where I can download the corpus.</span>
+</span><span class='line'><span class="sd">&quot;&quot;&quot; Read a dict file mapping, get the urls, </span>
+</span><span class='line'>
+</span><span class='line'><span class="sd">extract the text, send a mapping of the text </span>
+</span><span class='line'><span class="sd">and the associated url, close the file</span>
+</span><span class='line'><span class="sd">01/19/2015</span>
+</span><span class='line'><span class="sd">&quot;&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">buildMapping</span><span class="p">(</span><span class="n">someDictFile</span><span class="p">):</span>
+</span><span class='line'><span class="n">somedata</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">someDictFile</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span class='line'><span class="n">result</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">somedata</span><span class="p">)</span>
+</span><span class='line'><span class="n">keySize</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</span><span class='line'><span class="n">successRatio</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'><span class="n">linksLeft</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'><span class="n">target</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;content_link_mapping.txt&#39;</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">try</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">extractor</span> <span class="o">=</span> <span class="n">Extractor</span><span class="p">(</span><span class="n">extractor</span><span class="o">=</span><span class="s">&#39;ArticleSentencesExtractor&#39;</span><span class="p">,</span><span class="n">url</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;got the extractor&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="c">#target.write(str(result[key])+&quot;|||&quot;+extractor.getText().encode(&#39;utf-8&#39;)+&#39;\n\n\n&#39;)</span>
+</span><span class='line'>        <span class="n">target</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; ||| &quot;</span><span class="o">+</span><span class="n">extractor</span><span class="o">.</span><span class="n">getText</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span> <span class="c">#</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;wrote data&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">successRatio</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="n">linksLeft</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;[+] SUCCESS    &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">keySize</span> <span class="o">-</span> <span class="n">linksLeft</span><span class="p">))</span>
+</span><span class='line'>    <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">linksLeft</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;[-] FAILURE - &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">+</span> <span class="s">&quot; --- &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">keySize</span> <span class="o">-</span> <span class="n">linksLeft</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">target</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="s">&quot;Success Ratio : &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">successRatio</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">keySize</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span class='line'><span class="n">buildMapping</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Next we clean up the corpus and the result can be found <a href="https://github.com/dhurley14/pmarcaRTS/blob/master/src/corpus.txt">here</a>.
+<p>The boilerpipe python wrapper ended up extracting text from a little over 78% of the hyperlinks I passed through to it.  I have no idea if this is because
+the hyperlinks I sent it were 78% articles and the rest video&rsquo;s or pictures but I&rsquo;m fairly happy with that.  I ended up with around 600 articles of text I could use
+to extract data from.</p>
+
+<p>Next we clean up the corpus and the result can be found <a href="https://raw.githubusercontent.com/dhurley14/pmarcaRTS/master/src/actual/newcorpus.txt">here</a> (The file is
+3.5 MB of just text FYI).
 We now have a corpus we can use to build our LDA model.</p>
 
 <h3>LDA model results</h3>
 
-<p>I used the <a href="http://radimrehurek.com/gensim/index.html">gensim</a> package which has an implementation of the LDA algorithm and a very nice tutorial on how to utilize it.  After building the model I got the top ten topics Marc Andreessen retweets the most (at least during the 3200 tweets ending in November 2014).  After looking at the top words for each topic (<a href="https://github.com/dhurley14/pmarcaRTS/blob/master/src/bettertopics.txt">which can be viewed here</a>), I came up with the following list of topics (in no particular order):</p>
+<p>I used the <a href="http://radimrehurek.com/gensim/index.html">gensim</a> package which has an implementation of the LDA algorithm and a very nice tutorial on how to utilize it.  After building the model I got the top ten (and <a href="https://github.com/dhurley14/pmarcaRTS/blob/master/src/actual/tmp/16topics.txt">16</a> after reading <a href="http://a16z.com/2015/01/22/16-things/">this</a>) topics Marc Andreessen retweets the most.  After looking at the top words for each topic (<a href="https://github.com/dhurley14/pmarcaRTS/blob/master/src/actual/tmp/10topics.txt">which can be viewed here</a>), I came up with the following list of topics (in no particular order):</p>
 
-<h4>1. Venture Capital</h4>
+<h4>1. World Issues (economic &amp; political)</h4>
 
-<h4>2. Miscellaneous</h4>
+<h4>2. American Military (editorialized, sorry :(</h4>
 
-<h4>3. Employment</h4>
+<h4>3. Healthcare</h4>
 
-<h4>4. Labor issues</h4>
+<h4>4. Venture Capital</h4>
 
-<h4>5. Monetary policy</h4>
+<h4>5. Bitcoin Blockchain</h4>
 
-<h4>6. Healthcare technology</h4>
+<h4>6. ???</h4>
 
-<h4>7. Web services</h4>
+<h4>7. European Economic Policy</h4>
 
-<h4>8. Education</h4>
+<h4>8. Psychology</h4>
 
-<h4>9. Inflation</h4>
+<h4>9. Oil Crisis</h4>
 
-<h4>10. Global economics and finances.</h4>
+<h4>10. Gay rights</h4>
 
-<p>To generate a more comprehensive set of topics, it certainly would&rsquo;ve been nice to have not had to throw out 800 articles due to malformed hyperlinks.  I could probably make another call to the Twitter API and acquire another 100 articles from Marc Andreessen&rsquo;s timeline.  Unfortunately my free 14 day free trial with Diffbot is over.  Soon will be part 2 of this post, where I examine the sentiment of each topic using the text from the tweets.  Until next time!</p>
+<p>To generate a more comprehensive set of topics, it certainly would&rsquo;ve been nice to have acquired more than approximately 700 articles.  I also do not fully understand how the LDA algorithm works so I&rsquo;m sure by playing around with parameters in the LDA model I could more closely approximate the topics. I also believe that some of these topics seem far fetched because pmarca was probably only tweeting about a couple of these topics at the time. In addition to this, my sample size was limited to the most recent 3200 tweets, so whatever topics are there are the most commonly seen topics from pmarca&rsquo;s last 3200 tweets. Soon will be part 2 of this post, where I examine the sentiment of the tweets associated with these topics.  Until next time!</p>
 ]]></content>
   </entry>
   
