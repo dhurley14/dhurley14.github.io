@@ -148,7 +148,7 @@ Next we clean up the corpus and the result can be found [here](https://raw.githu
 We now have a corpus we can use to build our LDA model.  
 
 ###LDA model results
-I used the [gensim](http://radimrehurek.com/gensim/index.html) package which has an implementation of the LDA algorithm and a very nice tutorial on how to utilize it.  After building the model I got the top ten (and 16 after reading [this](http://a16z.com/2015/01/22/16-things/)) topics Marc Andreessen retweets the most.  After looking at the top words for each topic ([which can be viewed here](https://github.com/dhurley14/pmarcaRTS/blob/master/src/actual/tmp/10topics.txt)), I came up with the following list of topics (in no particular order):
+I used the [gensim](http://radimrehurek.com/gensim/index.html) package which has an implementation of the LDA algorithm and a very nice tutorial on how to utilize it.  After building the model I got the top ten (and [16](https://github.com/dhurley14/pmarcaRTS/blob/master/src/actual/tmp/16topics.txt) after reading [this](http://a16z.com/2015/01/22/16-things/)) topics Marc Andreessen retweets the most.  After looking at the top words for each topic ([which can be viewed here](https://github.com/dhurley14/pmarcaRTS/blob/master/src/actual/tmp/10topics.txt)), I came up with the following list of topics (in no particular order):
 
 ####1. World Issues (economic & political)
 ####2. American Military (editorialized, sorry :(
@@ -161,4 +161,4 @@ I used the [gensim](http://radimrehurek.com/gensim/index.html) package which has
 ####9. Oil Crisis
 ####10. Gay rights
 
-To generate a more comprehensive set of topics, it certainly would've been nice to have acquired more than approximately 700 articles.  I also do not fully understand how the LDA algorithm works so I'm sure by playing around with parameters in the LDA model I could more closely approximate the topics.  Also my sample size was limited to the most recent 3200 tweets, so whatever topics are there are the most commonly seen topics from pmarca's last 3200 tweets. Soon will be part 2 of this post, where I examine the sentiment of the tweets associated with these topics.  Until next time!
+To generate a more comprehensive set of topics, it certainly would've been nice to have acquired more than approximately 700 articles.  I also do not fully understand how the LDA algorithm works so I'm sure by playing around with parameters in the LDA model I could more closely approximate the topics. I also believe that some of these topics seem far fetched because pmarca was probably only tweeting about a couple of these topics at the time. In addition to this, my sample size was limited to the most recent 3200 tweets, so whatever topics are there are the most commonly seen topics from pmarca's last 3200 tweets. Soon will be part 2 of this post, where I examine the sentiment of the tweets associated with these topics.  Until next time!
