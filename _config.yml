@@ -3,7 +3,7 @@
 # ----------------------- #
 
 url: http://dhurley14.github.io
-title: AdventureL(DA | and)
+title: My ML Adventures
 subtitle: Adventures in Machine Learning
 author: Devin Hurley
 simple_search: https://www.google.com/search
@@ -32,7 +32,7 @@ destination: public
 plugins: plugins
 code_dir: downloads/code
 category_dir: blog/categories
-markdown: rdiscount
+markdown: kramdown #rdiscount
 rdiscount:
   extensions:
     - autolink
