@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Leontief input output model"
+title: "'Crude' "
 date: 2015-02-03 22:03:52 -0500
 comments: true
 categories: [Linear Algebra, numpy, scipy]
@@ -11,6 +11,8 @@ Oil prices have been falling dramatically.  Oil prices are now at 40% of what th
 The fall in oil prices has been a result of increasing oil production in the United States and 
 softening global demand.  Falling oil prices are part of a global phenomenon of deflation.  
 The United States is far off the Federal Reserve's goal of 2% inflation (currently up 0.7% in December 2014 from a year earlier).
+Being able to predict demand is imperative to all sectors of an economy.  In this post I will introduce the
+Leontief IO model and examine just how accurate it can be at predicting demand using historical data from the [BEA](http://bea.gov/industry/io_annual.htm)
 
 <!--more-->
 
@@ -110,6 +112,17 @@ $$
 \hat{x} = \begin{bmatrix}46.59\\35.9962\\40.1724\end{bmatrix}
 
 $$
+
+
+##How good is this model? - Working with BEA data
+
+So doing all the matrix operations on the Leontief model is pretty basic stuff.  How do we make this interesting?  Let's use real data
+from the BEA and test just how good this model is at predicting the necessary output of sectors to sufficiently supply economic demand.
+
+I grabbed data from the [BEA input output accounts data](http://bea.gov/industry/io_annual.htm).  After some about a half hour of examining the data,
+I was finally able to figure out what parts I needed to computer the appropriate values to be used in the model.  First I will go over our data set.
+
+The data set contains 
 
 ##Python numpy library..
 
