@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Linear Algebra | My ML Adventures]]></title>
+  <link href="http://dhurley14.github.io/blog/categories/linear-algebra/atom.xml" rel="self"/>
+  <link href="http://dhurley14.github.io/"/>
+  <updated>2015-02-08T22:14:13-05:00</updated>
+  <id>http://dhurley14.github.io/</id>
+  <author>
+    <name><![CDATA[Devin Hurley]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Introduction to the Leontief IO Model]]></title>
+    <link href="http://dhurley14.github.io/blog/2015/02/08/leontif-input-output-model/"/>
+    <updated>2015-02-08T22:03:52-05:00</updated>
+    <id>http://dhurley14.github.io/blog/2015/02/08/leontif-input-output-model</id>
+    <content type="html"><![CDATA[<h2 id="background-motivation">Background Motivation</h2>
+<p>Oil prices have been falling dramatically.  Oil prices are now at 40% of what they started FY 2014 off.
+The fall in oil prices has been a result of increasing shale oil production in the United States and 
+softening global demand.  Falling oil prices are part of a global phenomenon of deflation.<br />
+The United States is far off the Federal Reserve’s goal of 2% inflation (currently up 0.7% in December 2014 from a year earlier).
+Being able to predict demand is imperative to all sectors of an economy.  In this post I will introduce the
+Leontief IO model and examine just how accurate it can be at predicting demand using historical data from the <a href="http://bea.gov/industry/io_annual.htm">BEA</a></p>
+
+<p>This post will contain an introduction to the components of the model.  I will present a basic example using fictional data.
+I will then present a model utilizing real world data.  In a future post I will build a new model that can be used to predict values of 
+sector production <script type="math/tex">\hat{x}</script> using statistics and the Fourier transform.</p>
+
+<!--more-->
+
+<h2 id="enter-the-leontief-input---output-model">Enter the Leontief Input - Output Model</h2>
+<p><a href="https://en.wikipedia.org/wiki/Input%E2%80%93output_model#Basic_derivation">The Leontief Input - Output model</a> 
+amounts to breaking down an economy into it’s constituent parts so that firms can project demand for their specific sector of the economy.<br />
+Say an economy produces goods and services, and those goods and services also consume other goods and 
+services (we’ll call this the intermediate demand).  The rest of the goods and services produced go to 
+consumers (we’ll call this the final demand).  We can represent this relationship with an equation.  The following model 
+is a simplified version of more accurate models used globally. </p>
+
+<script type="math/tex; mode=display">
+\hat{x} = C\hat{x} + \hat{d}
+</script>
+
+<p>where <script type="math/tex">\hat{x}</script> is a vector containing the total amount of units produced, per sector; <script type="math/tex">C\hat{x}</script> is the intermediate demand (i.e. the demand
+the Services industry has for all units produced by all industry’s) and <script type="math/tex">\hat{d}</script> is the final demand (i.e. the consumer). 
+Assume there are three parts to a country, say, MadeUpLand’s economy.  In MadeUpLand there is Services, Manufacturing and Agriculture.
+Our rates for units consumed per unit of output per industry can be represented by the table below..</p>
+
+<table>
+  <tr>
+    <td>Purchased From | </td><td>Manufacturing | </td><td>Agriculture | </td><td>Services</td>
+  </tr>
+  <tr>
+    <td>&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212; | </td><td>&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8211; | </td><td>&#8212;&#8212;&#8212;&#8212;&#8212;&#8211; | </td><td>&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;</td>
+  </tr>
+  <tr>
+    <td>Manufacturing</td><td>.45</td><td>.35</td><td>.15</td>
+  </tr>
+  <tr>
+    <td>Agriculture</td><td>.15</td><td>.25</td><td>.05</td>
+  </tr>
+  <tr>
+    <td>Services</td><td>.05</td><td>.05</td><td>.25</td>
+  </tr>
+</table>
+
+<p>We can remove the headings of this table which will yield us our matrix <script type="math/tex">C</script>..</p>
+
+<script type="math/tex; mode=display">% &lt;![CDATA[
+
+C = \begin{bmatrix}0.45&0.35&0.15\\0.15&0.25&0.05\\0.05&0.05&0.25\end{bmatrix}
+ %]]&gt;</script>
+
+<p>Assuming our economists are able to accurately predict the number of units we can expect our consumers <script type="math/tex">d</script> to consume, say..</p>
+
+<script type="math/tex; mode=display">
+\hat{d} = \begin{bmatrix}7\\18\\26\end{bmatrix}
+</script>
+
+<p>We could then attempt to estimate the number of units our economy must produce, <script type="math/tex">\hat{x}</script>, in each sector to satisfy the demand from
+our consumers <script type="math/tex">\hat{d}</script> and the demand of other industries in our economy <script type="math/tex">C</script>.  The following transforms our equation to satisfy this constraint.</p>
+
+<script type="math/tex; mode=display">
+
+(I - C)\cdot\hat{x} = \hat{d}
+</script>
+
+<script type="math/tex; mode=display">
+
+\vdots
+
+</script>
+
+<script type="math/tex; mode=display">
+
+
+\hat{x} = (I - C)^{-1} \cdot \hat{d}
+
+</script>
+
+<p>Substituting our variables with the actual values yields the following result..</p>
+
+<script type="math/tex; mode=display">% &lt;![CDATA[
+
+
+\hat{x} = \left(\begin{bmatrix}1&0&0\\0&1&0\\0&0&1\end{bmatrix} - \begin{bmatrix}0.45&0.35&0.15\\0.15&0.25&0.05\\0.05&0.05&0.25\end{bmatrix}\right)^{-1} . \begin{bmatrix}7\\18\\26\end{bmatrix}
+
+ %]]&gt;</script>
+
+<script type="math/tex; mode=display">
+
+\vdots
+
+</script>
+
+<script type="math/tex; mode=display">
+
+\hat{x} = \begin{bmatrix}46.59\\35.9962\\40.1724\end{bmatrix}
+
+</script>
+
+<h2 id="how-good-is-this-model---working-with-bea-data">How good is this model? - Working with BEA data</h2>
+
+<p>So doing all the matrix operations on the Leontief model is pretty basic stuff.  How do we make this interesting?  Let’s use real data
+from the BEA and test that the above mathematical steps are correct.</p>
+
+<p>I grabbed data from the <a href="http://bea.gov/industry/io_annual.htm">BEA input output accounts data</a>.  After about a half hour of examining the data,
+I was able to figure out what parts I needed to computer the appropriate values to be used in the model.  First I will go over our data set.</p>
+
+<p>The data set contains total industry output vectors (<script type="math/tex">\hat{x}</script>).  I will reiterate now, the point of this post is to introduce a real world
+data set and attempt to prove that the Leontief model is correct, and that the mathematical steps above are reproducible on real world data.
+This won’t be a mathematical proof. Considering we are given <script type="math/tex">\hat{x}</script>, we must compute values for <script type="math/tex">\hat{d}</script> and <script type="math/tex">C</script>.  </p>
+
+<p>To compute values for <script type="math/tex">C</script> (this algorithm will be imperative in the next post when we build our extrapolative model) I introduce
+a new matrix <script type="math/tex">U</script>.  <script type="math/tex">U</script> contains the units consumed by the sectors of the economy.  <script type="math/tex">C_{i,j}</script> will be computed as </p>
+
+<script type="math/tex; mode=display">
+\frac{U_{i,j}}{\hat{x}_{j}}
+</script>
+
+<p><script type="math/tex">\hat{d}</script> will be defined as the difference between the total units the economy produced per sector, <script type="math/tex">\hat{x}</script>, and the amount each sector consumed, <script type="math/tex">C \cdot \hat{x}</script>.</p>
+
+<p>The data set contains total industry output vectors by sector for each year from 1997 - 2013.  For this example I will use only the 2013 data to
+build a kind of proof of concept that the Leontief model is correct.  The industry output vector will be represented as <script type="math/tex">\hat{x}</script>.<br />
+I will introduce a new matrix <script type="math/tex">U</script> which will contain the units consumed by industry (the input to each sector).  I will then utilize
+<script type="math/tex">U</script> to compute the consumption rates for which <script type="math/tex">C</script> will contain.</p>
+
+<p>I acquired the data for <script type="math/tex">\hat{x}</script> by just copying the column Total Industry Output from the “Make” excel file into a Python list.
+To build <script type="math/tex">U</script> I parsed the file <a href="https://github.com/dhurley14/LeontiefIOModel/blob/master/src/betterData.csv">fixedData.csv</a> which 
+is a modified version of the data from the BEA <a href="http://bea.gov/industry/xls/io-annual/IOUse_Before_Redefinitions_PRO_1997-2013_Sector.xlsx">“Use”</a> excel file.</p>
+
+<p>&#8220;`Python
+import csv
+import os
+import sys
+from scipy import linalg
+import numpy as np
+import math</p>
+
+<p>””” Create a script that will wrangle and format our IO data
+    and then put it into a scipy matrix, which we can then save
+    and use later.</p>
+
+<p>”””</p>
+
+<p>def save_table(someFile, theDelimiter=’,’,startPoint=2,endPoint=17):
+    “”” loads data from csv file
+    into a numpy matrix and saves
+    the matrix data</p>
+
+<pre><code>someFile csv: a csv file containing our matrix data.
+theDelimiter char: character to split columns of data, set to ','.
+
+"""
+x = [1.0/481026,1.0/580284, 1.0/496708, 1.0/1206919, 1.0/5787100, 1.0/1458137, 1.0/1392835, 1.0/1024517, 1.0/1223897, 1.0/5133698,
+    1.0/3691586,1.0/2564883,1.0/1218544,1.0/740624,1.0/2706124]
+afile = open(someFile, 'rb')
+data = csv.reader(afile, delimiter=theDelimiter)
+
+with open('betterData.csv','wb') as csvfile:
+    target = csv.writer(csvfile, delimiter=',')
+    for row in data:
+        print row[startPoint:endPoint]
+        target.writerow(row[startPoint:endPoint])
+
+data = np.genfromtxt('betterData.csv',dtype=None,delimiter=theDelimiter,skip_header=1)
+#for row in data:
+#    print row[2:]
+U = [row for row in data]
+print U
+</code></pre>
+
+<p>&#8220;`
+outputs this..</p>
+
+<p><code>[array([ 94325,    160,      0,   1939, 275162,   1584,   3193,     92,
+            1,     49,   2030,   1094,   7517,     81,   2663]), 
+            array([  2473,  54705,  33987,  10292, 568596,     50,     57,   2015,
+          301,   4060,   1341,    457,   1163,    454,  18612]), 
+          array([ 4168,  3563,  2191,  2192, 55702,  4641, 10797,  5912,  4326,
+       68779,  9216, 25255, 10772,  3593, 29092]), ...</code></p>
+
+<p>Now that we have our U, we can compute C and d.  Notice I set the variable <code>x</code> above to be 1.0/val instead of the actual
+output values because in Python multiplication is 25% faster than <a href="http://stackoverflow.com/a/226563">division</a>.</p>
+
+<p>&#8220;`
+new-host-2:~ devin$ time python -c ‘for i in xrange(int(1e8)): t=12341234234.234 / 2.0’</p>
+
+<p>real	0m12.162s
+user	0m12.131s
+sys	0m0.018s
+new-host-2:~ devin$ time python -c ‘for i in xrange(int(1e8)): t=12341234234.234 * 0.5’</p>
+
+<p>real	0m9.270s
+user	0m9.244s
+sys	0m0.015s
+&#8220;`</p>
+
+<p>Here is the python code that computes <script type="math/tex">C</script>.</p>
+
+<p>&#8220;`Python
+# table2 will contain the rates
+    # at which each sector consumes.
+    table2 = []
+    for row in U:
+        i = 0
+        row2 = []
+        for item in row:
+            item = item*x[i]
+            row2.append(math.fabs(float(item)))
+            i += 1
+            #print row2
+        print row2
+        table2.append(row2)
+    print “\n\ntable2 after loop”
+    print table2</p>
+
+<pre><code># transform table2 into a useable format
+# this will be C
+C = np.matrix(table2)
+C = C.astype(float)
+np.save('myMatrix',C)
+print C ```
+</code></pre>
+
+<p>Next we will compute <script type="math/tex">\hat{d}</script></p>
+
+<p>&#8220;`Python
+print “printing vec now..”</p>
+
+<pre><code># put x back into it's original form, not 1.0/val
+vecx = np.matrix([[1.0/float(item)] for item in x]) 
+print vecx
+B = C.dot(vecx)
+#B = np.load('myMatrix.npy')
+print("\nB:")
+print B
+print("\n our vector d")
+vecd = vecx - B
+print vecd ```
+</code></pre>
+
+<p>And finally our equation <script type="math/tex">\hat{x} = (I - C)^{-1} \cdot \hat{d}</script></p>
+
+<p>&#8220;`Python
+    print (“\nNow we will compute our function to find vecx”)
+    print(“computing x=(I-C)^-1 . d”)</p>
+
+<pre><code># create identity matrix by computing A dot inverse(A)
+I = A.dot(A.I)
+
+prod = (I - A)
+result = prod.I
+print result.dot(vecd)
+print "The above should be equal to vecx"
+print vecx
+</code></pre>
+
+<p>&#8220;`</p>
+
+<p>The resulting <script type="math/tex">\hat{x}</script> = <code>[[  481026.00000002]
+ [  580284.00000003]
+ [  496708.00000001]
+ [ 1206919.00000001]
+ [ 5787100.00000011]
+ [ 1458137.00000003]
+ [ 1392835.00000001]
+ [ 1024517.00000002]
+ [ 1223897.00000001]
+ [ 5133698.00000016]
+ [ 3691586.0000002 ]
+ [ 2564883.        ]
+ [ 1218544.00000002]
+ [  740624.00000001]
+ [ 2706124.00000001]]</code></p>
+
+<p>which, disregarding rounding numerical approximation errors, is exactly our precomputed total industrial output vector
+ <code>[[  481026.]
+ [  580284.]
+ [  496708.]
+ [ 1206919.]
+ [ 5787100.]
+ [ 1458137.]
+ [ 1392835.]
+ [ 1024517.]
+ [ 1223897.]
+ [ 5133698.]
+ [ 3691586.]
+ [ 2564883.]
+ [ 1218544.]
+ [  740624.]
+ [ 2706124.]]</code></p>
+
+<p>Next time we will use this algorithm of computing <script type="math/tex">C</script> and <script type="math/tex">\hat{d}</script> over all of our historical data,
+ perform some statistical analysis on this and then try to extrapolate values for <script type="math/tex">\hat{x}</script>.  Source code is available on
+ my <a href="https://github.com/dhurley14/LeontiefIOModel">GitHub</a>.  Until next time!</p>
+]]></content>
+  </entry>
+  
+</feed>
