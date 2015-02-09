@@ -14,6 +14,8 @@ In this book, Mr. O'Connor presents code to delve into the iPhone's SMS backups 
 I did this exercise back in 2013 and forgot about the code up until now.  This post will detail the issues I ran into 
 while trying to extract the data.
 
+<!--more-->
+
 ##Running Violent Python code
 
 By running the violent python code for [extracting sms messages](https://github.com/shadow-box/Violent-Python-Examples/blob/master/Chapter-3/7-iphoneMessages.py) I was able to see the database tables but not access them.
