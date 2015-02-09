@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Python | My ML Adventures]]></title>
-  <link href="http://dhurley14.github.io/blog/categories/python/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Data Mining | My ML Adventures]]></title>
+  <link href="http://dhurley14.github.io/blog/categories/data-mining/atom.xml" rel="self"/>
   <link href="http://dhurley14.github.io/"/>
   <updated>2015-02-09T14:00:17-05:00</updated>
   <id>http://dhurley14.github.io/</id>
@@ -62,19 +62,6 @@ where the iPhone decided it needed to remove that first month of conversations.<
 <p>I wrote this post to help people out as it seemed there were many people running into this issue ‘db encryption’ issue while
 trying to extract sms data from the iPhone’s backup database.  Hopefully this helps out for this wishing to do the same
 in the future!  I will continue to try to uncover why some of my backup messages are missing.  Until next time!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hello, World!]]></title>
-    <link href="http://dhurley14.github.io/blog/2015/01/07/hello/"/>
-    <updated>2015-01-07T22:11:51-05:00</updated>
-    <id>http://dhurley14.github.io/blog/2015/01/07/hello</id>
-    <content type="html"><![CDATA[<p>Hello world!</p>
-
-<p>The title for this blog is supposed to be a play on words of AdventureLand (i.e. AdventureLDA or AdventureLand).  Just a place to have fun ;)
-In this blog I will be examining a ton of different applications of machine learning algorithms. 
-Hopefully the results of these blog posts are interesting to people.  Here’s to an adventure in machine learning!</p>
 ]]></content>
   </entry>
   
