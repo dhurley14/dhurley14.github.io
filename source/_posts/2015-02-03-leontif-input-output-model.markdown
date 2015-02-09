@@ -312,4 +312,5 @@ The resulting $$\hat{x}$$ = `[[  481026.00000002]
  [ 2706124.]]`
 
  Next time we will use this algorithm of computing $$C$$ and $$\hat{d}$$ over all of our historical data,
- perform some statistical analysis on this and then try to extrapolate values for $$\hat{x}$$.  Until next time!
+ perform some statistical analysis on this and then try to extrapolate values for $$\hat{x}$$.  Source code is available on
+ my [GitHub](https://github.com/dhurley14/LeontiefIOModel).  Until next time!
