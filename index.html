@@ -9,9 +9,9 @@
   <meta name="author" content="Devin Hurley">
 
   
-  <meta name="description" content="Background Motivation
-Oil prices have been falling dramatically. Oil prices are now at 40% of what they started FY 2014 off.
-The fall in oil prices &hellip;">
+  <meta name="description" content="Background
+A few weeks ago my girlfriend had the idea of going back and seeing our first text messages to each other.
+Obviously we send each other &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,82 @@ The fall in oil prices &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/09/extracting-iphone-sms-backups/">Extracting iPhone SMS Backups</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-09T13:09:40-05:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>1:09 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2 id="background">Background</h2>
+<p>A few weeks ago my girlfriend had the idea of going back and seeing our first text messages to each other.
+Obviously we send each other quite a few messages a day, so just scrolling all the way back in time on the iPhone
+was out of the question.  I still thought this was a really neat idea and remembered during the winter of 2013 I had bought <a href="http://www.amazon.com/Violent-Python-Cookbook-Penetration-Engineers/dp/1597499579/">“Violent Python”</a> by TJ O’Connor.<br />
+In this book, Mr. O’Connor presents code to delve into the iPhone’s SMS backups that are stored on the computer.<br />
+I did this exercise back in 2013 and forgot about the code up until now.  This post will detail the issues I ran into 
+while trying to extract the data.</p>
+
+<h2 id="running-violent-python-code">Running Violent Python code</h2>
+
+<p>By running the violent python code for <a href="https://github.com/shadow-box/Violent-Python-Examples/blob/master/Chapter-3/7-iphoneMessages.py">extracting sms messages</a> I was able to see the database tables but not access them.
+I was getting an error message when I tried to open the tables up using the sqlite terminal application.  The error
+that kept coming through was </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="Bash"><span class="line">devin<span class="nv">$ </span>sqlite3 3d0d7e5fb2ce288813306e4d4636395e047a3d28
+</span><span class="line">SQLite version 3.6.12
+</span><span class="line">Enter <span class="s2">&quot;.help&quot;</span> <span class="k">for</span> instructions
+</span><span class="line">Enter SQL statements terminated with a <span class="s2">&quot;;&quot;</span>
+</span><span class="line">sqlite&gt; .table
+</span><span class="line">Error: file is encrypted or is not a database
+</span><span class="line">sqlite&gt;
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>After quite a bit of googling around trying to figure out how to decrypt the sms database, I found out that the reason 
+I was getting this error was due to the fact that I was running an older version of sqlite3, and that the database wasn’t
+actually encrypted.  I couldn’t quite find any reliable ways of upgrading sqlite3 so I just upgraded my Python installation 
+to 2.7.9 (I was previously running 2.7.3, oops :).</p>
+
+<p>This successfully displayed the ‘message’ database that the iPhone uses to store historical texts.  To extract them I ran this
+<a href="https://github.com/toffer/iphone-sms-backup/blob/master/sms-backup.py">script</a> which is more robust than the example script presented
+in Violent Python.  After doing so I was left with all of my messages from my girlfriend (after passing in the appropriate parameters 
+when I ran the script in the terminal, see usage <a href="https://github.com/toffer/iphone-sms-backup/blob/master/README.md">here</a>)  </p>
+
+<h2 id="conclusions">Conclusions</h2>
+<p>Unfortunately my very first texts to my girlfriend were not in the database.  I am not fully sure at what point the iPhone begins
+to remove the oldest messages from its ‘message’ database but I would be surprised that our conversation history had reached a point
+where the iPhone decided it needed to remove that first month of conversations.</p>
+
+<p>I wrote this post to help people out as it seemed there were many people running into this issue ‘db encryption’ issue while
+trying to extract sms data from the iPhone’s backup database.  Hopefully this helps out for this wishing to do the same
+in the future!  I will continue to try to uncover why some of my backup messages are missing.  Until next time!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -206,6 +282,10 @@ Hopefully the results of these blog posts are interesting to people.  Here’s t
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/02/09/extracting-iphone-sms-backups/">Extracting iPhone SMS Backups</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/02/08/leontif-input-output-model/">Introduction to the Leontief IO Model</a>
