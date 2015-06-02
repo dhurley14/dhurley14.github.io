@@ -3,7 +3,7 @@ layout: post
 title: "Extracting iPhone SMS Backups"
 date: 2015-02-09 13:09:40 -0500
 comments: true
-categories: 
+categories: [data extraction, data mining, Python, sqlite3]
 ---
 
 ##Background
