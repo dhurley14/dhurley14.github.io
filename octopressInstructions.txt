@@ -1,0 +1,38 @@
+==============================================
+**** How to deploy posts on octopress blog ***
+==============================================
+
+cd ~/Desktop/projects/octopress
+rake new_post["hello this is the title"]
+nano source/_posts/some-date-hello-title
+go here if you don't know what you're doing
+http://octopress.org/docs/blogging/
+
+then
+
+git add .
+git commit -m 'some text'
+git push origin source 
+
+# test out the new post, do…
+
+rake preview
+
+listening on localhost:4000
+
+# if it looks good,
+
+rake generate
+rake deploy
+
+# should now be on https://dhurley14.github.io
+
+boom shakalaka.
+
+==============================================
+
+add google analytics to the blog - 
+https://stefanalfbo.github.io/blog/2013/04/17/octopress-google-analytics-github-pages/
+
+also..
+http://www.mattnedrich.com/blog/2014/06/22/google-analytics-for-github-pages-with-octopress/
