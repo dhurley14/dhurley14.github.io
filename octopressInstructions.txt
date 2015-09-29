@@ -12,7 +12,7 @@ then
 
 git add .
 git commit -m 'some text'
-git push origin source 
+git push origin SOURCE 
 
 # test out the new post, do…
 
