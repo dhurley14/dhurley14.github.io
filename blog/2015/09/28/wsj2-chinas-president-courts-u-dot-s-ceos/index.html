@@ -5,13 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Extracting iPhone SMS Backups - My ML Adventures</title>
+  <title>WSJ2: China&#8217;s President Courts U.S. CEOs - My ML Adventures</title>
   <meta name="author" content="Devin Hurley">
 
   
-  <meta name="description" content="Background
-A few weeks ago my girlfriend had the idea of going back and seeing our first text messages to each other.
-Obviously we send each other &hellip;">
+  <meta name="description" content="China’s President Courts U.S. CEOs By Shira Ovide and Jeremy Page President Xi Jinping is looking to increase investment in China through promoting &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +18,7 @@ Obviously we send each other &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://dhurley14.github.io/blog/2015/02/09/extracting-iphone-sms-backups">
+  <link rel="canonical" href="http://dhurley14.github.io/blog/2015/09/28/wsj2-chinas-president-courts-u-dot-s-ceos">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="My ML Adventures" type="application/atom+xml">
@@ -84,7 +82,7 @@ Obviously we send each other &hellip;">
   
   <header>
     
-      <h1 class="entry-title">Extracting iPhone SMS Backups</h1>
+      <h1 class="entry-title">WSJ2: China&#8217;s President Courts U.S. CEOs</h1>
     
     
       <p class="meta">
@@ -93,63 +91,26 @@ Obviously we send each other &hellip;">
 
 
 
-<time class='entry-date' datetime='2015-02-09T13:09:40-05:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>1:09 pm</span></time>
+<time class='entry-date' datetime='2015-09-28T22:47:49-04:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:47 pm</span></time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h2 id="background">Background</h2>
-<p>A few weeks ago my girlfriend had the idea of going back and seeing our first text messages to each other.
-Obviously we send each other quite a few messages a day, so just scrolling all the way back in time on the iPhone
-was out of the question.  I still thought this was a really neat idea and remembered during the winter of 2013 I had bought <a href="http://www.amazon.com/Violent-Python-Cookbook-Penetration-Engineers/dp/1597499579/">“Violent Python”</a> by TJ O’Connor.<br />
-In this book, Mr. O’Connor presents code to delve into the iPhone’s SMS backups that are stored on the computer.<br />
-I did this exercise back in 2013 and forgot about the code up until now.  This post will detail the issues I ran into 
-while trying to extract the data.</p>
+<div class="entry-content"><h3 id="chinas-president-courts-us-ceos">China’s President Courts U.S. CEOs</h3>
 
-<!--more-->
+<h4 id="by-shira-ovide-and-jeremy-page">By Shira Ovide and Jeremy Page</h4>
 
-<h2 id="running-violent-python-code">Running Violent Python code</h2>
+<p>President Xi Jinping is looking to increase investment in China through promoting China’s increased demand.  U.S. companies have long been wary of exporting goods to China due to lacking intellectual property laws and general market access.
+President Xi Jinping seeks lower restrictions in his country to allow for the U.S. to increase high-tech exports to China, as well as lowering the barries to investment in general in the nation.
+Mr. Xi gave a speech outlining all of this after a conference with CEOs from Chinese and U.S. corporations.  Among the people present were Tim Cook, Satya Nadella and Jeff Bezos.  High-tech Chinese companies including Jack Ma (Alibaba), Pony Ma (Tencent Holdings) and Robin Li (Baidu) were also in attendance.  Mr. Xi’s claims China’s allure for high-tech U.S. companies should be the huge population that utilizes internet connected devices.  Mr. Xi says China is home to 600 million Internet users and 1.2 billion mobile phone users.
+<!--more--></p>
 
-<p>By running the violent python code for <a href="https://github.com/shadow-box/Violent-Python-Examples/blob/master/Chapter-3/7-iphoneMessages.py">extracting sms messages</a> I was able to see the database tables but not access them.
-I was getting an error message when I tried to open the tables up using the sqlite terminal application.  The error
-that kept coming through was </p>
+<p>Such a large market for consumer electronic devices and China’s seemingly wholehearted approach to economic openness and increased free trade should have companies jumping at China’s heels.  Unfortunately for the general Chinese populace, their government has been behind some massive attacks on U.S. companies, most recently and dramatically the attack on <a href="http://blog.erratasec.com/2015/04/pin-pointing-chinas-attack-against.html">GitHub</a>.
+The general attacks on U.S. companies by the Chinese and other worries, such as intellectual property theft and determining whether the market demand actually exists for consumer electronics has kept U.S. companies steadfast in their cautious approach to expanding to The Far East.  It is this author’s opinion that this move by Mr. Xi was in fact an appeal to the nations at large that China’s economy is not propped up by massive IPOs and the government, but a natural demand flows within the nation.  Through increasing foreign investment into China, China no longer has to prop up its economy and can rely on foreign investment to do the dirty work.  If U.S. companies do bite, China will be forced to buy more U.S. dollars (so that China can purchase U.S. goods), forcing the dollar to rise in purchasing power.  Kind of like what happened with Germany and the Euro.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="Bash"><span class="line">devin<span class="nv">$ </span>sqlite3 3d0d7e5fb2ce288813306e4d4636395e047a3d28
-</span><span class="line">SQLite version 3.6.12
-</span><span class="line">Enter <span class="s2">&quot;.help&quot;</span> <span class="k">for</span> instructions
-</span><span class="line">Enter SQL statements terminated with a <span class="s2">&quot;;&quot;</span>
-</span><span class="line">sqlite&gt; .table
-</span><span class="line">Error: file is encrypted or is not a database
-</span><span class="line">sqlite&gt;
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>After quite a bit of googling around trying to figure out how to decrypt the sms database, I found out that the reason 
-I was getting this error was due to the fact that I was running an older version of sqlite3, and that the database wasn’t
-actually encrypted.  I couldn’t quite find any reliable ways of upgrading sqlite3 so I just upgraded my Python installation 
-to 2.7.9 (I was previously running 2.7.3, oops :).</p>
-
-<p>This successfully displayed the ‘message’ database that the iPhone uses to store historical texts.  To extract them I ran this
-<a href="https://github.com/toffer/iphone-sms-backup/blob/master/sms-backup.py">script</a> which is more robust than the example script presented
-in Violent Python.  After doing so I was left with all of my messages from my girlfriend (after passing in the appropriate parameters 
-when I ran the script in the terminal, see usage <a href="https://github.com/toffer/iphone-sms-backup/blob/master/README.md">here</a>)  </p>
-
-<h2 id="conclusions">Conclusions</h2>
-<p>Unfortunately my very first texts to my girlfriend were not in the database.  I am not fully sure at what point the iPhone begins
-to remove the oldest messages from its ‘message’ database but I would be surprised that our conversation history had reached a point
-where the iPhone decided it needed to remove that first month of conversations.</p>
-
-<p>I wrote this post to help people out as it seemed there were many people running into this issue ‘db encryption’ issue while
-trying to extract sms data from the iPhone’s backup database.  Hopefully this helps out for this wishing to do the same
-in the future!  I will continue to try to uncover why some of my backup messages are missing.  Until next time!</p>
+<p>A weak currency generally allows for a nations’ exports to become cheaper.  When a nation has more exports than imports, it is said to have a surplus.  How do countries devalue their currency so that it does not become so expensive that it’s citizens can no longer afford to own it? By “printing” more of it and flooding the market!  However, the Eurozone has not done this.  Instead as it (Germany specifically) exported more and more, it did not try to keep the currency at a lower exchange rate (as Greece, Spain, Italy etc. would have preferred it) and allowed it to increase in strength.  This was great for Germany.  As its’ goods became more expensive to purchase while exports continued to flow out of the country, Germany racked up a trade surplus and a stronger currency. Greece, Italy, Portugal, Spain and a host of other countries that depended on the Euro got pushed into the mud at the expense of Germany’s power grab. </p>
 </div>
 
 
@@ -165,12 +126,12 @@ in the future!  I will continue to try to uncover why some of my backup messages
 
 
 
-<time class='entry-date' datetime='2015-02-09T13:09:40-05:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>1:09 pm</span></time>
+<time class='entry-date' datetime='2015-09-28T22:47:49-04:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:47 pm</span></time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/data-extraction/'>data extraction</a>, <a class='category' href='/blog/categories/data-mining/'>data mining</a>, <a class='category' href='/blog/categories/python/'>python</a>, <a class='category' href='/blog/categories/sqlite3/'>sqlite3</a>
+    <a class='category' href='/blog/categories/economics/'>economics</a>, <a class='category' href='/blog/categories/wall-street-journal/'>wall street journal</a>, <a class='category' href='/blog/categories/wsj/'>wsj</a>
   
 </span>
 
@@ -179,7 +140,7 @@ in the future!  I will continue to try to uncover why some of my backup messages
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://dhurley14.github.io/blog/2015/02/09/extracting-iphone-sms-backups/" data-via="" data-counturl="http://dhurley14.github.io/blog/2015/02/09/extracting-iphone-sms-backups/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://dhurley14.github.io/blog/2015/09/28/wsj2-chinas-president-courts-u-dot-s-ceos/" data-via="" data-counturl="http://dhurley14.github.io/blog/2015/09/28/wsj2-chinas-president-courts-u-dot-s-ceos/" >Tweet</a>
   
   
   
@@ -188,10 +149,8 @@ in the future!  I will continue to try to uncover why some of my backup messages
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2015/02/08/leontif-input-output-model/" title="Previous Post: Introduction to the Leontief IO Model ">&laquo; Introduction to the Leontief IO Model </a>
+        <a class="basic-alignment left" href="/blog/2015/09/19/wsj-econ-post-1/" title="Previous Post: WSJ Weekly Economics Post">&laquo; WSJ Weekly Economics Post</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2015/07/25/on-bidding-up-tech-shares/" title="Next Post: On Bidding Up Tech Shares">On Bidding Up Tech Shares &raquo;</a>
       
     </p>
   </footer>
