@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Numpy | My ML Adventures]]></title>
+  <title><![CDATA[Category: Numpy | Most Significant Byte]]></title>
   <link href="http://dhurley14.github.io/blog/categories/numpy/atom.xml" rel="self"/>
   <link href="http://dhurley14.github.io/"/>
-  <updated>2015-10-07T21:50:34-04:00</updated>
+  <updated>2015-11-27T13:09:32-05:00</updated>
   <id>http://dhurley14.github.io/</id>
   <author>
     <name><![CDATA[Devin Hurley]]></name>
