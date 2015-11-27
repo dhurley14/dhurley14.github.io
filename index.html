@@ -9,7 +9,8 @@
   <meta name="author" content="Devin Hurley">
 
   
-  <meta name="description" content="By Georgi Kantchev and Summer Said (October 3rd, 2015) Article Summary Russia is aggressively pumping oil from its wells at a rate of 10.74 million &hellip;">
+  <meta name="description" content="Introduction People say you learn a lot at a good startup (even if you’re at a crappy startup, you can still take the time to invest in yourself).
+I &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -79,6 +80,53 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/11/11/what-i-learned-at-pomco-today/">What I Learned at POMCO Today</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-11-11T13:21:37-05:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>1:21 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3 id="introduction">Introduction</h3>
+
+<p>People say you learn a lot at a good startup (even if you’re at a crappy startup, you can still take the time to invest in yourself).
+I wanted to start a series of blog posts chronicling what I learn, whether in the vein of technology or simple and general life skills, in
+the hope that these lessons may be applicable to someone who discovers this blog on the Internet.  </p>
+
+<p>My first lesson I would like to present is about..</p>
+
+<h4 id="the-long-primitive-in-objective-c">The ‘long’ primitive in Objective-C</h4>
+
+<p>The ANSI C-Standard calls for a MINIMUM of <a href="http://stackoverflow.com/a/589684">4 bytes for a long</a>.  However it does not set a maximum.  This is important because
+the iPhone 6 and 6S use a long value of 8 bytes, whereas all other iPhones use long values of 4 bytes.  So if you ever create a long that, when printed,
+is the correct number on the iPhone 6 or 6S but not on any other previous generation, it’s because your long is not long enough.  You need to use <code>long long</code>.</p>
+
+<p>I learned about this because I was getting the Unix Epoch time and trying to convert that into time since January 1st, 1900.  So when I did the conversion on my 
+iPhone 6, the <code>long</code> was able to hold the proper value.  However on any other iOS device predating the iPhone 6, this number would wrap around to negative values
+because it was larger than 4 bytes could store.</p>
+
+<p>So kids, remember to run your tests on all the different simulators and devices!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -402,6 +450,10 @@ Hopefully the results of these blog posts are interesting to people.  Here’s t
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/11/11/what-i-learned-at-pomco-today/">What I Learned at POMCO Today</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/10/07/wsj3-russia-and-saudi-arabia-to-continue-pumping-oil/">WSJ3: Russia and Saudi Arabia to Continue Pumping Oil</a>
       </li>
     
@@ -415,10 +467,6 @@ Hopefully the results of these blog posts are interesting to people.  Here’s t
     
       <li class="post">
         <a href="/blog/2015/07/25/on-bidding-up-tech-shares/">On Bidding Up Tech Shares</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/02/09/extracting-iphone-sms-backups/">Extracting iPhone SMS Backups</a>
       </li>
     
   </ul>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Objective-c | Most Significant Byte]]></title>
+  <link href="http://dhurley14.github.io/blog/categories/objective-c/atom.xml" rel="self"/>
+  <link href="http://dhurley14.github.io/"/>
+  <updated>2015-11-27T14:27:38-05:00</updated>
+  <id>http://dhurley14.github.io/</id>
+  <author>
+    <name><![CDATA[Devin Hurley]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[What I Learned at POMCO Today]]></title>
+    <link href="http://dhurley14.github.io/blog/2015/11/11/what-i-learned-at-pomco-today/"/>
+    <updated>2015-11-11T13:21:37-05:00</updated>
+    <id>http://dhurley14.github.io/blog/2015/11/11/what-i-learned-at-pomco-today</id>
+    <content type="html"><![CDATA[<h3 id="introduction">Introduction</h3>
+
+<p>People say you learn a lot at a good startup (even if you’re at a crappy startup, you can still take the time to invest in yourself).
+I wanted to start a series of blog posts chronicling what I learn, whether in the vein of technology or simple and general life skills, in
+the hope that these lessons may be applicable to someone who discovers this blog on the Internet.  </p>
+
+<p>My first lesson I would like to present is about..</p>
+
+<h4 id="the-long-primitive-in-objective-c">The ‘long’ primitive in Objective-C</h4>
+
+<p>The ANSI C-Standard calls for a MINIMUM of <a href="http://stackoverflow.com/a/589684">4 bytes for a long</a>.  However it does not set a maximum.  This is important because
+the iPhone 6 and 6S use a long value of 8 bytes, whereas all other iPhones use long values of 4 bytes.  So if you ever create a long that, when printed,
+is the correct number on the iPhone 6 or 6S but not on any other previous generation, it’s because your long is not long enough.  You need to use <code>long long</code>.</p>
+
+<p>I learned about this because I was getting the Unix Epoch time and trying to convert that into time since January 1st, 1900.  So when I did the conversion on my 
+iPhone 6, the <code>long</code> was able to hold the proper value.  However on any other iOS device predating the iPhone 6, this number would wrap around to negative values
+because it was larger than 4 bytes could store.</p>
+
+<p>So kids, remember to run your tests on all the different simulators and devices!</p>
+]]></content>
+  </entry>
+  
+</feed>
