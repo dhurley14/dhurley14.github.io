@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "What I learned At POMCO Today"
-date: 2015-11-11 13:21:37 18:00
+title: "What I Learned At POMCO Today"
+date: 2015-11-11
 comments: true
 categories: lessons coding Objective-C iOS mobile
 ---
