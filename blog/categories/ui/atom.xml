@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Ui | Most Significant Byte]]></title>
+  <link href="http://dhurley14.github.io/blog/categories/ui/atom.xml" rel="self"/>
+  <link href="http://dhurley14.github.io/"/>
+  <updated>2015-11-28T11:57:11-05:00</updated>
+  <id>http://dhurley14.github.io/</id>
+  <author>
+    <name><![CDATA[Devin Hurley]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[What I Learned at POMCO Today 5]]></title>
+    <link href="http://dhurley14.github.io/blog/2015/11/19/what-i-learned-at-pomco-today-5/"/>
+    <updated>2015-11-19T00:00:00-05:00</updated>
+    <id>http://dhurley14.github.io/blog/2015/11/19/what-i-learned-at-pomco-today-5</id>
+    <content type="html"><![CDATA[<blockquote>
+  <p>The SWRevealController makes for an excellent user experience when you need to add menu options to your iOS app.</p>
+</blockquote>
+
+<p>The SWRevealController..</p>
+
+<!--more-->
+<p>Provides some really nice functionality for utilizing screen real estate with nice animations.
+The tutorial <a href="http://www.appcoda.com/ios-programming-sidebar-navigation-menu/">here</a> discusses in detail 
+how to set up a menu screen that functions similarly to the sidebar menu in the Facebook app.</p>
+]]></content>
+  </entry>
+  
+</feed>

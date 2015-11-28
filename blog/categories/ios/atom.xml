@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ios | Most Significant Byte]]></title>
   <link href="http://dhurley14.github.io/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://dhurley14.github.io/"/>
-  <updated>2015-11-27T14:27:38-05:00</updated>
+  <updated>2015-11-28T11:57:11-05:00</updated>
   <id>http://dhurley14.github.io/</id>
   <author>
     <name><![CDATA[Devin Hurley]]></name>
@@ -14,9 +14,27 @@
 
   
   <entry>
+    <title type="html"><![CDATA[What I Learned at POMCO Today 5]]></title>
+    <link href="http://dhurley14.github.io/blog/2015/11/19/what-i-learned-at-pomco-today-5/"/>
+    <updated>2015-11-19T00:00:00-05:00</updated>
+    <id>http://dhurley14.github.io/blog/2015/11/19/what-i-learned-at-pomco-today-5</id>
+    <content type="html"><![CDATA[<blockquote>
+  <p>The SWRevealController makes for an excellent user experience when you need to add menu options to your iOS app.</p>
+</blockquote>
+
+<p>The SWRevealController..</p>
+
+<!--more-->
+<p>Provides some really nice functionality for utilizing screen real estate with nice animations.
+The tutorial <a href="http://www.appcoda.com/ios-programming-sidebar-navigation-menu/">here</a> discusses in detail 
+how to set up a menu screen that functions similarly to the sidebar menu in the Facebook app.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[What I Learned at POMCO Today]]></title>
     <link href="http://dhurley14.github.io/blog/2015/11/11/what-i-learned-at-pomco-today/"/>
-    <updated>2015-11-11T13:21:37-05:00</updated>
+    <updated>2015-11-11T00:00:00-05:00</updated>
     <id>http://dhurley14.github.io/blog/2015/11/11/what-i-learned-at-pomco-today</id>
     <content type="html"><![CDATA[<h3 id="introduction">Introduction</h3>
 

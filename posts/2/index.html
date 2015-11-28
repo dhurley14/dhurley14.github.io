@@ -1,0 +1,341 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Most Significant Byte</title>
+  <meta name="author" content="Devin Hurley">
+
+  
+  <meta name="description" content="Background Motivation
+Oil prices have been falling dramatically. Oil prices are now at 40% of what they started FY 2014 off.
+The fall in oil prices &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://dhurley14.github.io/posts/2">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Most Significant Byte" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36716298-2']);
+    _gaq.push(['_trackPageview']);
+    _gaq.push(['_setDomainName','github.io']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Most Significant Byte</a></h1>
+  
+    <h2>For Turning Thoughts to Bits.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="dhurley14.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about/">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/08/leontif-input-output-model/">Introduction to the Leontief IO Model</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-08T22:03:52-05:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:03 pm</span></time>
+        
+           | <a href="/blog/2015/02/08/leontif-input-output-model/#disqus_thread"
+             data-disqus-identifier="http://dhurley14.github.io/blog/2015/02/08/leontif-input-output-model/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2 id="background-motivation">Background Motivation</h2>
+<p>Oil prices have been falling dramatically.  Oil prices are now at 40% of what they started FY 2014 off.
+The fall in oil prices has been a result of increasing shale oil production in the United States and 
+softening global demand.  Falling oil prices are part of a global phenomenon of deflation.<br />
+The United States is far off the Federal Reserve’s goal of 2% inflation (currently up 0.7% in December 2014 from a year earlier).
+Being able to predict demand is imperative to all sectors of an economy.  In this post I will introduce the
+Leontief IO model and examine just how accurate it can be at predicting demand using historical data from the <a href="http://bea.gov/industry/io_annual.htm">BEA</a></p>
+
+<p>This post will contain an introduction to the components of the model.  I will present a basic example using fictional data.
+I will then present a model utilizing real world data.  In a future post I will build a new model that can be used to predict values of 
+sector production <script type="math/tex">\hat{x}</script> using statistics and the Fourier transform.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/02/08/leontif-input-output-model/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/11/marc-andreessen-lda/">Topic Analysis and Marc Andreessen&#8217;s Tweets</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-11T22:43:07-05:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:43 pm</span></time>
+        
+           | <a href="/blog/2015/01/11/marc-andreessen-lda/#disqus_thread"
+             data-disqus-identifier="http://dhurley14.github.io/blog/2015/01/11/marc-andreessen-lda/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2 id="background-motivation">Background Motivation</h2>
+<p>I began this experiment with topic analysis on a friend’s suggestion on utilizing the treasure trove that is twitter.
+Marc Andreessen retweets a ton of different people all the time.  It’s impossible to keep up with what those people’s interests are,
+and more specifically what pmarca’s interests are.  I wanted to learn what exactly are the “Top Ten Things” that Marc Andreessen retweets, and how does he feel about these topics?
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/01/11/marc-andreessen-lda/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/07/hello/">Hello, World!</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-07T22:11:51-05:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:11 pm</span></time>
+        
+           | <a href="/blog/2015/01/07/hello/#disqus_thread"
+             data-disqus-identifier="http://dhurley14.github.io/blog/2015/01/07/hello/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Hello world!</p>
+
+<p>The title for this blog is supposed to be a play on words of AdventureLand (i.e. AdventureLDA or AdventureLand).  Just a place to have fun ;)
+In this blog I will be examining a ton of different applications of machine learning algorithms. 
+Hopefully the results of these blog posts are interesting to people.  Here’s to an adventure in machine learning!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/index.html">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/11/19/what-i-learned-at-pomco-today-5/">What I Learned at POMCO Today 5</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/til-4/">What I Learned at POMCO Today - 4</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/13/til-3/">TIL - 3</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/12/what-i-learned-at-pomco-today/">What I Learned at POMCO Today</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/11/what-i-learned-at-pomco-today/">What I Learned at POMCO Today</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/dhurley14">@dhurley14</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'dhurley14',
+            count: 2,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Devin Hurley -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'dhurley14githubio';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+
+
+  <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+    inlineMath: [ ['$', '$'] ],
+    displayMath: [ ['$$', '$$']],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  messageStyle: "none",
+  "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+});
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+</body>
+</html>

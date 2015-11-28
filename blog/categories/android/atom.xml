@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Android | Most Significant Byte]]></title>
+  <link href="http://dhurley14.github.io/blog/categories/android/atom.xml" rel="self"/>
+  <link href="http://dhurley14.github.io/"/>
+  <updated>2015-11-28T11:57:11-05:00</updated>
+  <id>http://dhurley14.github.io/</id>
+  <author>
+    <name><![CDATA[Devin Hurley]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[What I Learned at POMCO Today - 4]]></title>
+    <link href="http://dhurley14.github.io/blog/2015/11/18/til-4/"/>
+    <updated>2015-11-18T00:00:00-05:00</updated>
+    <id>http://dhurley14.github.io/blog/2015/11/18/til-4</id>
+    <content type="html"><![CDATA[<h3 id="android-and-google-maps-api">Android and Google Maps API</h3>
+
+<blockquote>
+  <p>When generating a signed apk for release, that signature needs to be set in the google developer console
+where our API key is kept.</p>
+</blockquote>
+
+<blockquote>
+  <p>Basically we need to map the release build fingerprint (SHA-1) to the google maps API key in the developer
+console.</p>
+</blockquote>
+
+<h3 id="read-on-for-bonus-til">Read On for BONUS TIL!</h3>
+
+<!--more-->
+
+<blockquote>
+  <p>You can remotely enable a Google API for an Android app that has already been released.</p>
+</blockquote>
+
+<p>To do this, get the fingerprint and package name of the app by looking at logged errors through the Android 
+device in Android Studio.  (Android will log errors when the API calls from your app fail) Once you have these items you can add them to the api by going to
+<a href="https://console.developers.google.com/">console.developers.google.com</a>, select “API Manager” in the menu and adding 
+the fingerprint to the API you wish to enable.</p>
+
+<p>I learned about this because we pushed a version of Google Maps API for Android to the app store but the fingerprint 
+that our release APK was signed with was not the same as the fingerprint that enabled our Google Maps API for Android.</p>
+
+<p>So we needed a way to remotely enable this API in our already existing Android devices.  Pushing a new app signed with 
+the correct fingerprint that our Google Maps API was using would not fix this for our users who had already downloaded 
+our app.  So I did some digging on the Interwebs and was able to figure this out.  Hopefully this little bit of info 
+will help out others in the future!</p>
+]]></content>
+  </entry>
+  
+</feed>
