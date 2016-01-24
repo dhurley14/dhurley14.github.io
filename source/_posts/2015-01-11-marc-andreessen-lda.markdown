@@ -21,9 +21,11 @@ with each topic.  Thus giving us an overview of how Marc Andreessen feels about 
 retweets.
 
 ###Acquiring pmarca's Tweets
+
 I utilized the [twython](https://pypi.python.org/pypi/twython/) library to acquire the tweets.  Unfortunately, Twitter's api limits you to the 3200 most recent tweets so a quick introduction to the API might be useful to some.  The file containing all of this logic is the aptly named (I think at least) get_tweets.py.
 
 I first needed access to the Twitter API.  Twython makes this extrememly easy and all I need to do is add my `APP_KEY` and `APP_SECRET` for authorization.
+
 ``` Python
     from twython import Twython
 
@@ -37,6 +39,7 @@ I first needed access to the Twitter API.  Twython makes this extrememly easy an
         return twitter
 ```
 The next step was to get the user's tweets.  The `**kwargs` were necessary so that I could loop through the Twitter API and acquire all 3200 of pmarca's most recent tweets (again Twitter doesn't allow you to access all of a user's tweets).
+
 ``` Python
     def get_tweets(username='pmarca', **kwargs):
         """ Get a user's timeline
@@ -150,15 +153,24 @@ We now have a corpus we can use to build our LDA model.
 ###LDA model results
 I used the [gensim](http://radimrehurek.com/gensim/index.html) package which has an implementation of the LDA algorithm and a very nice tutorial on how to utilize it.  After building the model I got the top ten (and [16](https://github.com/dhurley14/pmarcaRTS/blob/master/src/actual/tmp/16topics.txt) after reading [this](http://a16z.com/2015/01/22/16-things/)) topics Marc Andreessen retweets the most.  After looking at the top words for each topic ([which can be viewed here](https://github.com/dhurley14/pmarcaRTS/blob/master/src/actual/tmp/10topics.txt)), I came up with the following list of topics (in no particular order):
 
-####1. World Issues (economic & political)
-####2. American Military (editorialized, sorry :(
-####3. Healthcare
-####4. Venture Capital
-####5. Bitcoin Blockchain
-####6. ??? 
-####7. European Economic Policy
-####8. Psychology
-####9. Oil Crisis
-####10. Gay rights
+#### 1. World Issues (economic & political)
+
+#### 2. American Military (editorialized, sorry :(
+
+#### 3. Healthcare
+
+#### 4. Venture Capital
+
+#### 5. Bitcoin Blockchain
+
+#### 6. ??? 
+
+#### 7. European Economic Policy
+
+#### 8. Psychology
+
+#### 9. Oil Crisis
+
+#### 10. Gay rights
 
 To generate a more comprehensive set of topics, it certainly would've been nice to have acquired more than approximately 700 articles.  I also do not fully understand how the LDA algorithm works so I'm sure by playing around with parameters in the LDA model I could more closely approximate the topics. I also believe that some of these topics seem far fetched because pmarca was probably only tweeting about a couple of these topics at the time. In addition to this, my sample size was limited to the most recent 3200 tweets, so whatever topics are there are the most commonly seen topics from pmarca's last 3200 tweets. Soon will be part 2 of this post, where I examine the sentiment of the tweets associated with these topics.  Until next time!
