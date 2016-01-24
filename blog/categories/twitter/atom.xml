@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Twitter | Most Significant Byte]]></title>
   <link href="http://dhurley14.github.io/blog/categories/twitter/atom.xml" rel="self"/>
   <link href="http://dhurley14.github.io/"/>
-  <updated>2015-11-28T11:57:11-05:00</updated>
+  <updated>2016-01-24T18:43:35-05:00</updated>
   <id>http://dhurley14.github.io/</id>
   <author>
     <name><![CDATA[Devin Hurley]]></name>
@@ -33,232 +33,127 @@ with each topic.  Thus giving us an overview of how Marc Andreessen feels about 
 retweets.</p>
 
 <h3 id="acquiring-pmarcas-tweets">Acquiring pmarca’s Tweets</h3>
+
 <p>I utilized the <a href="https://pypi.python.org/pypi/twython/">twython</a> library to acquire the tweets.  Unfortunately, Twitter’s api limits you to the 3200 most recent tweets so a quick introduction to the API might be useful to some.  The file containing all of this logic is the aptly named (I think at least) get_tweets.py.</p>
 
-<p>I first needed access to the Twitter API.  Twython makes this extrememly easy and all I need to do is add my <code>APP_KEY</code> and <code>APP_SECRET</code> for authorization.
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-<span class='line-number'>110</span>
-<span class='line-number'>111</span>
-</pre></td><td class='code'><pre><code class='Python'><span class='line'><span class="kn">from</span> <span class="nn">twython</span> <span class="kn">import</span> <span class="n">Twython</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">get_authentication</span><span class="p">():</span>
-</span><span class='line'><span class="sd">&quot;&quot;&quot; Get a connection to the Twitter API using Twython.</span>
-</span><span class='line'><span class="sd">return a new instance of the Twython object.</span>
-</span><span class='line'><span class="sd">&quot;&quot;&quot;</span>
-</span><span class='line'><span class="n">APP_KEY</span> <span class="o">=</span> <span class="s">&#39;xxxx&#39;</span>
-</span><span class='line'><span class="n">APP_SECRET</span> <span class="o">=</span> <span class="s">&#39;xxxxx&#39;</span>
-</span><span class='line'><span class="n">twitter</span> <span class="o">=</span> <span class="n">Twython</span><span class="p">(</span><span class="n">APP_KEY</span><span class="p">,</span> <span class="n">APP_SECRET</span><span class="p">)</span>
-</span><span class='line'><span class="k">return</span> <span class="n">twitter</span> <span class="sb">``` The next step was to get the user&#39;s tweets.  The `</span><span class="o">**</span><span class="n">kwargs</span><span class="sb">` were necessary so that I could loop through the Twitter API and acquire all 3200 of pmarca&#39;s most recent tweets (again Twitter doesn&#39;t allow you to access all of a user&#39;s tweets). ```</span> <span class="n">Python</span>
-</span><span class='line'><span class="k">def</span> <span class="nf">get_tweets</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&#39;pmarca&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-</span><span class='line'><span class="sd">&quot;&quot;&quot; Get a user&#39;s timeline</span>
-</span><span class='line'><span class="sd">:param username: (default pmarca)</span>
-</span><span class='line'><span class="sd">:param tweetID: </span>
-</span><span class='line'><span class="sd">&quot;&quot;&quot;</span>
-</span><span class='line'><span class="n">twitter</span> <span class="o">=</span> <span class="n">get_authentication</span><span class="p">()</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># to get all 3200 possible tweets, I must cycle</span>
-</span><span class='line'><span class="c"># through, and change the max_id on each call to be the lowest</span>
-</span><span class='line'><span class="c"># id , so that my next call gets all the tweets below that id,</span>
-</span><span class='line'><span class="c"># and so on and so forth.</span>
-</span><span class='line'><span class="n">user_timeline</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span><span class='line'>    <span class="n">user_timeline</span> <span class="o">=</span> <span class="n">twitter</span><span class="o">.</span><span class="n">get_user_timeline</span><span class="p">(</span><span class="n">screen_name</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-</span><span class='line'><span class="k">else</span><span class="p">:</span>
-</span><span class='line'>    <span class="n">user_timeline</span> <span class="o">=</span> <span class="n">twitter</span><span class="o">.</span><span class="n">get_user_timeline</span><span class="p">(</span><span class="n">screen_name</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">max_id</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;anId&#39;</span><span class="p">])</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">return</span> <span class="n">user_timeline</span> <span class="sb">``</span><span class="err">`</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Now</span> <span class="n">that</span> <span class="n">I</span> <span class="n">have</span> <span class="n">my</span> <span class="n">authentication</span> <span class="ow">and</span> <span class="n">a</span> <span class="n">way</span> <span class="n">to</span> <span class="n">get</span> <span class="n">the</span> <span class="n">user</span><span class="err">’</span><span class="n">s</span> <span class="n">timeline</span> <span class="p">(</span><span class="n">note</span> <span class="n">that</span> <span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">count</span><span class="o">=</span><span class="mi">200</span><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;</span> <span class="ow">is</span> <span class="n">the</span> <span class="nb">max</span> <span class="n">amount</span> <span class="n">of</span> <span class="n">tweets</span> <span class="kn">from</span> <span class="nn">a</span> <span class="nn">user</span><span class="err">’</span><span class="n">s</span> <span class="n">timeline</span> <span class="n">you</span> <span class="n">can</span> <span class="n">receive</span> <span class="n">before</span> <span class="n">having</span> <span class="n">to</span> <span class="n">paginate</span><span class="p">,</span> <span class="n">which</span> <span class="ow">is</span> <span class="n">what</span> <span class="n">I</span> <span class="n">will</span> <span class="n">show</span> <span class="nb">next</span><span class="p">),</span> <span class="n">I</span> <span class="n">will</span> <span class="n">build</span> <span class="n">a</span> <span class="n">python</span> <span class="nb">dict</span> <span class="n">that</span> <span class="n">will</span> <span class="n">store</span> <span class="n">the</span> <span class="n">tweets</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">hyperlinks</span> <span class="n">that</span> <span class="n">the</span> <span class="n">tweet</span> <span class="n">links</span> <span class="n">to</span><span class="o">.</span>  <span class="n">This</span> <span class="n">will</span> <span class="n">help</span> <span class="n">me</span> <span class="n">perform</span> <span class="n">sentiment</span> <span class="n">analysis</span> <span class="n">on</span> <span class="n">the</span> <span class="n">topics</span> <span class="n">using</span> <span class="n">the</span> <span class="n">tweets</span> <span class="k">as</span> <span class="n">my</span> <span class="n">sentiment</span> <span class="n">indicators</span><span class="o">.&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">To</span> <span class="n">get</span> <span class="n">the</span> <span class="nb">next</span> <span class="n">oldest</span> <span class="mi">200</span> <span class="n">tweets</span><span class="p">,</span> <span class="ow">and</span> <span class="n">so</span> <span class="n">on</span> <span class="ow">and</span> <span class="n">so</span> <span class="n">forth</span> <span class="n">until</span> <span class="n">I</span> <span class="nb">max</span> <span class="n">out</span> <span class="n">at</span> <span class="mi">3200</span><span class="p">,</span> <span class="n">I</span> <span class="n">had</span> <span class="n">to</span> <span class="n">loop</span> <span class="n">through</span> <span class="n">get_tweets</span><span class="p">(),</span> <span class="n">setting</span> <span class="n">the</span> <span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">tweetID</span><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;</span> <span class="n">parameter</span> <span class="n">to</span> <span class="n">the</span> <span class="n">ID</span> <span class="n">of</span> <span class="n">the</span> <span class="n">last</span> <span class="n">tweet</span> <span class="n">that</span> <span class="n">I</span> <span class="n">received</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">previous</span> <span class="n">API</span> <span class="n">call</span><span class="o">.</span>  <span class="n">I</span> <span class="n">do</span> <span class="n">this</span> <span class="mi">16</span> <span class="n">times</span> <span class="ow">in</span> <span class="n">total</span> <span class="p">(</span><span class="n">hence</span><span class="p">,</span> <span class="mi">3200</span> <span class="n">tweets</span><span class="p">)</span><span class="o">.</span>  <span class="n">I</span> <span class="n">then</span> <span class="n">write</span> <span class="nb">all</span> <span class="n">of</span> <span class="n">the</span> <span class="n">tweets</span> <span class="n">to</span> <span class="n">a</span> <span class="nb">file</span> <span class="n">called</span> <span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">pmarca_rts_append</span><span class="o">.</span><span class="n">txt</span><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;.&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="sb">``</span><span class="err">`</span> <span class="n">Python</span>
-</span><span class='line'><span class="k">def</span> <span class="nf">output_all_rts</span><span class="p">():</span>
-</span><span class='line'><span class="n">user_timeline</span> <span class="o">=</span> <span class="n">get_tweets</span><span class="p">()</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c"># the below will build the first entry in our dict.  The dict will map tweet&#39;s and their corresponding URL&#39;s that were found in the tweets.</span>
-</span><span class='line'><span class="n">urls</span> <span class="o">=</span> <span class="p">{</span><span class="n">user_timeline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&#39;entities&#39;</span><span class="p">][</span><span class="s">&#39;urls&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">&#39;expanded_url&#39;</span><span class="p">]:</span> <span class="n">user_timeline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&#39;text&#39;</span><span class="p">]</span>  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">user_timeline</span><span class="p">))</span> <span class="k">if</span> <span class="n">user_timeline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&#39;entities&#39;</span><span class="p">][</span><span class="s">&#39;urls&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="s">&quot;RT&quot;</span> <span class="ow">in</span> <span class="n">user_timeline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&#39;text&#39;</span><span class="p">]}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
-</span><span class='line'><span class="n">user_timeline</span> <span class="o">=</span> <span class="n">get_tweets</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&#39;pmarca&#39;</span><span class="p">,</span><span class="n">anId</span><span class="o">=</span><span class="n">user_timeline</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">user_timeline</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;id&#39;</span><span class="p">])</span>
-</span><span class='line'><span class="c"># Now I update that dict again to map more tweet&#39;s and URL&#39;s together</span>
-</span><span class='line'><span class="c"># this will help when I have to perform sentiment analysis on each topic.</span>
-</span><span class='line'><span class="n">urls</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">user_timeline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&#39;entities&#39;</span><span class="p">][</span><span class="s">&#39;urls&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">&#39;expanded_url&#39;</span><span class="p">]:</span> <span class="n">user_timeline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&#39;text&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">user_timeline</span><span class="p">))</span>
-</span><span class='line'>    <span class="k">if</span> <span class="n">user_timeline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&#39;entities&#39;</span><span class="p">][</span><span class="s">&#39;urls&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="s">&quot;RT&quot;</span> <span class="ow">in</span> <span class="n">user_timeline</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&#39;text&#39;</span><span class="p">]})</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">urls</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">output_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;pmarca_rts_links_dict.txt&quot;</span><span class="p">,</span> <span class="s">&quot;w+b&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="n">output_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">urls</span><span class="p">))</span>
-</span><span class='line'><span class="n">output_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">if</span> <span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">name</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span> <span class="o">==</span> <span class="err">‘</span><span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">main</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span><span class="err">’</span><span class="p">:</span>
-</span><span class='line'><span class="n">output_all_rts</span><span class="p">()</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="sb">``</span><span class="err">`</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Now</span> <span class="n">I</span> <span class="n">have</span> <span class="nb">all</span> <span class="n">of</span> <span class="n">pmarca</span><span class="err">’</span><span class="n">s</span> <span class="n">retweets</span> <span class="p">(</span><span class="n">which</span> <span class="n">turns</span> <span class="n">out</span> <span class="n">to</span> <span class="n">be</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="n">of</span> <span class="nb">all</span> <span class="n">of</span> <span class="n">his</span> <span class="n">tweets</span> <span class="n">returned</span> <span class="n">by</span> <span class="n">the</span> <span class="n">API</span><span class="p">)</span><span class="o">.</span>
-</span><span class='line'><span class="n">Next</span> <span class="n">up</span> <span class="n">will</span> <span class="n">be</span> <span class="n">to</span> <span class="n">extract</span> <span class="n">the</span> <span class="n">text</span> <span class="kn">from</span> <span class="nn">the</span> <span class="nn">associated</span> <span class="nn">links.</span>  <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">In</span> <span class="n">order</span> <span class="n">to</span> <span class="n">build</span> <span class="n">my</span> <span class="n">LDA</span> <span class="n">model</span> <span class="n">I</span> <span class="n">needed</span> <span class="n">to</span> <span class="n">find</span> <span class="n">a</span> <span class="n">way</span> <span class="n">to</span> <span class="n">extract</span> <span class="n">the</span> <span class="n">body</span> <span class="n">of</span> <span class="n">the</span> <span class="n">text</span> <span class="kn">from</span> <span class="nn">each</span> <span class="nn">article</span> <span class="nn">for</span> <span class="nn">which</span> <span class="nn">I</span> <span class="nn">had</span> <span class="nn">links</span> <span class="nn">to.</span>  <span class="nn">On</span> <span class="nn">the</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;http://blog.mathandpencil.com/using-latent-dirichlet-allocation-to-categorize-my-twitter-feed/&quot;</span><span class="o">&gt;</span><span class="n">mathandpencil</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="n">blog</span><span class="p">,</span> <span class="n">Joseph</span> <span class="n">Misiti</span> <span class="n">uses</span> <span class="n">Diffbot</span> <span class="n">to</span> <span class="n">acquire</span> <span class="n">the</span> <span class="n">text</span> <span class="n">body</span><span class="o">.</span>  <span class="n">Unfortunately</span> <span class="n">my</span> <span class="n">Diffbot</span> <span class="n">account</span> <span class="ow">is</span> <span class="n">no</span> <span class="n">longer</span> <span class="n">active</span> <span class="n">so</span> <span class="n">I</span> <span class="n">used</span> <span class="n">the</span> <span class="n">extremely</span> <span class="n">handy</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;https://github.com/misja/python-boilerpipe&quot;</span><span class="o">&gt;</span><span class="n">python</span><span class="o">-</span><span class="n">boilerpipe</span> <span class="n">wrapper</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="n">library</span> <span class="n">to</span> <span class="n">handle</span> <span class="n">this</span> <span class="k">for</span> <span class="n">me</span><span class="o">.&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">First</span><span class="p">,</span> <span class="n">I</span> <span class="n">needed</span> <span class="n">to</span> <span class="n">strip</span> <span class="n">out</span> <span class="n">the</span> <span class="n">URL</span><span class="err">’</span><span class="n">s</span> <span class="kn">from</span> <span class="nn">the</span> <span class="nn">dictionary</span> <span class="nn">I</span> <span class="nn">built</span> <span class="nn">when</span> <span class="nn">I</span> <span class="nn">extracted</span> <span class="nn">the</span> <span class="nn">links</span> <span class="nn">from</span> <span class="nn">the</span> <span class="nn">tweets.</span>  <span class="nn">At</span> <span class="nn">this</span> <span class="nn">point</span><span class="p">,</span> <span class="n">I</span> <span class="n">figured</span> <span class="n">it</span> <span class="n">would</span> <span class="n">be</span> <span class="n">better</span> <span class="n">to</span> <span class="n">just</span>
-</span><span class='line'><span class="nb">map</span> <span class="n">the</span> <span class="n">tweets</span> <span class="n">to</span> <span class="n">the</span> <span class="n">article</span> <span class="n">body</span> <span class="n">itself</span><span class="o">.</span>  <span class="n">So</span> <span class="n">I</span> <span class="n">wrote</span> <span class="n">a</span> <span class="n">script</span> <span class="n">to</span> <span class="n">do</span> <span class="n">that</span><span class="o">.</span>  <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">By</span> <span class="n">passing</span> <span class="ow">in</span> <span class="n">the</span> <span class="nb">dict</span> <span class="n">I</span> <span class="n">had</span> <span class="n">saved</span> <span class="n">previously</span> <span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">pmarca_rts_links_dict</span><span class="o">.</span><span class="n">txt</span><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;</span> <span class="n">I</span> <span class="n">was</span> <span class="n">able</span> <span class="n">to</span> <span class="n">extract</span> <span class="n">the</span> <span class="n">text</span> <span class="kn">from</span> <span class="nn">the</span> <span class="nn">hyperlinks</span> <span class="nn">and</span> <span class="nn">map</span> <span class="nn">the</span> <span class="nn">body</span> <span class="nn">article</span> <span class="nn">text</span> <span class="nn">to</span> <span class="nn">the</span>
-</span><span class='line'><span class="n">tweets</span> <span class="p">(</span><span class="n">I</span> <span class="n">used</span> <span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;|||&lt;/</span><span class="n">code</span><span class="o">&gt;</span> <span class="k">as</span> <span class="n">the</span> <span class="n">chars</span> <span class="n">to</span> <span class="n">separate</span> <span class="n">the</span> <span class="n">tweet</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">article</span> <span class="n">body</span> <span class="n">text</span><span class="p">)</span><span class="o">.&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="sb">``</span><span class="err">`</span> <span class="n">Python</span>
-</span><span class='line'><span class="kn">from</span> <span class="nn">boilerpipe.extract</span> <span class="kn">import</span> <span class="n">Extractor</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">ast</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">”””</span> <span class="n">Read</span> <span class="n">a</span> <span class="nb">dict</span> <span class="nb">file</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">get</span> <span class="n">the</span> <span class="n">urls</span><span class="p">,</span> <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">extract</span> <span class="n">the</span> <span class="n">text</span><span class="p">,</span> <span class="n">send</span> <span class="n">a</span> <span class="n">mapping</span> <span class="n">of</span> <span class="n">the</span> <span class="n">text</span>
-</span><span class='line'><span class="ow">and</span> <span class="n">the</span> <span class="n">associated</span> <span class="n">url</span><span class="p">,</span> <span class="n">close</span> <span class="n">the</span> <span class="nb">file</span>
-</span><span class='line'><span class="mo">01</span><span class="o">/</span><span class="mi">19</span><span class="o">/</span><span class="mi">2015</span>
-</span><span class='line'><span class="err">“””</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">buildMapping</span><span class="p">(</span><span class="n">someDictFile</span><span class="p">):</span>
-</span><span class='line'><span class="n">somedata</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">someDictFile</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-</span><span class='line'><span class="n">result</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">somedata</span><span class="p">)</span>
-</span><span class='line'><span class="n">keySize</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-</span><span class='line'><span class="n">successRatio</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'><span class="n">linksLeft</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'><span class="n">target</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="err">‘</span><span class="n">content_link_mapping</span><span class="o">.</span><span class="n">txt</span><span class="err">’</span><span class="p">,</span><span class="err">’</span><span class="n">w</span><span class="err">’</span><span class="p">)</span>
-</span><span class='line'><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="k">try</span><span class="p">:</span>
-</span><span class='line'>    <span class="n">extractor</span> <span class="o">=</span> <span class="n">Extractor</span><span class="p">(</span><span class="n">extractor</span><span class="o">=</span><span class="s">&#39;ArticleSentencesExtractor&#39;</span><span class="p">,</span><span class="n">url</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
-</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;got the extractor&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="c">#target.write(str(result[key])+&quot;|||&quot;+extractor.getText().encode(&#39;utf-8&#39;)+&#39;\n\n\n&#39;)</span>
-</span><span class='line'>    <span class="n">target</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; ||| &quot;</span><span class="o">+</span><span class="n">extractor</span><span class="o">.</span><span class="n">getText</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span> <span class="c">#</span>
-</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;wrote data&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">successRatio</span> <span class="o">+=</span> <span class="mi">1</span>
-</span><span class='line'>    <span class="n">linksLeft</span> <span class="o">+=</span> <span class="mi">1</span>
-</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;[+] SUCCESS    &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">keySize</span> <span class="o">-</span> <span class="n">linksLeft</span><span class="p">))</span>
-</span><span class='line'><span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
-</span><span class='line'>    <span class="n">linksLeft</span> <span class="o">+=</span> <span class="mi">1</span>
-</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;[-] FAILURE - &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">+</span> <span class="s">&quot; --- &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">keySize</span> <span class="o">-</span> <span class="n">linksLeft</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">target</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="s">&quot;Success Ratio : &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">successRatio</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">keySize</span><span class="p">))</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">if</span> <span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">name</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;==</span><span class="err">”</span><span class="o">&lt;</span><span class="n">strong</span><span class="o">&gt;</span><span class="n">main</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;</span><span class="err">”</span><span class="p">:</span>
-</span><span class='line'><span class="n">buildMapping</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>I first needed access to the Twitter API.  Twython makes this extrememly easy and all I need to do is add my <code>APP_KEY</code> and <code>APP_SECRET</code> for authorization.</p>
+
+<p>&#8220;` Python
+    from twython import Twython</p>
+
+<pre><code>def get_authentication():
+    """ Get a connection to the Twitter API using Twython.
+    return a new instance of the Twython object.
+    """
+    APP_KEY = 'xxxx'
+    APP_SECRET = 'xxxxx'
+    twitter = Twython(APP_KEY, APP_SECRET)
+    return twitter ``` The next step was to get the user's tweets.  The `**kwargs` were necessary so that I could loop through the Twitter API and acquire all 3200 of pmarca's most recent tweets (again Twitter doesn't allow you to access all of a user's tweets).
+</code></pre>
+
+<p>&#8220;` Python
+    def get_tweets(username=’pmarca’, **kwargs):
+        “”” Get a user’s timeline
+        :param username: (default pmarca)
+        :param tweetID: 
+        “””
+        twitter = get_authentication()</p>
+
+<pre><code>    # to get all 3200 possible tweets, I must cycle
+    # through, and change the max_id on each call to be the lowest
+    # id , so that my next call gets all the tweets below that id,
+    # and so on and so forth.
+    user_timeline = ""
+
+    if len(kwargs) == 0:
+        user_timeline = twitter.get_user_timeline(screen_name=username, count=200)
+    else:
+        user_timeline = twitter.get_user_timeline(screen_name=username, count=200, max_id=kwargs['anId'])    
+
+    return user_timeline ```
+</code></pre>
+
+<p>Now that I have my authentication and a way to get the user’s timeline (note that <code>count=200</code> is the max amount of tweets from a user’s timeline you can receive before having to paginate, which is what I will show next), I will build a python dict that will store the tweets and the hyperlinks that the tweet links to.  This will help me perform sentiment analysis on the topics using the tweets as my sentiment indicators.</p>
+
+<p>To get the next oldest 200 tweets, and so on and so forth until I max out at 3200, I had to loop through get_tweets(), setting the <code>tweetID</code> parameter to the ID of the last tweet that I received in the previous API call.  I do this 16 times in total (hence, 3200 tweets).  I then write all of the tweets to a file called <code>pmarca_rts_append.txt</code>.</p>
+
+<p>&#8220;` Python
+def output_all_rts():
+    user_timeline = get_tweets()</p>
+
+<pre><code># the below will build the first entry in our dict.  The dict will map tweet's and their corresponding URL's that were found in the tweets.
+urls = {user_timeline[i]['entities']['urls'][0]['expanded_url']: user_timeline[i]['text']  for i in xrange(len(user_timeline)) if user_timeline[i]['entities']['urls'] and "RT" in user_timeline[i]['text']}
+
+for i in xrange(16):
+    user_timeline = get_tweets(username='pmarca',anId=user_timeline[len(user_timeline)-1]['id'])
+    # Now I update that dict again to map more tweet's and URL's together
+    # this will help when I have to perform sentiment analysis on each topic.
+    urls.update({user_timeline[i]['entities']['urls'][0]['expanded_url']: user_timeline[i]['text'] for i in xrange(len(user_timeline))
+        if user_timeline[i]['entities']['urls'] and "RT" in user_timeline[i]['text']})
+
+print len(urls)
+
+output_file = open("pmarca_rts_links_dict.txt", "w+b")
+output_file.write(str(urls))
+output_file.close()
+</code></pre>
+
+<p>if <strong>name</strong> == ‘<strong>main</strong>’:
+    output_all_rts()</p>
+
+<p>&#8220;`</p>
+
+<p>Now I have all of pmarca’s retweets (which turns out to be 1/2 of all of his tweets returned by the API).
+Next up will be to extract the text from the associated links.  </p>
+
+<p>In order to build my LDA model I needed to find a way to extract the body of the text from each article for which I had links to.  On the <a href="http://blog.mathandpencil.com/using-latent-dirichlet-allocation-to-categorize-my-twitter-feed/">mathandpencil</a> blog, Joseph Misiti uses Diffbot to acquire the text body.  Unfortunately my Diffbot account is no longer active so I used the extremely handy <a href="https://github.com/misja/python-boilerpipe">python-boilerpipe wrapper</a> library to handle this for me.</p>
+
+<p>First, I needed to strip out the URL’s from the dictionary I built when I extracted the links from the tweets.  At this point, I figured it would be better to just
+map the tweets to the article body itself.  So I wrote a script to do that.  </p>
+
+<p>By passing in the dict I had saved previously <code>pmarca_rts_links_dict.txt</code> I was able to extract the text from the hyperlinks and map the body article text to the 
+tweets (I used <code>|||</code> as the chars to separate the tweet and the article body text).</p>
+
+<p>&#8220;` Python
+    from boilerpipe.extract import Extractor
+import ast, os, sys</p>
+
+<p>””” Read a dict file mapping, get the urls, </p>
+
+<p>extract the text, send a mapping of the text 
+and the associated url, close the file
+01/19/2015
+“””</p>
+
+<p>def buildMapping(someDictFile):
+    somedata = open(someDictFile).read()
+    result = ast.literal_eval(somedata)
+    keySize = len(result.keys())
+    successRatio = 0
+    linksLeft = 0
+    target = open(‘content_link_mapping.txt’,’w’)
+    for key in result.keys():</p>
+
+<pre><code>    try:
+        extractor = Extractor(extractor='ArticleSentencesExtractor',url=str(key))
+        print("got the extractor")
+        #target.write(str(result[key])+"|||"+extractor.getText().encode('utf-8')+'\n\n\n')
+        target.write(result[key].encode('utf-8') + " ||| "+extractor.getText().replace("\n","").encode('utf-8')+"\n") #
+        print("wrote data")
+        successRatio += 1
+        linksLeft += 1
+        print("[+] SUCCESS    " + str(keySize - linksLeft))
+    except Exception, e:
+        linksLeft += 1
+        print("[-] FAILURE - " + str(e)+ " --- " + str(keySize - linksLeft)) 
+
+target.close()
+print("Success Ratio : "+str(successRatio)+"/"+str(keySize))
+</code></pre>
+
+<p>if <strong>name</strong>==”<strong>main</strong>”:
+    buildMapping(sys.argv[1])
+&#8220;`
 The boilerpipe python wrapper ended up extracting text from a little over 78% of the hyperlinks I passed through to it.  I have no idea if this is because
 the hyperlinks I sent it were 78% articles and the rest video’s or pictures but I’m fairly happy with that.  I ended up with around 600 articles of text I could use
 to extract data from.</p>
@@ -271,15 +166,24 @@ We now have a corpus we can use to build our LDA model.  </p>
 <p>I used the <a href="http://radimrehurek.com/gensim/index.html">gensim</a> package which has an implementation of the LDA algorithm and a very nice tutorial on how to utilize it.  After building the model I got the top ten (and <a href="https://github.com/dhurley14/pmarcaRTS/blob/master/src/actual/tmp/16topics.txt">16</a> after reading <a href="http://a16z.com/2015/01/22/16-things/">this</a>) topics Marc Andreessen retweets the most.  After looking at the top words for each topic (<a href="https://github.com/dhurley14/pmarcaRTS/blob/master/src/actual/tmp/10topics.txt">which can be viewed here</a>), I came up with the following list of topics (in no particular order):</p>
 
 <h4 id="world-issues-economic--political">1. World Issues (economic &amp; political)</h4>
-<p>####2. American Military (editorialized, sorry :(
-####3. Healthcare
-####4. Venture Capital
-####5. Bitcoin Blockchain
-####6. ??? 
-####7. European Economic Policy
-####8. Psychology
-####9. Oil Crisis
-####10. Gay rights</p>
+
+<h4 id="american-military-editorialized-sorry-">2. American Military (editorialized, sorry :(</h4>
+
+<h4 id="healthcare">3. Healthcare</h4>
+
+<h4 id="venture-capital">4. Venture Capital</h4>
+
+<h4 id="bitcoin-blockchain">5. Bitcoin Blockchain</h4>
+
+<h4 id="section">6. ???</h4>
+
+<h4 id="european-economic-policy">7. European Economic Policy</h4>
+
+<h4 id="psychology">8. Psychology</h4>
+
+<h4 id="oil-crisis">9. Oil Crisis</h4>
+
+<h4 id="gay-rights">10. Gay rights</h4>
 
 <p>To generate a more comprehensive set of topics, it certainly would’ve been nice to have acquired more than approximately 700 articles.  I also do not fully understand how the LDA algorithm works so I’m sure by playing around with parameters in the LDA model I could more closely approximate the topics. I also believe that some of these topics seem far fetched because pmarca was probably only tweeting about a couple of these topics at the time. In addition to this, my sample size was limited to the most recent 3200 tweets, so whatever topics are there are the most commonly seen topics from pmarca’s last 3200 tweets. Soon will be part 2 of this post, where I examine the sentiment of the tweets associated with these topics.  Until next time!</p>
 ]]></content>

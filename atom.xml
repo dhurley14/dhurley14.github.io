@@ -4,7 +4,7 @@
   <title><![CDATA[Most Significant Byte]]></title>
   <link href="http://dhurley14.github.io/atom.xml" rel="self"/>
   <link href="http://dhurley14.github.io/"/>
-  <updated>2015-11-28T11:57:11-05:00</updated>
+  <updated>2016-01-24T18:43:35-05:00</updated>
   <id>http://dhurley14.github.io/</id>
   <author>
     <name><![CDATA[Devin Hurley]]></name>
@@ -708,10 +708,12 @@ with each topic.  Thus giving us an overview of how Marc Andreessen feels about 
 retweets.</p>
 
 <h3 id="acquiring-pmarcas-tweets">Acquiring pmarca’s Tweets</h3>
+
 <p>I utilized the <a href="https://pypi.python.org/pypi/twython/">twython</a> library to acquire the tweets.  Unfortunately, Twitter’s api limits you to the 3200 most recent tweets so a quick introduction to the API might be useful to some.  The file containing all of this logic is the aptly named (I think at least) get_tweets.py.</p>
 
-<p>I first needed access to the Twitter API.  Twython makes this extrememly easy and all I need to do is add my <code>APP_KEY</code> and <code>APP_SECRET</code> for authorization.
-&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+<p>I first needed access to the Twitter API.  Twython makes this extrememly easy and all I need to do is add my <code>APP_KEY</code> and <code>APP_SECRET</code> for authorization.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
 <span class="line-number">4</span>
@@ -721,7 +723,7 @@ retweets.</p>
 <span class="line-number">8</span>
 <span class="line-number">9</span>
 <span class="line-number">10</span>
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="Python"><span class="line"><span class="kn">from</span> <span class="nn">twython</span> <span class="kn">import</span> <span class="n">Twython</span>
+</pre></td><td class="code"><pre><code class="Python"><span class="line"><span class="kn">from</span> <span class="nn">twython</span> <span class="kn">import</span> <span class="n">Twython</span>
 </span><span class="line">
 </span><span class="line"><span class="k">def</span> <span class="nf">get_authentication</span><span class="p">():</span>
 </span><span class="line">    <span class="sd">&quot;&quot;&quot; Get a connection to the Twitter API using Twython.</span>
@@ -731,9 +733,10 @@ retweets.</p>
 </span><span class="line">    <span class="n">APP_SECRET</span> <span class="o">=</span> <span class="s">&#39;xxxxx&#39;</span>
 </span><span class="line">    <span class="n">twitter</span> <span class="o">=</span> <span class="n">Twython</span><span class="p">(</span><span class="n">APP_KEY</span><span class="p">,</span> <span class="n">APP_SECRET</span><span class="p">)</span>
 </span><span class="line">    <span class="k">return</span> <span class="n">twitter</span>
-</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;
-The next step was to get the user’s tweets.  The <code>**kwargs</code> were necessary so that I could loop through the Twitter API and acquire all 3200 of pmarca’s most recent tweets (again Twitter doesn’t allow you to access all of a user’s tweets).
-&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>The next step was to get the user’s tweets.  The <code>**kwargs</code> were necessary so that I could loop through the Twitter API and acquire all 3200 of pmarca’s most recent tweets (again Twitter doesn’t allow you to access all of a user’s tweets).</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
 <span class="line-number">4</span>
@@ -752,7 +755,7 @@ The next step was to get the user’s tweets.  The <code>**kwargs</code> were ne
 <span class="line-number">17</span>
 <span class="line-number">18</span>
 <span class="line-number">19</span>
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="Python"><span class="line"><span class="k">def</span> <span class="nf">get_tweets</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&#39;pmarca&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</pre></td><td class="code"><pre><code class="Python"><span class="line"><span class="k">def</span> <span class="nf">get_tweets</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&#39;pmarca&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 </span><span class="line">    <span class="sd">&quot;&quot;&quot; Get a user&#39;s timeline</span>
 </span><span class="line"><span class="sd">    :param username: (default pmarca)</span>
 </span><span class="line"><span class="sd">    :param tweetID: </span>
@@ -771,7 +774,7 @@ The next step was to get the user’s tweets.  The <code>**kwargs</code> were ne
 </span><span class="line">        <span class="n">user_timeline</span> <span class="o">=</span> <span class="n">twitter</span><span class="o">.</span><span class="n">get_user_timeline</span><span class="p">(</span><span class="n">screen_name</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">max_id</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;anId&#39;</span><span class="p">])</span>
 </span><span class="line">
 </span><span class="line">    <span class="k">return</span> <span class="n">user_timeline</span>
-</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>Now that I have my authentication and a way to get the user’s timeline (note that <code>count=200</code> is the max amount of tweets from a user’s timeline you can receive before having to paginate, which is what I will show next), I will build a python dict that will store the tweets and the hyperlinks that the tweet links to.  This will help me perform sentiment analysis on the topics using the tweets as my sentiment indicators.</p>
 
@@ -919,15 +922,24 @@ We now have a corpus we can use to build our LDA model.  </p>
 <p>I used the <a href="http://radimrehurek.com/gensim/index.html">gensim</a> package which has an implementation of the LDA algorithm and a very nice tutorial on how to utilize it.  After building the model I got the top ten (and <a href="https://github.com/dhurley14/pmarcaRTS/blob/master/src/actual/tmp/16topics.txt">16</a> after reading <a href="http://a16z.com/2015/01/22/16-things/">this</a>) topics Marc Andreessen retweets the most.  After looking at the top words for each topic (<a href="https://github.com/dhurley14/pmarcaRTS/blob/master/src/actual/tmp/10topics.txt">which can be viewed here</a>), I came up with the following list of topics (in no particular order):</p>
 
 <h4 id="world-issues-economic--political">1. World Issues (economic &amp; political)</h4>
-<p>####2. American Military (editorialized, sorry :(
-####3. Healthcare
-####4. Venture Capital
-####5. Bitcoin Blockchain
-####6. ??? 
-####7. European Economic Policy
-####8. Psychology
-####9. Oil Crisis
-####10. Gay rights</p>
+
+<h4 id="american-military-editorialized-sorry-">2. American Military (editorialized, sorry :(</h4>
+
+<h4 id="healthcare">3. Healthcare</h4>
+
+<h4 id="venture-capital">4. Venture Capital</h4>
+
+<h4 id="bitcoin-blockchain">5. Bitcoin Blockchain</h4>
+
+<h4 id="section">6. ???</h4>
+
+<h4 id="european-economic-policy">7. European Economic Policy</h4>
+
+<h4 id="psychology">8. Psychology</h4>
+
+<h4 id="oil-crisis">9. Oil Crisis</h4>
+
+<h4 id="gay-rights">10. Gay rights</h4>
 
 <p>To generate a more comprehensive set of topics, it certainly would’ve been nice to have acquired more than approximately 700 articles.  I also do not fully understand how the LDA algorithm works so I’m sure by playing around with parameters in the LDA model I could more closely approximate the topics. I also believe that some of these topics seem far fetched because pmarca was probably only tweeting about a couple of these topics at the time. In addition to this, my sample size was limited to the most recent 3200 tweets, so whatever topics are there are the most commonly seen topics from pmarca’s last 3200 tweets. Soon will be part 2 of this post, where I examine the sentiment of the tweets associated with these topics.  Until next time!</p>
 ]]></content>
