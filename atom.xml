@@ -4,7 +4,7 @@
   <title><![CDATA[Most Significant Byte]]></title>
   <link href="http://dhurley14.github.io/atom.xml" rel="self"/>
   <link href="http://dhurley14.github.io/"/>
-  <updated>2016-01-24T18:43:35-05:00</updated>
+  <updated>2016-02-11T19:56:56-05:00</updated>
   <id>http://dhurley14.github.io/</id>
   <author>
     <name><![CDATA[Devin Hurley]]></name>
@@ -12,6 +12,24 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Michael Nielsen How Bitcoin Works]]></title>
+    <link href="http://dhurley14.github.io/blog/2016/02/11/michael-nielsen-how-bitcoin-works/"/>
+    <updated>2016-02-11T18:54:13-05:00</updated>
+    <id>http://dhurley14.github.io/blog/2016/02/11/michael-nielsen-how-bitcoin-works</id>
+    <content type="html"><![CDATA[<h1 id="how-bitcoin-works">How Bitcoin Works</h1>
+
+<p>So I recently finished reading / taking notes on a <a href="http://www.michaelnielsen.org/ddi/how-the-bitcoin-protocol-actually-works/">blog post</a> from Michael Nielsen.
+In it he builds up the ideas of the block chain from basic principles.  He goes over the specifics of the Bitcoin block chain but the 
+theory is applicable to other networks such as Ethereum. </p>
+
+<p>An understanding of how both <a href="https://en.wikipedia.org/wiki/Public-key_cryptography">public key cryptography</a> and <a href="https://en.wikipedia.org/wiki/Digital_signature#Definition">digital signatures</a> work is pretty necessary to truly understand everything in the blog post.
+  The Wikipedia pages for these concepts are fairly comprehensive and don’t take much time to absorb the general ideas, which is all you really need for Nielsen’s post.</p>
+
+<p>If you have been interested in how block chain technology works, along with the underlying concepts that make up the block chain, I would highly suggest this blog post.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[What I Learned at POMCO Today 5]]></title>

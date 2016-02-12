@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://dhurley14.github.io/blog/2016/02/11/michael-nielsen-how-bitcoin-works/</loc>
+    <lastmod>2016-02-11T18:54:13-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>http://dhurley14.github.io/blog/2015/11/19/what-i-learned-at-pomco-today-5/</loc>
     <lastmod>2015-11-19T00:00:00-05:00</lastmod>
     <priority>0.8</priority>
@@ -67,25 +72,25 @@
   </url>
   <url>
     <loc>http://dhurley14.github.io/about.html</loc>
-    <lastmod>2016-01-24T18:43:35-05:00</lastmod>
+    <lastmod>2016-02-11T19:56:56-05:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://dhurley14.github.io/</loc>
-    <lastmod>2016-01-24T18:43:35-05:00</lastmod>
+    <lastmod>2016-02-11T19:56:56-05:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>http://dhurley14.github.io/blog/archives/</loc>
-    <lastmod>2016-01-24T18:43:35-05:00</lastmod>
+    <lastmod>2016-02-11T19:56:56-05:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://dhurley14.github.io/about/</loc>
-    <lastmod>2016-01-24T18:43:35-05:00</lastmod>
+    <lastmod>2016-02-11T19:56:56-05:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
