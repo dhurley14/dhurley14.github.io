@@ -17,7 +17,7 @@ general understanding of what you're giving up when you take on an under market 
 
 <!-- more -->
 
-After doing an explicit example (with a bit of help from martin shen) I generalized my specific outcomes so that it could help others who find themselves in similar situations.
+After doing an explicit example (with a bit of help from a stranger on the Internet) I generalized my specific outcomes so that it could help others who find themselves in similar situations.
 
 The beauty of the following equation is that almost all of these numbers are numbers that the people on the other side of the table have to come up with.
 The logic that follows is simple and even better, allows the everyone to reach the same logical conclusion.  YMMV.
