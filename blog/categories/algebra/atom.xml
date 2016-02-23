@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Algebra | Most Significant Byte]]></title>
   <link href="http://dhurley14.github.io/blog/categories/algebra/atom.xml" rel="self"/>
   <link href="http://dhurley14.github.io/"/>
-  <updated>2016-02-22T22:54:37-05:00</updated>
+  <updated>2016-02-22T23:14:52-05:00</updated>
   <id>http://dhurley14.github.io/</id>
   <author>
     <name><![CDATA[Devin Hurley]]></name>
@@ -76,16 +76,15 @@ The idea is to get a nice upside for lowering your standard of living for <scrip
 2 \cdot \left (\frac{[(s_{m} - s_{0}) \cdot N] \cdot (1.60)}{p(\Omega)\cdot\Omega}  \right )
 </script>
 
-<p>This is not the end.  We should assume the company has taken on some debt, and due to liquidation preference, that <script type="math/tex">\Omega</script> is not the value that your equity
-will actually represent.  Even after dilution you will have to take into account that some of <script type="math/tex">\Omega</script> will be taken out before it even gets to you.  So to get 
-a true understanding of how much your equity will be worth by exit you should multiply by some constant that will reflect this.  I’m assuming 25% of the outcome 
-will go to preferred stock holders and other forms of debt, before it reaches ESOs.</p>
+<p>This will represent how much (logically) you would be within your right to ask for. </p>
+
+<p>To calculate how much this percent will represent after debt is paid down and taking into account the preferred shareholders stake (assuming this represents about 25% of the pie), I’m assuming 25% of the outcome  will go to preferred stock holders and other forms of debt, before it reaches ESOs.</p>
 
 <script type="math/tex; mode=display">
 0.75 \cdot \left (2 \cdot \left (\frac{[(s_{m} - s_{0}) \cdot N] \cdot (1.60)}{p(\Omega)\cdot\Omega}  \right ) \right )
 </script>
 
-<p>This equation will approximate how much equity you will own by the time your company exits.</p>
+<p>This equation will approximate how much of the company you will truly own by the time your company exits.</p>
 
 <h3 id="tldr">TL;DR</h3>
 
@@ -93,19 +92,25 @@ will go to preferred stock holders and other forms of debt, before it reaches ES
 
 <script type="math/tex; mode=display">2 \equiv Upside</script>
 
-<script type="math/tex; mode=display">s_{m} \equiv Market salary for your position.</script>
+<script type="math/tex; mode=display">s_{m} \equiv Market\, salary\, for\, your\, position.</script>
 
-<script type="math/tex; mode=display">s_{0} \equiv Salary offered.</script>
+<script type="math/tex; mode=display">s_{0} \equiv Salary\, offered.</script>
 
-<script type="math/tex; mode=display">1.60 \equiv AMT and 6.25% dilution / annum.</script>
+<script type="math/tex; mode=display">1.60 \equiv AMT\, and\, 6.25%\, dilution\, /\, annum.</script>
 
-<script type="math/tex; mode=display">\Omega \equiv Outcome of Exit</script>
+<script type="math/tex; mode=display">\Omega \equiv Outcome\, of\, Exit</script>
 
-<script type="math/tex; mode=display">p(\Omega) \equiv Probability of outcome.</script>
+<script type="math/tex; mode=display">p(\Omega) \equiv Probability\, of\, outcome.</script>
 
 <script type="math/tex; mode=display">
-0.75 \cdot \left (2 \cdot \left (\frac{[(s_{m} - s_{0}) \cdot N] \cdot (1.60)}{p(\Omega)\cdot\Omega}  \right ) \right )
+2 \cdot \left (\frac{[(s_{m} - s_{0}) \cdot N] \cdot (1.60)}{p(\Omega)\cdot\Omega}  \right ) \equiv How\, many\, points\, to\, ask\, for
 </script>
+
+<p>… and finally, what you can reasonable expect your points to represent out of the total <script type="math/tex">\Omega</script> left over after debt and prefferred shareholders get their 
+slice …
+<script type="math/tex">
+0.75 \cdot \left (2 \cdot \left (\frac{[(s_{m} - s_{0}) \cdot N] \cdot (1.60)}{p(\Omega)\cdot\Omega}  \right ) \right )
+</script></p>
 
 <h2 id="conclusion">Conclusion</h2>
 
