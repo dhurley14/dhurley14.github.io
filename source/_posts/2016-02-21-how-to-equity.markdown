@@ -10,10 +10,11 @@ categories: [startups, equity, algebra]
 
 So recently I've had to do a little math as to how to value my stock options as a part of my total equity package.  Below I will outline an equation 
 which will approximate the optimal stock options grant you should receive based on the risk you take by joining a startup (this risk is variable based on where in 
-the funding timeline your company is) along with the investment you make due to undermarket salary and a few other things to take into consideration.
+the funding timeline your company is) along with the investment you make should you need to take an undermarket salary, along with and a few other things to take 
+into consideration.
 
 Being purely logical, the output of this equation is what you should expect.  Most founders will not offer you this but this is a great tool to help get a 
-general understanding of what you're giving up when you take on an under market salary.
+general understanding of what you're giving up when you take on an under market salary in exchange for equity.
 
 <!-- more -->
 
@@ -24,11 +25,12 @@ The logic that follows is simple and even better, allows the everyone to reach t
 
 ##How to 101: Market Rate Salary
 
-Let's say you're interviewing at a startup and the company offers you 55,000 `USD` and options.  Given that salary, how do you come up with an appropriate amount
-of options that will givey you a return on the investment of an undermarket salary along with the risk of joining an early (pre series A) startup?  
+Let's say you're interviewing at a startup and the company offers you some salary POST-TAX which we will call $$s_{0}$$, and options.  Given that salary, how do 
+you come up with an appropriate amount of options that will givey you a return on the investment of an undermarket salary along with the risk of joining an early 
+(pre series A) startup?  
 
-Let's say a market salary for your position (POST-TAX) is 75K.  Pick whatever number suits you but to explain the equation I will start with this number.
-Let's call your market salary (75K) $$s_{m}$$.  Your current salary (55K) is represented by $$s_{0}$$.  Assuming you work at this startup for $$N$$ years you will give up approximately...  
+Let's say a market salary for your position (POST-TAX) is $$s_{m}$$.  Pick whatever number suits you but to explain the equation I will start with this number.  
+Assuming you work at this startup for $$N$$ years you will give up approximately...  
 
 $$
 [(s_{m} - s_{0}) \cdot N]
@@ -37,9 +39,9 @@ $$
 in salary.  This step is important, so take some time and really try to simulate just how much salary you are giving up.  Your market rate should jump every year
  or so as the rate at which you learn at a startup is exponentially faster than at BigCo.  
 So to figure out how much equity you would need to make up for that loss of salary, you would just take that number, divide it by the startup's optimal outcome,
-which we will call $$\Omega$$ (say the company sells for 30MM, $$\Omega \equiv 30MM$$), and now you're done!
+which we will call $$\Omega$$ (say the company sells for 18 Billion `USD`, $$\Omega \equiv 18\,Billion$$), and now you're done!
 
-... Except you probably haven't filed an 83b, subject to (AMT)[https://en.wikipedia.org/wiki/Alternative_minimum_tax] which in the U.S. is approximately 35% so you'll want to account for that in your calculation
+... Except you probably haven't filed an 83b, subject to [AMT](https://en.wikipedia.org/wiki/Alternative_minimum_tax) which in the U.S. is approximately 35% so you'll want to account for that in your calculation
 
 $$
 \frac{[(s_{m} - s_{0}) \cdot N] \cdot (1.35)}{\Omega}
