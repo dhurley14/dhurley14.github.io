@@ -64,16 +64,15 @@ $$
 2 \cdot \left (\frac{[(s_{m} - s_{0}) \cdot N] \cdot (1.60)}{p(\Omega)\cdot\Omega}  \right )
 $$
 
-This is not the end.  We should assume the company has taken on some debt, and due to liquidation preference, that $$\Omega$$ is not the value that your equity
-will actually represent.  Even after dilution you will have to take into account that some of $$\Omega$$ will be taken out before it even gets to you.  So to get 
-a true understanding of how much your equity will be worth by exit you should multiply by some constant that will reflect this.  I'm assuming 25% of the outcome 
-will go to preferred stock holders and other forms of debt, before it reaches ESOs.
+This will represent how much (logically) you would be within your right to ask for. 
+
+To calculate how much this percent will represent after debt is paid down and taking into account the preferred shareholders stake (assuming this represents about 25% of the pie), I'm assuming 25% of the outcome  will go to preferred stock holders and other forms of debt, before it reaches ESOs.
 
 $$
 0.75 \cdot \left (2 \cdot \left (\frac{[(s_{m} - s_{0}) \cdot N] \cdot (1.60)}{p(\Omega)\cdot\Omega}  \right ) \right )
 $$
 
-This equation will approximate how much equity you will own by the time your company exits.
+This equation will approximate how much of the company you will truly own by the time your company exits.
 
 ### TL;DR
 
@@ -82,16 +81,22 @@ $$0.75 \equiv Percent\, common\, stock\, options\, represent\, out\, of\, total\
 
 $$2 \equiv Upside$$
 
-$$s_{m} \equiv Market salary for your position.$$
+$$s_{m} \equiv Market\, salary\, for\, your\, position.$$
 
-$$s_{0} \equiv Salary offered.$$
+$$s_{0} \equiv Salary\, offered.$$
 
-$$1.60 \equiv AMT and 6.25% dilution / annum.$$
+$$1.60 \equiv AMT\, and\, 6.25%\, dilution\, /\, annum.$$
 
-$$\Omega \equiv Outcome of Exit$$
+$$\Omega \equiv Outcome\, of\, Exit$$
 
-$$p(\Omega) \equiv Probability of outcome.$$
+$$p(\Omega) \equiv Probability\, of\, outcome.$$
 
+$$
+2 \cdot \left (\frac{[(s_{m} - s_{0}) \cdot N] \cdot (1.60)}{p(\Omega)\cdot\Omega}  \right ) \equiv How\, many\, points\, to\, ask\, for
+$$
+
+... and finally, what you can reasonable expect your points to represent out of the total $$\Omega$$ left over after debt and prefferred shareholders get their 
+slice ...
 $$
 0.75 \cdot \left (2 \cdot \left (\frac{[(s_{m} - s_{0}) \cdot N] \cdot (1.60)}{p(\Omega)\cdot\Omega}  \right ) \right )
 $$
