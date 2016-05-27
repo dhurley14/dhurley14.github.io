@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Equity | Most Significant Byte]]></title>
   <link href="http://dhurley14.github.io/blog/categories/equity/atom.xml" rel="self"/>
   <link href="http://dhurley14.github.io/"/>
-  <updated>2016-02-22T23:14:52-05:00</updated>
+  <updated>2016-05-27T01:01:05-04:00</updated>
   <id>http://dhurley14.github.io/</id>
   <author>
     <name><![CDATA[Devin Hurley]]></name>
@@ -20,28 +20,22 @@
     <id>http://dhurley14.github.io/blog/2016/02/21/how-to-equity</id>
     <content type="html"><![CDATA[<h2 id="hark-an-angel">Hark! An Angel!</h2>
 
-<p>So recently I’ve had to do a little math as to how to value my stock options as a part of my total equity package.  Below I will outline an equation 
-which will approximate the optimal stock options grant you should receive based on the risk you take by joining a startup (this risk is variable based on where in 
-the funding timeline your company is) along with the investment you make should you need to take an undermarket salary, along with and a few other things to take 
-into consideration.</p>
+<p>So recently I was asked by a close friend if I could help him understand his total compensation package.  The problem was how to project how much equity he needed in order to make back the money he was missing out on based on a market rate salary.  I ended up generalizing his situation and felt it might help others out if I posted the solution here.  So here is my explanation on how to calculate how much equity you (as an early startup employee) will need in order to make up for a loss in salary, assuming the startup cannot afford to pay you a market-rate salary.</p>
 
 <p>Being purely logical, the output of this equation is what you should expect.  Most founders will not offer you this but this is a great tool to help get a 
-general understanding of what you’re giving up when you take on an under market salary in exchange for equity.</p>
+general understanding of how much money you would need to make back on a liquidation event at your startup up when you take on an under market salary in exchange for equity.</p>
 
 <!-- more -->
 
-<p>After doing an explicit example (with a bit of help from a stranger on the Internet) I generalized my specific outcomes so that it could help others who find themselves in similar situations.</p>
-
-<p>The beauty of the following equation is that almost all of these numbers are numbers that the people on the other side of the table have to come up with.
-The logic that follows is simple and even better, allows the everyone to reach the same logical conclusion.  YMMV.</p>
+<p>After doing an explicit example (with a bit of help from a stranger on the Internet) I generalized the specific outcomes so that it could help others who find themselves in similar situations.  YMMV.</p>
 
 <h2 id="how-to-101-market-rate-salary">How to 101: Market Rate Salary</h2>
 
-<p>Let’s say you’re interviewing at a startup and the company offers you some salary POST-TAX which we will call <script type="math/tex">s_{0}</script>, and options.  Given that salary, how do 
-you come up with an appropriate amount of options that will givey you a return on the investment of an undermarket salary along with the risk of joining an early 
-(pre series A) startup?  </p>
+<p>Let’s say you’re interviewing at a startup and the company offers you some salary POST-TAX which we will call <script type="math/tex">s_{0}</script>, and stock options.  Given that salary 
+(<script type="math/tex">s_{0}</script>), how do you come up with an appropriate amount of options that will givey you a return on the investment of an undermarket salary along 
+with the risk of joining an early stage (pre series A) startup?  </p>
 
-<p>Let’s say a market salary for your position (POST-TAX) is <script type="math/tex">s_{m}</script>.  Pick whatever number suits you but to explain the equation I will start with this number.<br />
+<p>Looking at your offered salary of <script type="math/tex">s_{0}</script>, let’s say a market salary for your position (POST-TAX) is actually <script type="math/tex">s_{m}</script>.  Feel free to insert numbers as we go along or follow along until the end of the post where we reach our final model from basic principles.
 Assuming you work at this startup for <script type="math/tex">N</script> years you will give up approximately…  </p>
 
 <script type="math/tex; mode=display">
@@ -59,18 +53,18 @@ which we will call <script type="math/tex">\Omega</script> (say the company sell
 \frac{[(s_{m} - s_{0}) \cdot N] \cdot (1.35)}{\Omega}
 </script>
 
-<p>You should also consider the strike price for these options as well, as you will need to spend your salary to purchase those, and include some dilution factor (a conservative value is 25% over 4 years, which is 6.25% per year so you’ll need to calculate that by hand to really figure out what constant to use.  Let’s up this value to <script type="math/tex">1.60</script> to help insulate us from this.  Now that we know what we need AT EXIT, we’re all set? Right? Right?!?! </p>
+<p>You should also consider the strike price for these options as well, as you will need to spend your post-tax salary to purchase those, and include some dilution factor (a conservative value is 25% over 4 years, which is 6.25% per year so you’ll need to calculate that by hand to really figure out what constant to use.  Let’s up this value from <script type="math/tex">1.35</script> to <script type="math/tex">1.60</script> to help insulate us from this.  Now that we know what we need AT EXIT, we’re all set? Right? Right?!?! </p>
 
 <h2 id="exit-to-the-right-of-the-aircraft">Exit to the Right of the Aircraft</h2>
 
-<p>So given our optimal outcome <script type="math/tex">\Omega</script> we need to calculate the risk of not hitting that target.  Instead of using this pure value we should weight it according to the probability of <script type="math/tex">\Omega</script> actually occurring.  Our expected outcome will now be <script type="math/tex">p(\Omega) \cdot \Omega</script>.  So our new equation for our necessary equity becomes…</p>
+<p>So given our optimal outcome <script type="math/tex">\Omega</script> we need to calculate the risk of not hitting that target.  Instead of using this pure value we should weigh it according to the probability of <script type="math/tex">\Omega</script> actually occurring.  Our expected outcome will now be <script type="math/tex">p(\Omega) \cdot \Omega</script>.  So our new equation for our necessary equity becomes…</p>
 
 <script type="math/tex; mode=display">
 \frac{[(s_{m} - s_{0}) \cdot N] \cdot (1.60)}{p(\Omega) \cdot \Omega}
 </script>
 
 <p>This will give us a nice buffer in case we miss this optimal target.  HOWEVER THIS IS STILL JUST TO BREAK EVEN.
-The idea is to get a nice upside for lowering your standard of living for <script type="math/tex">N</script> years along with the increased stress and work necessary for helping to build a company.  SO, let’s double this value</p>
+The idea is to get a nice upside for lowering your standard of living for <script type="math/tex">N</script> years along with the increased stress and work necessary for helping to build a company.  So, let’s double this value</p>
 
 <script type="math/tex; mode=display">
 2 \cdot \left (\frac{[(s_{m} - s_{0}) \cdot N] \cdot (1.60)}{p(\Omega)\cdot\Omega}  \right )
@@ -106,7 +100,7 @@ The idea is to get a nice upside for lowering your standard of living for <scrip
 2 \cdot \left (\frac{[(s_{m} - s_{0}) \cdot N] \cdot (1.60)}{p(\Omega)\cdot\Omega}  \right ) \equiv How\, many\, points\, to\, ask\, for
 </script>
 
-<p>… and finally, what you can reasonable expect your points to represent out of the total <script type="math/tex">\Omega</script> left over after debt and prefferred shareholders get their 
+<p>… and finally, what you can reasonably expect your points to represent out of the total <script type="math/tex">\Omega</script> left over after debt and prefferred shareholders get their 
 slice …
 <script type="math/tex">
 0.75 \cdot \left (2 \cdot \left (\frac{[(s_{m} - s_{0}) \cdot N] \cdot (1.60)}{p(\Omega)\cdot\Omega}  \right ) \right )
@@ -116,8 +110,7 @@ slice …
 
 <p>You should never join a startup because you want to be rich.  Join one because you will have responsibilities you would have to wait 10+ years to have; join one 
 because you like the people that started the company;  join one because you will be forced to jump out of your comfort zone; join one because you want to test
-yourself.  Do not join one if your dream is to get rich.  There are far easier and safer ways to do this.  However, there should be decent payout for the fact that you did take a risk, imbued some amount of 
-increased stress, and possibly damaged a few relationships along the way.</p>
+yourself.  Do not join one if your dream is to get rich.  There are far easier and safer ways to do this.  However, there should be decent payout for the fact that you did take a risk, imbued some amount of increased stress, and possibly damaged a few relationships along the way.</p>
 
 <p>The obvious objective is to secure a market salary in the first place.  At this point any options would simply be icing on the proverbial cake.  However sometimes 
 this is not possible so you have to take a salary cut.  This post is designed to help you as an early startup employee prevent yourself from becoming <a href="http://www.nytimes.com/2015/12/27/technology/when-a-unicorn-start-up-stumbles-its-employees-get-hurt.html?_r=0">one</a> of <a href="http://blog.nawbo-sv.org/incentive-stock-option-horror-story/">these</a> other <a href="http://venturebeat.com/2012/02/27/a-classic-startup-horror-story-the-ma-bait-and-switch/">guys</a></p>
