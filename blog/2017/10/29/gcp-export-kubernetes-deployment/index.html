@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Android - Most Significant Byte</title>
+  <title>GCP Export Kubernetes Deployment - Most Significant Byte</title>
   <meta name="author" content="Devin Hurley">
 
   
-  <meta name="description" content="Category: android">
+  <meta name="description" content="GKE Custom Deployments The Google Container Engine (GKE) + Google Compute Engine codelab (aside from the codelab being in dire need of some updates, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://dhurley14.github.io/blog/categories/android">
+  <link rel="canonical" href="http://dhurley14.github.io/blog/2017/10/29/gcp-export-kubernetes-deployment">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Most Significant Byte" type="application/atom+xml">
@@ -78,36 +78,98 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Android</h1>
+    
+      <h1 class="entry-title">GCP Export Kubernetes Deployment</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2017-10-29T19:54:51-04:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>7:54 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://dhurley14.github.io">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><h2 id="gke-custom-deployments">GKE Custom Deployments</h2>
 
-  
-  <h2>2015</h2>
+<p>The Google Container Engine (GKE) + Google Compute Engine codelab (aside from the <a href="https://codelabs.developers.google.com/codelabs/cloud-compute-kubernetes/index.html?index=..%2F..%2Findex#0">codelab</a> being in dire need of some updates, see this issue <a href="https://github.com/googlecodelabs/feedback/issues/243">here,</a> <a href="https://github.com/googlecodelabs/feedback/issues/250">here,</a> and <a href="https://github.com/googlecodelabs/feedback/issues/274">here</a>) does not provide any introduction to kubernetes <code>deployments</code>.  K8s deployments are built using yaml files.  Customizing this yaml file allowed me to store secrets securely.</p>
 
-<article>
-  
-<h1><a href="/blog/2015/11/18/til-4/">What I Learned at POMCO Today - 4</a></h1>
-<time datetime="2015-11-18T00:00:00-05:00" pubdate><span class='month'>Nov</span> <span class='day'>18</span> <span class='year'>2015</span></time>
+<!--more-->
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/android/'>android</a>, <a class='category' href='/blog/categories/apk/'>apk</a>, <a class='category' href='/blog/categories/coding/'>coding</a>, <a class='category' href='/blog/categories/mobile/'>mobile</a>, <a class='category' href='/blog/categories/signing/'>signing</a></span>
-</footer>
+<p>This was exactly what I needed to do.  However I didn’t have any idea how to write a deployment yaml file.. nor did I really have a desire to learn.  I already had a kubernetes cluster running in GKE with a container running my app code.</p>
 
+<p>After googling around I found you could export a deployment as a yaml file.  This would allow you to customize and update the deployment as you progress without having to write the yaml file from scratch.</p>
 
-</article>
+<p>Here is the code that let me export my k8s deployment</p>
 
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">kubectl get deployment myawesomedeployment -o yaml --export &gt; k8s_deployment_config.yaml
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>This will now allow you to do neat stuff like add a secret to the yaml file along with, say updating an image in your deployment…</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">kubectl <span class="nb">set </span>image deployment/myawesomedeployment <span class="nv">myawesomecontainer</span><span class="o">=</span>gcr.io/myproject/myawesomecontainer:v2
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Anyways this gave me a lot of flexibility and saved me a TON of time simply due to not having to learn how to write a deployment yaml file from scratch.  This is mostly just a post for helping me when I need to do this again, but maybe it will help someone else too!</p>
+
+<p>My next post will explain how to deploy and interact with secrets in your Docker container through the kubernetes secrets object configuration.  <a href="https://cloud.google.com/sql/docs/postgres/connect-container-engine#5_create_your_secrets">Google</a> has a basic introduction to the usage of secrets in your application in order to store and access database credentials.</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Devin Hurley</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2017-10-29T19:54:51-04:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>7:54 pm</span></time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://dhurley14.github.io/blog/2017/10/29/gcp-export-kubernetes-deployment/" data-via="" data-counturl="http://dhurley14.github.io/blog/2017/10/29/gcp-export-kubernetes-deployment/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2016/02/21/how-to-equity/" title="Previous Post: How To Equity">&laquo; How To Equity</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -191,7 +253,10 @@
       var disqus_shortname = 'dhurley14githubio';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://dhurley14.github.io/blog/2017/10/29/gcp-export-kubernetes-deployment/';
+        var disqus_url = 'http://dhurley14.github.io/blog/2017/10/29/gcp-export-kubernetes-deployment/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

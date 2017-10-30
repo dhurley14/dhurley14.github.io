@@ -4,7 +4,7 @@
   <title><![CDATA[Most Significant Byte]]></title>
   <link href="http://dhurley14.github.io/atom.xml" rel="self"/>
   <link href="http://dhurley14.github.io/"/>
-  <updated>2016-05-27T01:01:05-04:00</updated>
+  <updated>2017-10-29T20:54:38-04:00</updated>
   <id>http://dhurley14.github.io/</id>
   <author>
     <name><![CDATA[Devin Hurley]]></name>
@@ -12,6 +12,39 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[GCP Export Kubernetes Deployment]]></title>
+    <link href="http://dhurley14.github.io/blog/2017/10/29/gcp-export-kubernetes-deployment/"/>
+    <updated>2017-10-29T19:54:51-04:00</updated>
+    <id>http://dhurley14.github.io/blog/2017/10/29/gcp-export-kubernetes-deployment</id>
+    <content type="html"><![CDATA[<h2 id="gke-custom-deployments">GKE Custom Deployments</h2>
+
+<p>The Google Container Engine (GKE) + Google Compute Engine codelab (aside from the <a href="https://codelabs.developers.google.com/codelabs/cloud-compute-kubernetes/index.html?index=..%2F..%2Findex#0">codelab</a> being in dire need of some updates, see this issue <a href="https://github.com/googlecodelabs/feedback/issues/243">here,</a> <a href="https://github.com/googlecodelabs/feedback/issues/250">here,</a> and <a href="https://github.com/googlecodelabs/feedback/issues/274">here</a>) does not provide any introduction to kubernetes <code>deployments</code>.  K8s deployments are built using yaml files.  Customizing this yaml file allowed me to store secrets securely.</p>
+
+<!--more-->
+
+<p>This was exactly what I needed to do.  However I didn’t have any idea how to write a deployment yaml file.. nor did I really have a desire to learn.  I already had a kubernetes cluster running in GKE with a container running my app code.</p>
+
+<p>After googling around I found you could export a deployment as a yaml file.  This would allow you to customize and update the deployment as you progress without having to write the yaml file from scratch.</p>
+
+<p>Here is the code that let me export my k8s deployment</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">kubectl get deployment myawesomedeployment -o yaml --export &gt; k8s_deployment_config.yaml
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>This will now allow you to do neat stuff like add a secret to the yaml file along with, say updating an image in your deployment…</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">kubectl <span class="nb">set </span>image deployment/myawesomedeployment <span class="nv">myawesomecontainer</span><span class="o">=</span>gcr.io/myproject/myawesomecontainer:v2
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Anyways this gave me a lot of flexibility and saved me a TON of time simply due to not having to learn how to write a deployment yaml file from scratch.  This is mostly just a post for helping me when I need to do this again, but maybe it will help someone else too!</p>
+
+<p>My next post will explain how to deploy and interact with secrets in your Docker container through the kubernetes secrets object configuration.  <a href="https://cloud.google.com/sql/docs/postgres/connect-container-engine#5_create_your_secrets">Google</a> has a basic introduction to the usage of secrets in your application in order to store and access database credentials.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[How to Equity]]></title>
