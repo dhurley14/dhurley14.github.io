@@ -105,26 +105,29 @@
   <li><code>minikube start</code></li>
   <li>from the same terminal window you ran minikube start run <code>eval $(minikube docker-env)</code></li>
   <li>again, from the same terminal window, run your docker build command</li>
-  <li>update your deployment spec’s* pod to point to the local docker image, whatever you tagged it as.</li>
+  <li>update your deployment spec’s [1] pod to point to the local docker image, whatever you tagged it as.</li>
   <li>update your deployment spec’s imagePullPolicy to be Never (<code>imagePullPolicy: Never</code>)</li>
   <li>kubectl create -f deployment_spec.yaml</li>
   <li>wait for the pods to get created (should not take long)</li>
   <li>expose a loadbalancing service via <code>kubectl expose deployment mydeployment --type="LoadBalancer"</code></li>
-  <li>
-    <p>see below..</p>
-
-    <p><code>bash
-kubectl get services
-NAME               TYPE           CLUSTER-IP   EXTERNAL-IP   PORT(S)          AGE
-mydeployment   LoadBalancer   10.0.0.40    &lt;pending&gt;     5000:32711/TCP   5s
-kubernetes         ClusterIP      10.0.0.1     &lt;none&gt;        443/TCP          13m
-</code></p>
-  </li>
+  <li>see [2]</li>
   <li>Generally, cloud providers will then provide an ip address for access to the service.  However since this is minikube there isn’t anyone assinging IP’s to anything.  Minikube allows you to simulate this by running <code>minikube service &lt;load balancer from step 9&gt;</code> and it will attempt to open a web page to your service.</li>
   <li><a href="https://www.youtube.com/watch?v=KOO5S4vxi0o">These go to 11.</a></li>
 </ol>
 
-<p>* get your deployment spec from remote <a href="http://dhurley14.github.io/blog/2017/10/29/gcp-export-kubernetes-deployment/">see here</a></p>
+<p>[1] get your deployment spec from remote <a href="http://dhurley14.github.io/blog/2017/10/29/gcp-export-kubernetes-deployment/">see here</a></p>
+
+<p>[2]</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">kubectl get services
+</span><span class="line">NAME               TYPE           CLUSTER-IP   EXTERNAL-IP   PORT<span class="o">(</span>S<span class="o">)</span>          AGE
+</span><span class="line">mydeployment   LoadBalancer   10.0.0.40    &lt;pending&gt;     5000:32711/TCP   5s
+</span><span class="line">kubernetes         ClusterIP      10.0.0.1     &lt;none&gt;        443/TCP          13m
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
 
 
