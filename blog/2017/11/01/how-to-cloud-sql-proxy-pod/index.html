@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Analysis - Most Significant Byte</title>
+  <title>How to Cloud_sql_proxy Pod - Most Significant Byte</title>
   <meta name="author" content="Devin Hurley">
 
   
-  <meta name="description" content="Category: analysis">
+  <meta name="description" content="So I don’t have to google this every time.. Make sure you stop your local postgres instance. Run this command to open a tunnel to the cloud sql &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://dhurley14.github.io/blog/categories/analysis">
+  <link rel="canonical" href="http://dhurley14.github.io/blog/2017/11/01/how-to-cloud-sql-proxy-pod">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Most Significant Byte" type="application/atom+xml">
@@ -78,36 +78,88 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Analysis</h1>
+    
+      <h1 class="entry-title">How to Cloud_sql_proxy Pod</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2017-11-01T22:54:58-04:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2017</span></span> <span class='time'>10:54 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://dhurley14.github.io">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>So I don’t have to google this every time..  <strong>Make sure you stop your local postgres instance</strong>.</p>
 
-  
-  <h2>2015</h2>
+<p>Run this command to open a tunnel to the cloud sql instance in GCP.</p>
 
-<article>
-  
-<h1><a href="/blog/2015/10/07/wsj3-russia-and-saudi-arabia-to-continue-pumping-oil/">WSJ3: Russia and Saudi Arabia to Continue Pumping Oil</a></h1>
-<time datetime="2015-10-07T20:40:12-04:00" pubdate><span class='month'>Oct</span> <span class='day'>07</span> <span class='year'>2015</span></time>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">cloud_sql_proxy -instances<span class="o">=</span>&lt;INSTANCE_NAME&gt;<span class="o">=</span>tcp:5432 -credential_file<span class="o">=</span>&lt;CRED_FILE&gt; <span class="p">&amp;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/analysis/'>analysis</a>, <a class='category' href='/blog/categories/economics/'>economics</a>, <a class='category' href='/blog/categories/wsj/'>wsj</a></span>
-</footer>
+<p>if the connection was successful you should now be able to tunnel into the remote cloud sql instance using…</p>
 
-
-</article>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">psql <span class="s2">&quot;host=127.0.01 sslmode=disable dbname=&lt;DB_NAME&gt; user=&lt;DB_USER&gt; password=&lt;DB_PASS&gt;&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Devin Hurley</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2017-11-01T22:54:58-04:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2017</span></span> <span class='time'>10:54 pm</span></time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://dhurley14.github.io/blog/2017/11/01/how-to-cloud-sql-proxy-pod/" data-via="" data-counturl="http://dhurley14.github.io/blog/2017/11/01/how-to-cloud-sql-proxy-pod/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2017/10/29/gcp-export-kubernetes-deployment/" title="Previous Post: GCP export kubernetes deployment">&laquo; GCP export kubernetes deployment</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2017/11/02/utilizing-minikube-for-debugging/" title="Next Post: utilizing minikube for debugging">utilizing minikube for debugging &raquo;</a>
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -191,7 +243,10 @@
       var disqus_shortname = 'dhurley14githubio';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://dhurley14.github.io/blog/2017/11/01/how-to-cloud-sql-proxy-pod/';
+        var disqus_url = 'http://dhurley14.github.io/blog/2017/11/01/how-to-cloud-sql-proxy-pod/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

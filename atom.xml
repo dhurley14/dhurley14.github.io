@@ -4,7 +4,7 @@
   <title><![CDATA[Most Significant Byte]]></title>
   <link href="http://dhurley14.github.io/atom.xml" rel="self"/>
   <link href="http://dhurley14.github.io/"/>
-  <updated>2017-10-30T22:48:51-04:00</updated>
+  <updated>2017-11-11T21:23:17-05:00</updated>
   <id>http://dhurley14.github.io/</id>
   <author>
     <name><![CDATA[Devin Hurley]]></name>
@@ -12,6 +12,151 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Exposing Kubernetes Ports]]></title>
+    <link href="http://dhurley14.github.io/blog/2017/11/11/exposing-kubernetes-ports/"/>
+    <updated>2017-11-11T17:45:04-05:00</updated>
+    <id>http://dhurley14.github.io/blog/2017/11/11/exposing-kubernetes-ports</id>
+    <content type="html"><![CDATA[<h2 id="loadbalancers-on-kubernetes">LoadBalancers on Kubernetes</h2>
+
+<p><code>kubectl expose deployment categorylinksbot --port=80 --target-port=5000 --type=LoadBalancer</code></p>
+
+<p>Make sure you specify the port the load balancer should listen on, as well as the “target port” to forward traffic from the load balancer to.  <code>--target-port</code> is the port your web app is listening on for requests (flask web apps default to 5000 I think).  <code>--port</code> is the port you wish the load balancer to receive traffic on.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Switching Between Git Users]]></title>
+    <link href="http://dhurley14.github.io/blog/2017/11/02/switching-between-git-users/"/>
+    <updated>2017-11-02T23:37:41-04:00</updated>
+    <id>http://dhurley14.github.io/blog/2017/11/02/switching-between-git-users</id>
+    <content type="html"><![CDATA[<h2 id="git-config">Git Config</h2>
+
+<p>Something I had never thought about was exactly how git manages your user configurations.  Luckily I had just the issue that warranted this kind of knowledge!  I wanted to set up another github account which would host a new blog I would be hosting using github pages.  I didn’t want to use my personal account because I’m already hosting this blog there ;)  Anyways I needed to figure out how to manage permissions for pushing to different remote repos between two separate github accounts.</p>
+
+<!--more-->
+
+<p>The way “I” needed to do this (YMMV unfortunately) was by activating a specific user in the <code>.git/config</code> file under my git repo.  When you init a git repo it creates a config file local to that repo.  Git also creates a global configuration file which stores other stuff.  I like to think of these as the git version of <code>nvm</code> (<a href="https://github.com/creationix/nvm">node version manager</a>).  When I’m in different node repos I may want to use different versions of node, which is where nvm comes in.</p>
+
+<p>Same principle for git.  When I am in different github repositories I may need to switch between accounts.  This may all sound very trivial but it’s something I forgot at some point so I wanted to document it.  Anyways, after I uploaded my public ssh key to github, all I  needed to do was add the ssh host in <code>~/.ssh/config</code></p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="c"># githubWork</span>
+</span><span class="line">Host work
+</span><span class="line">   HostName github.com
+</span><span class="line">   User git
+</span><span class="line">   IdentityFile ~/.ssh/my_work_account_rsa
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>I also think you need to add the below to the <code>~/.ssh/config</code> file but I’m not entirely sure.  I’ll have to do some more investigating..</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">Host *
+</span><span class="line">  AddKeysToAgent yes
+</span><span class="line">  UseKeychain yes
+</span><span class="line">  IdentityFile ~/.ssh/my_work_account_rsa
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Then when I wanted to use this account for a git repo, I would initialize the repo and modify the <code>.git/config</code> file to use </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="o">[</span>core<span class="o">]</span>
+</span><span class="line">	<span class="nv">repositoryformatversion</span> <span class="o">=</span> 0
+</span><span class="line">	<span class="nv">filemode</span> <span class="o">=</span> <span class="nb">true</span>
+</span><span class="line"><span class="nb">	</span><span class="nv">bare</span> <span class="o">=</span> <span class="nb">false</span>
+</span><span class="line"><span class="nb">	</span><span class="nv">logallrefupdates</span> <span class="o">=</span> <span class="nb">true</span>
+</span><span class="line"><span class="nb">	</span><span class="nv">ignorecase</span> <span class="o">=</span> <span class="nb">true</span>
+</span><span class="line"><span class="nb">	</span><span class="nv">precomposeunicode</span> <span class="o">=</span> <span class="nb">true</span>
+</span><span class="line"><span class="o">[</span>remote <span class="s2">&quot;origin&quot;</span><span class="o">]</span>
+</span><span class="line">	<span class="nv">url</span> <span class="o">=</span> git@work:myWorkGitAccount/test.git
+</span><span class="line">	<span class="nv">fetch</span> <span class="o">=</span> +refs/heads/*:refs/remotes/origin/*
+</span><span class="line"><span class="o">[</span>user<span class="o">]</span>
+</span><span class="line">	<span class="nv">name</span> <span class="o">=</span> myWorkGitAccount
+</span><span class="line">	<span class="nv">email</span> <span class="o">=</span> my_work_email@gmail.com
+</span><span class="line"><span class="o">[</span>branch <span class="s2">&quot;master&quot;</span><span class="o">]</span>
+</span><span class="line">	<span class="nv">remote</span> <span class="o">=</span> origin
+</span><span class="line">	<span class="nv">merge</span> <span class="o">=</span> refs/heads/master
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>And presto I was able to push to my remote git repo using my “work” account ;)  I didn’t have to do anything outside of this because the local <code>.git/config</code> file overrides the global file (and the global file overrides the system).  But yeah that’s how it’s done!  I don’t know why I only needed this to manage two github accounts and not when I was setting up my bitbucket repo..  Not sure what happened there.  Some sort of magic maybe?  Eh I’m sure I’ll have to figure that out eventually.  But for now this worked so I’m going to stick with this process for my future needs.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Utilizing Minikube for Debugging]]></title>
+    <link href="http://dhurley14.github.io/blog/2017/11/02/utilizing-minikube-for-debugging/"/>
+    <updated>2017-11-02T23:29:33-04:00</updated>
+    <id>http://dhurley14.github.io/blog/2017/11/02/utilizing-minikube-for-debugging</id>
+    <content type="html"><![CDATA[<ol>
+  <li><code>minikube start</code></li>
+  <li>from the same terminal window you ran minikube start run <code>eval $(minikube docker-env)</code></li>
+  <li>again, from the same terminal window, run your docker build command</li>
+  <li>update your deployment spec’s* pod to point to the local docker image, whatever you tagged it as.</li>
+  <li>update your deployment spec’s imagePullPolicy to be Never (<code>imagePullPolicy: Never</code>)</li>
+  <li>kubectl create -f deployment_spec.yaml</li>
+  <li>wait for the pods to get created (should not take long)</li>
+  <li>expose a loadbalancing service via <code>kubectl expose deployment mydeployment --type="LoadBalancer"</code></li>
+  <li>
+    <p>see below..</p>
+
+    <p><code>bash
+kubectl get services
+NAME               TYPE           CLUSTER-IP   EXTERNAL-IP   PORT(S)          AGE
+mydeployment   LoadBalancer   10.0.0.40    &lt;pending&gt;     5000:32711/TCP   5s
+kubernetes         ClusterIP      10.0.0.1     &lt;none&gt;        443/TCP          13m
+</code></p>
+  </li>
+  <li>Generally, cloud providers will then provide an ip address for access to the service.  However since this is minikube there isn’t anyone assinging IP’s to anything.  Minikube allows you to simulate this by running <code>minikube service &lt;load balancer from step 9&gt;</code> and it will attempt to open a web page to your service.</li>
+  <li><a href="https://www.youtube.com/watch?v=KOO5S4vxi0o">These go to 11.</a></li>
+</ol>
+
+<p>* get your deployment spec from remote <a href="http://dhurley14.github.io/blog/2017/10/29/gcp-export-kubernetes-deployment/">see here</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to Cloud_sql_proxy Pod]]></title>
+    <link href="http://dhurley14.github.io/blog/2017/11/01/how-to-cloud-sql-proxy-pod/"/>
+    <updated>2017-11-01T22:54:58-04:00</updated>
+    <id>http://dhurley14.github.io/blog/2017/11/01/how-to-cloud-sql-proxy-pod</id>
+    <content type="html"><![CDATA[<p>So I don’t have to google this every time..  <strong>Make sure you stop your local postgres instance</strong>.</p>
+
+<p>Run this command to open a tunnel to the cloud sql instance in GCP.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">cloud_sql_proxy -instances<span class="o">=</span>&lt;INSTANCE_NAME&gt;<span class="o">=</span>tcp:5432 -credential_file<span class="o">=</span>&lt;CRED_FILE&gt; <span class="p">&amp;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>if the connection was successful you should now be able to tunnel into the remote cloud sql instance using…</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">psql <span class="s2">&quot;host=127.0.01 sslmode=disable dbname=&lt;DB_NAME&gt; user=&lt;DB_USER&gt; password=&lt;DB_PASS&gt;&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[GCP Export Kubernetes Deployment]]></title>
