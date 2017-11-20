@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>GCP Export Kubernetes Deployment - Most Significant Byte</title>
+  <title>Most Significant Byte</title>
   <meta name="author" content="Devin Hurley">
 
   
-  <meta name="description" content="GKE Custom Deployments The Google Container Engine (GKE) + Google Compute Engine codelab (aside from the codelab being in dire need of some updates, &hellip;">
+  <meta name="description" content="Hello world! The title for this blog is supposed to be a play on words of AdventureLand (i.e. AdventureLDA or AdventureLand). Just a place to have &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://dhurley14.github.io/blog/2017/10/29/gcp-export-kubernetes-deployment">
+  <link rel="canonical" href="http://dhurley14.github.io/posts/3">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Most Significant Byte" type="application/atom+xml">
@@ -77,12 +77,15 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div>
-<article class="hentry" role="article">
+      <div class="blog-index">
   
+  
+  
+    <article>
+      
   <header>
     
-      <h1 class="entry-title">GCP Export Kubernetes Deployment</h1>
+      <h1 class="entry-title"><a href="/blog/2015/01/07/hello/">Hello, World!</a></h1>
     
     
       <p class="meta">
@@ -91,86 +94,36 @@
 
 
 
-<time class='entry-date' datetime='2017-10-29T19:54:51-04:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>7:54 pm</span></time>
+<time class='entry-date' datetime='2015-01-07T22:11:51-05:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:11 pm</span></time>
         
-           | <a href="#disqus_thread"
-             data-disqus-identifier="http://dhurley14.github.io">Comments</a>
+           | <a href="/blog/2015/01/07/hello/#disqus_thread"
+             data-disqus-identifier="http://dhurley14.github.io/blog/2015/01/07/hello/">Comments</a>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h2 id="gke-custom-deployments">GKE Custom Deployments</h2>
+  <div class="entry-content"><p>Hello world!</p>
 
-<p>The Google Container Engine (GKE) + Google Compute Engine codelab (aside from the <a href="https://codelabs.developers.google.com/codelabs/cloud-compute-kubernetes/index.html?index=..%2F..%2Findex#0">codelab</a> being in dire need of some updates, see this issue <a href="https://github.com/googlecodelabs/feedback/issues/243">here,</a> <a href="https://github.com/googlecodelabs/feedback/issues/250">here,</a> and <a href="https://github.com/googlecodelabs/feedback/issues/274">here</a>) does not provide any introduction to kubernetes <code>deployments</code>. K8s deployments are built using yaml files. Manually customizing this yaml file allowed me to more easily manage secrets securely, among other benefits.</p>
-
-<!--more-->
-
-<p>When you start going through tutorials on how to deploy and manage your containers with kubernetes you end up running a bunch of <code>kubectl</code> (cube-control?) commands. These all basically map to updating text in a yaml file. Sometimes it would be easier to just write the necessary yaml out by hand. In order to do this you need some place to start. Luckily <code>kubectl</code> allows you to export all of the commands you’ve run against your k8s deployment into a file. This was exactly what I needed. I already had a kubernetes cluster running in GKE with a container running my app code. Now I needed to set up the necessary secrets and add another container in my pod so that I could access my Postgres Cloud SQL instance.</p>
-
-<p>Here is the code that let me export my k8s deployment.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">kubectl get deployment myawesomedeployment -o yaml --export &gt; k8s_deployment_config.yaml
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>The <code>kubectl</code> docs have a more thorough listing of all <a href="https://kubernetes.io/docs/user-guide/kubectl/v1.8/#get">available options</a> for exporting deployments, among other things.</p>
-
-<p>You don’t necessarily need a deployment configuration file to, say, update one of the containers running in a pod. However if you want to quickly add another container to your pod, along with some other settings (like a SECRET!!!…) without running seven different <code>kubectl</code> commands (and trying to remember them all for future deployments), a deployment configuration file will help you swiftly accomplish this.</p>
-
-<p>This is mostly just a post for helping me when I need to remember how to do this again, but maybe it will help someone else too!</p>
-
-<p>My next post will explain how to deploy and interact with secrets in your Docker container through the kubernetes secrets object configuration. Google has a <a href="https://cloud.google.com/sql/docs/postgres/connect-container-engine#5_create_your_secrets">basic introduction</a> to the usage of secrets in your application in order to store and access database credentials.</p>
+<p>The title for this blog is supposed to be a play on words of AdventureLand (i.e. AdventureLDA or AdventureLand).  Just a place to have fun ;)
+In this blog I will be examining a ton of different applications of machine learning algorithms. 
+Hopefully the results of these blog posts are interesting to people.  Here’s to an adventure in machine learning!</p>
 </div>
-
-
-  <footer>
-    <p class="meta">
-      
+  
   
 
-<span class="byline author vcard">Posted by <span class="fn">Devin Hurley</span></span>
 
-      
-
-
-
-
-<time class='entry-date' datetime='2017-10-29T19:54:51-04:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>7:54 pm</span></time>
-      
-
-
-    </p>
+    </article>
+  
+  <div class="pagination">
     
-      <div class="sharing">
-  
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://dhurley14.github.io/blog/2017/10/29/gcp-export-kubernetes-deployment/" data-via="" data-counturl="http://dhurley14.github.io/blog/2017/10/29/gcp-export-kubernetes-deployment/" >Tweet</a>
-  
-  
-  
-</div>
-
+    <a href="/blog/archives">Blog Archives</a>
     
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2016/02/21/how-to-equity/" title="Previous Post: How To Equity">&laquo; How To Equity</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2017/11/01/how-to-cloud-sql-proxy-pod/" title="Next Post: how to cloud_sql_proxy pod">how to cloud_sql_proxy pod &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a class="next" href="/posts/2">Newer &rarr;</a>
+    
+  </div>
 </div>
-  </section>
-
-</div>
-
 <aside class="sidebar">
   
     <section>
@@ -236,7 +189,6 @@
   
 </aside>
 
-
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -251,10 +203,7 @@
       var disqus_shortname = 'dhurley14githubio';
       
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://dhurley14.github.io/blog/2017/10/29/gcp-export-kubernetes-deployment/';
-        var disqus_url = 'http://dhurley14.github.io/blog/2017/10/29/gcp-export-kubernetes-deployment/';
-        var disqus_script = 'embed.js';
+        var disqus_script = 'count.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

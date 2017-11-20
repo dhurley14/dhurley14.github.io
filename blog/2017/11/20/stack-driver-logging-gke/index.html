@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Switching Between Git Users - Most Significant Byte</title>
+  <title>StackDriver Logging and Monitoring With GKE - Most Significant Byte</title>
   <meta name="author" content="Devin Hurley">
 
   
-  <meta name="description" content="Git Config Something I had never thought about was exactly how git manages your user configurations. Luckily I had just the issue that warranted this &hellip;">
+  <meta name="description" content="Google Container Engine (GKE) recently (like in the past 48 hours) changed it’s name to Google Kubernetes Engine, which just makes more sense. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://dhurley14.github.io/blog/2017/11/02/switching-between-git-users">
+  <link rel="canonical" href="http://dhurley14.github.io/blog/2017/11/20/stack-driver-logging-gke">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Most Significant Byte" type="application/atom+xml">
@@ -82,7 +82,7 @@
   
   <header>
     
-      <h1 class="entry-title">Switching Between Git Users</h1>
+      <h1 class="entry-title">StackDriver Logging and Monitoring With GKE</h1>
     
     
       <p class="meta">
@@ -91,7 +91,7 @@
 
 
 
-<time class='entry-date' datetime='2017-11-02T23:37:41-04:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2017</span></span> <span class='time'>11:37 pm</span></time>
+<time class='entry-date' datetime='2017-11-20T13:20:25-05:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>1:20 pm</span></time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://dhurley14.github.io">Comments</a>
@@ -101,41 +101,9 @@
   </header>
 
 
-<div class="entry-content"><h2 id="git-config">Git Config</h2>
-
-<p>Something I had never thought about was exactly how git manages your user configurations.  Luckily I had just the issue that warranted this kind of knowledge!  I wanted to set up another github account which would host a new blog I would be hosting using github pages.  I didn’t want to use my personal account because I’m already hosting this blog there ;)  Anyways I needed to figure out how to manage permissions for pushing to different remote repos between two separate github accounts.</p>
+<div class="entry-content"><p>Google Container Engine (GKE) recently (like in the past 48 hours) changed it’s name to Google Kubernetes Engine, which just makes more sense.  Anyways, I needed to enable monitoring and logging on my GKE cluster as I was (drumroll) hacked again!!! 🎉🎉🎉 yay!!! So I really needed monitoring and better logging enabled.  When you spin up a GKE cluster, the VM’s that google provisions for you on GCE are using their proprietary node image Container-Optimized OS (cos).  “cos” is a stripped down GNU/Linux image.  Unfortunately the install <a href="https://cloud.google.com/logging/docs/agent/installation">script</a> Google provides will not run on this because in the install <a href="https://dl.google.com/cloudagents/install-logging-agent.sh">script</a> the below piece of code cannot identify the cos image.</p>
 
 <!--more-->
-
-<p>The way “I” needed to do this (YMMV unfortunately) was by activating a specific user in the <code>.git/config</code> file under my git repo.  When you init a git repo it creates a config file local to that repo.  Git also creates a global configuration file which stores other stuff.  I like to think of these as the git version of <code>nvm</code> (<a href="https://github.com/creationix/nvm">node version manager</a>).  When I’m in different node repos I may want to use different versions of node, which is where nvm comes in.</p>
-
-<p>Same principle for git.  When I am in different github repositories I may need to switch between accounts.  This may all sound very trivial but it’s something I forgot at some point so I wanted to document it.  Anyways, after I uploaded my public ssh key to github, all I  needed to do was add the ssh host in <code>~/.ssh/config</code></p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="c"># githubWork</span>
-</span><span class="line">Host work
-</span><span class="line">   HostName github.com
-</span><span class="line">   User git
-</span><span class="line">   IdentityFile ~/.ssh/my_work_account_rsa
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>I also think you need to add the below to the <code>~/.ssh/config</code> file but I’m not entirely sure.  I’ll have to do some more investigating..</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">Host *
-</span><span class="line">  AddKeysToAgent yes
-</span><span class="line">  UseKeychain yes
-</span><span class="line">  IdentityFile ~/.ssh/my_work_account_rsa
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Then when I wanted to use this account for a git repo, I would initialize the repo and modify the <code>.git/config</code> file to use </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -153,25 +121,66 @@
 <span class="line-number">14</span>
 <span class="line-number">15</span>
 <span class="line-number">16</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="o">[</span>core<span class="o">]</span>
-</span><span class="line">	<span class="nv">repositoryformatversion</span> <span class="o">=</span> 0
-</span><span class="line">	<span class="nv">filemode</span> <span class="o">=</span> <span class="nb">true</span>
-</span><span class="line"><span class="nb">	</span><span class="nv">bare</span> <span class="o">=</span> <span class="nb">false</span>
-</span><span class="line"><span class="nb">	</span><span class="nv">logallrefupdates</span> <span class="o">=</span> <span class="nb">true</span>
-</span><span class="line"><span class="nb">	</span><span class="nv">ignorecase</span> <span class="o">=</span> <span class="nb">true</span>
-</span><span class="line"><span class="nb">	</span><span class="nv">precomposeunicode</span> <span class="o">=</span> <span class="nb">true</span>
-</span><span class="line"><span class="o">[</span>remote <span class="s2">&quot;origin&quot;</span><span class="o">]</span>
-</span><span class="line">	<span class="nv">url</span> <span class="o">=</span> git@work:myWorkGitAccount/test.git
-</span><span class="line">	<span class="nv">fetch</span> <span class="o">=</span> +refs/heads/*:refs/remotes/origin/*
-</span><span class="line"><span class="o">[</span>user<span class="o">]</span>
-</span><span class="line">	<span class="nv">name</span> <span class="o">=</span> myWorkGitAccount
-</span><span class="line">	<span class="nv">email</span> <span class="o">=</span> my_work_email@gmail.com
-</span><span class="line"><span class="o">[</span>branch <span class="s2">&quot;master&quot;</span><span class="o">]</span>
-</span><span class="line">	<span class="nv">remote</span> <span class="o">=</span> origin
-</span><span class="line">	<span class="nv">merge</span> <span class="o">=</span> refs/heads/master
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">install<span class="o">()</span> <span class="o">{</span>
+</span><span class="line">  <span class="k">case</span> <span class="s2">&quot;${ID:-}&quot;</span> in
+</span><span class="line">    amzn<span class="o">)</span>
+</span><span class="line">      <span class="nb">echo</span> <span class="s1">&#39;Installing agents for Amazon Linux.&#39;</span>
+</span><span class="line">      install_for_amazon_linux
+</span><span class="line">      <span class="p">;;</span>
+</span><span class="line">    debian<span class="p">|</span>ubuntu<span class="o">)</span>
+</span><span class="line">      <span class="nb">echo</span> <span class="s1">&#39;Installing agents for Debian or Ubuntu.&#39;</span>
+</span><span class="line">      install_for_debian
+</span><span class="line">      <span class="p">;;</span>
+</span><span class="line">    rhel<span class="p">|</span>centos<span class="o">)</span>
+</span><span class="line">      <span class="nb">echo</span> <span class="s1">&#39;Installing agents for RHEL or CentOS.&#39;</span>
+</span><span class="line">      install_for_redhat
+</span><span class="line">      <span class="p">;;</span>
+</span><span class="line">    *<span class="o">)</span>
+</span><span class="line">      <span class="c"># Fallback for systems lacking /etc/os-release.</span>
+</span><span class="line">      <span class="k">if</span> <span class="o">[[</span> -f /etc/debian_version <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span><span class="line">        <span class="nb">echo</span> <span class="s1">&#39;Installing agents for Debian.&#39;</span>
+</span><span class="line">        install_for_debian
+</span><span class="line">      <span class="k">elif</span> <span class="o">[[</span> -f /etc/redhat-release <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span><span class="line">        <span class="nb">echo</span> <span class="s1">&#39;Installing agents for Red Hat.&#39;</span>
+</span><span class="line">        install_for_redhat
+</span><span class="line">      <span class="k">else</span>
+</span><span class="line">        <span class="nb">echo</span> &gt;<span class="p">&amp;</span><span class="m">2</span> <span class="s1">&#39;Unidentifiable or unsupported platform.&#39;</span>
+</span><span class="line">        <span class="nb">exit </span>1
+</span><span class="line">      <span class="k">fi</span>
+</span><span class="line">  <span class="k">esac</span>
+</span><span class="line"><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>And presto I was able to push to my remote git repo using my “work” account ;)  I didn’t have to do anything outside of this because the local <code>.git/config</code> file overrides the global file (and the global file overrides the system).  But yeah that’s how it’s done!  I don’t know why I only needed this to manage two github accounts and not when I was setting up my bitbucket repo..  Not sure what happened there.  Some sort of magic maybe?  Eh I’m sure I’ll have to figure that out eventually.  But for now this worked so I’m going to stick with this process for my future needs.</p>
+<p>To get stackdriver running you have to modify the node image for GKE to Ubuntu..</p>
+
+<h2 id="however">HOWEVER</h2>
+
+<p>There is also this <a href="https://cloud.google.com/kubernetes-engine/docs/monitoring">monitoring tutorial</a> and a <a href="https://cloud.google.com/kubernetes-engine/docs/logging">logging tutorial</a> specifically for kubernetes engine, which I didn’t find until just now.  Maybe I’m an idiot.</p>
+
+<p>Just gonna reproduce everything I did today here for clarity..</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">gcloud beta container clusters update my-awesome-cluster --monitoring-service<span class="o">=</span>monitoring.googleapis.com
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>and</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">gcloud beta container clusters update my-awesome-cluster --logging-service<span class="o">=</span>logging.googleapis.com
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>I could also get Prometheus running as a pod in my cluster.. so that might be cool too.  I may try this at some point.  Prometheus may be overkill for what I’m doing right now.</p>
 </div>
 
 
@@ -187,7 +196,7 @@
 
 
 
-<time class='entry-date' datetime='2017-11-02T23:37:41-04:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2017</span></span> <span class='time'>11:37 pm</span></time>
+<time class='entry-date' datetime='2017-11-20T13:20:25-05:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>1:20 pm</span></time>
       
 
 
@@ -195,7 +204,7 @@
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://dhurley14.github.io/blog/2017/11/02/switching-between-git-users/" data-via="" data-counturl="http://dhurley14.github.io/blog/2017/11/02/switching-between-git-users/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://dhurley14.github.io/blog/2017/11/20/stack-driver-logging-gke/" data-via="" data-counturl="http://dhurley14.github.io/blog/2017/11/20/stack-driver-logging-gke/" >Tweet</a>
   
   
   
@@ -204,10 +213,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2017/11/02/utilizing-minikube-for-debugging/" title="Previous Post: utilizing minikube for debugging">&laquo; utilizing minikube for debugging</a>
+        <a class="basic-alignment left" href="/blog/2017/11/11/exposing-kubernetes-ports/" title="Previous Post: exposing kubernetes ports">&laquo; exposing kubernetes ports</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2017/11/11/exposing-kubernetes-ports/" title="Next Post: exposing kubernetes ports">exposing kubernetes ports &raquo;</a>
       
     </p>
   </footer>
@@ -302,8 +309,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://dhurley14.github.io/blog/2017/11/02/switching-between-git-users/';
-        var disqus_url = 'http://dhurley14.github.io/blog/2017/11/02/switching-between-git-users/';
+        var disqus_identifier = 'http://dhurley14.github.io/blog/2017/11/20/stack-driver-logging-gke/';
+        var disqus_url = 'http://dhurley14.github.io/blog/2017/11/20/stack-driver-logging-gke/';
         var disqus_script = 'embed.js';
       
     (function () {

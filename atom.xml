@@ -4,7 +4,7 @@
   <title><![CDATA[Most Significant Byte]]></title>
   <link href="http://dhurley14.github.io/atom.xml" rel="self"/>
   <link href="http://dhurley14.github.io/"/>
-  <updated>2017-11-11T21:34:23-05:00</updated>
+  <updated>2017-11-20T15:16:46-05:00</updated>
   <id>http://dhurley14.github.io/</id>
   <author>
     <name><![CDATA[Devin Hurley]]></name>
@@ -12,6 +12,94 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[StackDriver Logging and Monitoring With GKE]]></title>
+    <link href="http://dhurley14.github.io/blog/2017/11/20/stack-driver-logging-gke/"/>
+    <updated>2017-11-20T13:20:25-05:00</updated>
+    <id>http://dhurley14.github.io/blog/2017/11/20/stack-driver-logging-gke</id>
+    <content type="html"><![CDATA[<p>Google Container Engine (GKE) recently (like in the past 48 hours) changed it’s name to Google Kubernetes Engine, which just makes more sense.  Anyways, I needed to enable monitoring and logging on my GKE cluster as I was (drumroll) hacked again!!! 🎉🎉🎉 yay!!! So I really needed monitoring and better logging enabled.  When you spin up a GKE cluster, the VM’s that google provisions for you on GCE are using their proprietary node image Container-Optimized OS (cos).  “cos” is a stripped down GNU/Linux image.  Unfortunately the install <a href="https://cloud.google.com/logging/docs/agent/installation">script</a> Google provides will not run on this because in the install <a href="https://dl.google.com/cloudagents/install-logging-agent.sh">script</a> the below piece of code cannot identify the cos image.</p>
+
+<!--more-->
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">install<span class="o">()</span> <span class="o">{</span>
+</span><span class="line">  <span class="k">case</span> <span class="s2">&quot;${ID:-}&quot;</span> in
+</span><span class="line">    amzn<span class="o">)</span>
+</span><span class="line">      <span class="nb">echo</span> <span class="s1">&#39;Installing agents for Amazon Linux.&#39;</span>
+</span><span class="line">      install_for_amazon_linux
+</span><span class="line">      <span class="p">;;</span>
+</span><span class="line">    debian<span class="p">|</span>ubuntu<span class="o">)</span>
+</span><span class="line">      <span class="nb">echo</span> <span class="s1">&#39;Installing agents for Debian or Ubuntu.&#39;</span>
+</span><span class="line">      install_for_debian
+</span><span class="line">      <span class="p">;;</span>
+</span><span class="line">    rhel<span class="p">|</span>centos<span class="o">)</span>
+</span><span class="line">      <span class="nb">echo</span> <span class="s1">&#39;Installing agents for RHEL or CentOS.&#39;</span>
+</span><span class="line">      install_for_redhat
+</span><span class="line">      <span class="p">;;</span>
+</span><span class="line">    *<span class="o">)</span>
+</span><span class="line">      <span class="c"># Fallback for systems lacking /etc/os-release.</span>
+</span><span class="line">      <span class="k">if</span> <span class="o">[[</span> -f /etc/debian_version <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span><span class="line">        <span class="nb">echo</span> <span class="s1">&#39;Installing agents for Debian.&#39;</span>
+</span><span class="line">        install_for_debian
+</span><span class="line">      <span class="k">elif</span> <span class="o">[[</span> -f /etc/redhat-release <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span><span class="line">        <span class="nb">echo</span> <span class="s1">&#39;Installing agents for Red Hat.&#39;</span>
+</span><span class="line">        install_for_redhat
+</span><span class="line">      <span class="k">else</span>
+</span><span class="line">        <span class="nb">echo</span> &gt;<span class="p">&amp;</span><span class="m">2</span> <span class="s1">&#39;Unidentifiable or unsupported platform.&#39;</span>
+</span><span class="line">        <span class="nb">exit </span>1
+</span><span class="line">      <span class="k">fi</span>
+</span><span class="line">  <span class="k">esac</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>To get stackdriver running you have to modify the node image for GKE to Ubuntu..</p>
+
+<h2 id="however">HOWEVER</h2>
+
+<p>There is also this <a href="https://cloud.google.com/kubernetes-engine/docs/monitoring">monitoring tutorial</a> and a <a href="https://cloud.google.com/kubernetes-engine/docs/logging">logging tutorial</a> specifically for kubernetes engine, which I didn’t find until just now.  Maybe I’m an idiot.</p>
+
+<p>Just gonna reproduce everything I did today here for clarity..</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">gcloud beta container clusters update my-awesome-cluster --monitoring-service<span class="o">=</span>monitoring.googleapis.com
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>and</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">gcloud beta container clusters update my-awesome-cluster --logging-service<span class="o">=</span>logging.googleapis.com
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>I could also get Prometheus running as a pod in my cluster.. so that might be cool too.  I may try this at some point.  Prometheus may be overkill for what I’m doing right now.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Exposing Kubernetes Ports]]></title>
@@ -1244,19 +1332,6 @@ We now have a corpus we can use to build our LDA model.  </p>
 <h4 id="gay-rights">10. Gay rights</h4>
 
 <p>To generate a more comprehensive set of topics, it certainly would’ve been nice to have acquired more than approximately 700 articles.  I also do not fully understand how the LDA algorithm works so I’m sure by playing around with parameters in the LDA model I could more closely approximate the topics. I also believe that some of these topics seem far fetched because pmarca was probably only tweeting about a couple of these topics at the time. In addition to this, my sample size was limited to the most recent 3200 tweets, so whatever topics are there are the most commonly seen topics from pmarca’s last 3200 tweets. Soon will be part 2 of this post, where I examine the sentiment of the tweets associated with these topics.  Until next time!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hello, World!]]></title>
-    <link href="http://dhurley14.github.io/blog/2015/01/07/hello/"/>
-    <updated>2015-01-07T22:11:51-05:00</updated>
-    <id>http://dhurley14.github.io/blog/2015/01/07/hello</id>
-    <content type="html"><![CDATA[<p>Hello world!</p>
-
-<p>The title for this blog is supposed to be a play on words of AdventureLand (i.e. AdventureLDA or AdventureLand).  Just a place to have fun ;)
-In this blog I will be examining a ton of different applications of machine learning algorithms. 
-Hopefully the results of these blog posts are interesting to people.  Here’s to an adventure in machine learning!</p>
 ]]></content>
   </entry>
   
