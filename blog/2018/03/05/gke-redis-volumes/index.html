@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Mobile - Most Significant Byte</title>
+  <title>GKE and Redis - Most Significant Byte</title>
   <meta name="author" content="Devin Hurley">
 
   
-  <meta name="description" content="Category: mobile">
+  <meta name="description" content="Redis allows users to save data to a single file with the bgsave command. If left unspecified inside your redis.conf file, bgsave will write this &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://dhurley14.github.io/blog/categories/mobile">
+  <link rel="canonical" href="http://dhurley14.github.io/blog/2018/03/05/gke-redis-volumes">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Most Significant Byte" type="application/atom+xml">
@@ -78,50 +78,76 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Mobile</h1>
+    
+      <h1 class="entry-title">GKE and Redis</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2018-03-05T22:41:46-05:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2018</span></span> <span class='time'>10:41 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://dhurley14.github.io">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>Redis allows users to save data to a single file with the <a href="https://redis.io/commands/bgsave">bgsave</a> command.  If left unspecified inside your <code>redis.conf</code> file, bgsave will write this data to /docker/host/dir:/data.</p>
 
-  
-  <h2>2015</h2>
-
-<article>
-  
-<h1><a href="/blog/2015/11/18/til-4/">What I Learned at POMCO Today - 4</a></h1>
-<time datetime="2015-11-18T00:00:00-05:00" pubdate><span class='month'>Nov</span> <span class='day'>18</span> <span class='year'>2015</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/android/'>android</a>, <a class='category' href='/blog/categories/apk/'>apk</a>, <a class='category' href='/blog/categories/coding/'>coding</a>, <a class='category' href='/blog/categories/mobile/'>mobile</a>, <a class='category' href='/blog/categories/signing/'>signing</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2015/11/11/what-i-learned-at-pomco-today/">What I Learned at POMCO Today</a></h1>
-<time datetime="2015-11-11T00:00:00-05:00" pubdate><span class='month'>Nov</span> <span class='day'>11</span> <span class='year'>2015</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/coding/'>coding</a>, <a class='category' href='/blog/categories/ios/'>ios</a>, <a class='category' href='/blog/categories/lessons/'>lessons</a>, <a class='category' href='/blog/categories/mobile/'>mobile</a>, <a class='category' href='/blog/categories/objective-c/'>objective-c</a></span>
-</footer>
-
-
-</article>
-
+<p>I had always assumed you needed to specifically mount a volume for this to work, however it apparently works even when no volume is specified, thus allowing easier deployment scaling in kubernetes.</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Devin Hurley</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2018-03-05T22:41:46-05:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2018</span></span> <span class='time'>10:41 pm</span></time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://dhurley14.github.io/blog/2018/03/05/gke-redis-volumes/" data-via="" data-counturl="http://dhurley14.github.io/blog/2018/03/05/gke-redis-volumes/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2017/11/20/stack-driver-logging-gke/" title="Previous Post: StackDriver logging and Monitoring with GKE">&laquo; StackDriver logging and Monitoring with GKE</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -205,7 +231,10 @@
       var disqus_shortname = 'dhurley14githubio';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://dhurley14.github.io/blog/2018/03/05/gke-redis-volumes/';
+        var disqus_url = 'http://dhurley14.github.io/blog/2018/03/05/gke-redis-volumes/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

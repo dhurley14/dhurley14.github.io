@@ -9,7 +9,7 @@
   <meta name="author" content="Devin Hurley">
 
   
-  <meta name="description" content="Google Container Engine (GKE) recently (like in the past 48 hours) changed it’s name to Google Kubernetes Engine, which just makes more sense. &hellip;">
+  <meta name="description" content="Redis allows users to save data to a single file with the bgsave command. If left unspecified inside your redis.conf file, bgsave will write this &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -79,6 +79,40 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2018/03/05/gke-redis-volumes/">GKE and Redis</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2018-03-05T22:41:46-05:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2018</span></span> <span class='time'>10:41 pm</span></time>
+        
+           | <a href="/blog/2018/03/05/gke-redis-volumes/#disqus_thread"
+             data-disqus-identifier="http://dhurley14.github.io/blog/2018/03/05/gke-redis-volumes/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Redis allows users to save data to a single file with the <a href="https://redis.io/commands/bgsave">bgsave</a> command.  If left unspecified inside your <code>redis.conf</code> file, bgsave will write this data to /docker/host/dir:/data.</p>
+
+<p>I had always assumed you needed to specifically mount a volume for this to work, however it apparently works even when no volume is specified, thus allowing easier deployment scaling in kubernetes.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -457,55 +491,6 @@ theory is applicable to other networks such as Ethereum. </p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/11/18/til-4/">What I Learned at POMCO Today - 4</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-11-18'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-           | <a href="/blog/2015/11/18/til-4/#disqus_thread"
-             data-disqus-identifier="http://dhurley14.github.io/blog/2015/11/18/til-4/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3 id="android-and-google-maps-api">Android and Google Maps API</h3>
-
-<blockquote>
-  <p>When generating a signed apk for release, that signature needs to be set in the google developer console
-where our API key is kept.</p>
-</blockquote>
-
-<blockquote>
-  <p>Basically we need to map the release build fingerprint (SHA-1) to the google maps API key in the developer
-console.</p>
-</blockquote>
-
-<h3 id="read-on-for-bonus-til">Read On for BONUS TIL!</h3>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2015/11/18/til-4/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -521,6 +506,10 @@ console.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2018/03/05/gke-redis-volumes/">GKE and Redis</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2017/11/20/stack-driver-logging-gke/">StackDriver Logging and Monitoring With GKE</a>
       </li>
     
@@ -534,10 +523,6 @@ console.</p>
     
       <li class="post">
         <a href="/blog/2017/11/02/utilizing-minikube-for-debugging/">Utilizing Minikube for Debugging</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2017/11/01/how-to-cloud-sql-proxy-pod/">How to Cloud_sql_proxy Pod</a>
       </li>
     
   </ul>
@@ -582,7 +567,7 @@ console.</p>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2017 - Devin Hurley -
+  Copyright &copy; 2018 - Devin Hurley -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
