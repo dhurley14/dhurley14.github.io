@@ -4,7 +4,7 @@
   <title><![CDATA[Most Significant Byte]]></title>
   <link href="http://dhurley14.github.io/atom.xml" rel="self"/>
   <link href="http://dhurley14.github.io/"/>
-  <updated>2018-03-05T23:15:10-05:00</updated>
+  <updated>2018-03-07T23:52:50-05:00</updated>
   <id>http://dhurley14.github.io/</id>
   <author>
     <name><![CDATA[Devin Hurley]]></name>
@@ -18,7 +18,13 @@
     <link href="http://dhurley14.github.io/blog/2018/03/05/gke-redis-volumes/"/>
     <updated>2018-03-05T22:41:46-05:00</updated>
     <id>http://dhurley14.github.io/blog/2018/03/05/gke-redis-volumes</id>
-    <content type="html"><![CDATA[<p>Redis allows users to save data to a single file with the <a href="https://redis.io/commands/bgsave">bgsave</a> command.  If left unspecified inside your <code>redis.conf</code> file, bgsave will write this data to /docker/host/dir:/data.</p>
+    <content type="html"><![CDATA[<h3 id="edit">Edit:</h3>
+
+<p>Just kidding this is not true at all, disregard the below post</p>
+
+<h3 id="gke-and-redis">GKE and Redis</h3>
+
+<p>Redis allows users to save data to a single file with the <a href="https://redis.io/commands/bgsave">bgsave</a> command.  If left unspecified inside your <code>redis.conf</code> file, bgsave will write this data to /docker/host/dir:/data.</p>
 
 <p>I had always assumed you needed to specifically mount a volume for this to work, however it apparently works even when no volume is specified, thus allowing easier deployment scaling in kubernetes.</p>
 ]]></content>

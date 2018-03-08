@@ -9,7 +9,7 @@
   <meta name="author" content="Devin Hurley">
 
   
-  <meta name="description" content="Redis allows users to save data to a single file with the bgsave command. If left unspecified inside your redis.conf file, bgsave will write this &hellip;">
+  <meta name="description" content="Edit: Just kidding this is not true at all, disregard the below post GKE and Redis Redis allows users to save data to a single file with the bgsave &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -104,7 +104,13 @@
   </header>
 
 
-  <div class="entry-content"><p>Redis allows users to save data to a single file with the <a href="https://redis.io/commands/bgsave">bgsave</a> command.  If left unspecified inside your <code>redis.conf</code> file, bgsave will write this data to /docker/host/dir:/data.</p>
+  <div class="entry-content"><h3 id="edit">Edit:</h3>
+
+<p>Just kidding this is not true at all, disregard the below post</p>
+
+<h3 id="gke-and-redis">GKE and Redis</h3>
+
+<p>Redis allows users to save data to a single file with the <a href="https://redis.io/commands/bgsave">bgsave</a> command.  If left unspecified inside your <code>redis.conf</code> file, bgsave will write this data to /docker/host/dir:/data.</p>
 
 <p>I had always assumed you needed to specifically mount a volume for this to work, however it apparently works even when no volume is specified, thus allowing easier deployment scaling in kubernetes.</p>
 </div>
