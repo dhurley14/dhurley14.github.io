@@ -1,0 +1,21 @@
+---
+layout: post
+title: "WSJ2: China's President Courts U.S. CEOs"
+date: 2015-09-28 22:47:49 -0400
+comments: true
+categories: [Economics, Wall Street Journal, WSJ]
+---
+
+###China's President Courts U.S. CEOs ######
+
+####By Shira Ovide and Jeremy Page
+
+President Xi Jinping is looking to increase investment in China through promoting China's increased demand.  U.S. companies have long been wary of exporting goods to China due to lacking intellectual property laws and general market access.
+President Xi Jinping seeks lower restrictions in his country to allow for the U.S. to increase high-tech exports to China, as well as lowering the barries to investment in general in the nation.
+Mr. Xi gave a speech outlining all of this after a conference with CEOs from Chinese and U.S. corporations.  Among the people present were Tim Cook, Satya Nadella and Jeff Bezos.  High-tech Chinese companies including Jack Ma (Alibaba), Pony Ma (Tencent Holdings) and Robin Li (Baidu) were also in attendance.  Mr. Xi's claims China's allure for high-tech U.S. companies should be the huge population that utilizes internet connected devices.  Mr. Xi says China is home to 600 million Internet users and 1.2 billion mobile phone users.
+<!--more-->
+
+Such a large market for consumer electronic devices and China's seemingly wholehearted approach to economic openness and increased free trade should have companies jumping at China's heels.  Unfortunately for the general Chinese populace, their government has been behind some massive attacks on U.S. companies, most recently and dramatically the attack on [GitHub](http://blog.erratasec.com/2015/04/pin-pointing-chinas-attack-against.html).
+The general attacks on U.S. companies by the Chinese and other worries, such as intellectual property theft and determining whether the market demand actually exists for consumer electronics has kept U.S. companies steadfast in their cautious approach to expanding to The Far East.  It is this author's opinion that this move by Mr. Xi was in fact an appeal to the nations at large that China's economy is not propped up by massive IPOs and the government, but a natural demand flows within the nation.  Through increasing foreign investment into China, China no longer has to prop up its economy and can rely on foreign investment to do the dirty work.  If U.S. companies do bite, China will be forced to buy more U.S. dollars (so that China can purchase U.S. goods), forcing the dollar to rise in purchasing power.  Kind of like what happened with Germany and the Euro.
+
+A weak currency generally allows for a nations' exports to become cheaper.  When a nation has more exports than imports, it is said to have a surplus.  How do countries devalue their currency so that it does not become so expensive that it's citizens can no longer afford to own it? By "printing" more of it and flooding the market!  However, the Eurozone has not done this.  Instead as it (Germany specifically) exported more and more, it did not try to keep the currency at a lower exchange rate (as Greece, Spain, Italy etc. would have preferred it) and allowed it to increase in strength.  This was great for Germany.  As its' goods became more expensive to purchase while exports continued to flow out of the country, Germany racked up a trade surplus and a stronger currency. Greece, Italy, Portugal, Spain and a host of other countries that depended on the Euro got pushed into the mud at the expense of Germany's power grab. 

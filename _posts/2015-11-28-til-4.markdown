@@ -1,0 +1,34 @@
+---
+layout: post
+title: "What I Learned at POMCO Today - 4"
+date: 2015-11-18
+comments: true
+categories: Android mobile apk signing coding
+---
+
+### Android and Google Maps API 
+
+> When generating a signed apk for release, that signature needs to be set in the google developer console
+> where our API key is kept.
+
+> Basically we need to map the release build fingerprint (SHA-1) to the google maps API key in the developer
+> console.
+
+### Read On for BONUS TIL!
+
+<!--more-->
+
+> You can remotely enable a Google API for an Android app that has already been released.
+
+To do this, get the fingerprint and package name of the app by looking at logged errors through the Android 
+device in Android Studio.  (Android will log errors when the API calls from your app fail) Once you have these items you can add them to the api by going to
+[console.developers.google.com](https://console.developers.google.com/), select "API Manager" in the menu and adding 
+the fingerprint to the API you wish to enable.
+
+I learned about this because we pushed a version of Google Maps API for Android to the app store but the fingerprint 
+that our release APK was signed with was not the same as the fingerprint that enabled our Google Maps API for Android.
+
+So we needed a way to remotely enable this API in our already existing Android devices.  Pushing a new app signed with 
+the correct fingerprint that our Google Maps API was using would not fix this for our users who had already downloaded 
+our app.  So I did some digging on the Interwebs and was able to figure this out.  Hopefully this little bit of info 
+will help out others in the future!
