@@ -6,7 +6,7 @@ comments: true
 categories: [startups, equity, algebra]
 ---
 
-##Hark! An Angel!
+## Hark! An Angel!
 
 So recently I was asked by a close friend if I could help him understand his total compensation package.  The problem was how to project how much equity he needed in order to make back the money he was missing out on based on a market rate salary.  I ended up generalizing his situation and felt it might help others out if I posted the solution here.  So here is my explanation on how to calculate how much equity you (as an early startup employee) will need in order to make up for a loss in salary, assuming the startup cannot afford to pay you a market-rate salary.
 
@@ -18,7 +18,7 @@ general understanding of how much money you would need to make back on a liquida
 
 After doing an explicit example (with a bit of help from a stranger on the Internet) I generalized the specific outcomes so that it could help others who find themselves in similar situations.  YMMV.
 
-##How to 101: Market Rate Salary
+## How to 101: Market Rate Salary
 
 Let's say you're interviewing at a startup and the company offers you some salary POST-TAX which we will call $$s_{0}$$, and stock options.  Given that salary 
 ($$s_{0}$$), how do you come up with an appropriate amount of options that will givey you a return on the investment of an undermarket salary along 
