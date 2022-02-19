@@ -21,7 +21,7 @@
 title: Most Significant Byte
 email: snowmiser111@gmail.com
 description: Machine learning and Python
-baseurl: "/blog" # the subpath of your site, e.g. /blog
+baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://dhurley14.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: snowmiser
 github_username: dhurley14
